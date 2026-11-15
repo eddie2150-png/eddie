@@ -244,7 +244,7 @@
           </div>
         </div>
 
-        <!-- 圖例列 -->
+        <!-- 圖例列（固定呈現當期總結不跳動） -->
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 font-mono text-xs font-bold">
           <div class="flex items-center gap-1.5 p-2 rounded-xl bg-slate-950 border border-slate-800 truncate">
             <span class="w-2.5 h-2.5 rounded-full bg-amber-400 shrink-0"></span>
@@ -264,10 +264,9 @@
           </div>
         </div>
 
-        <!-- 走勢圖容器 (overflow-visible 讓懸浮卡穩妥浮在最高綠線上方不遮擋) -->
+        <!-- 走勢圖容器（智慧上下翻轉避讓，完整顯示不遮擋綠線與標題） -->
         <div id="mainChartContainer" class="relative w-full h-[215px] sm:h-[250px] bg-slate-950/80 rounded-2xl p-2 sm:p-3 border border-slate-800/80 overflow-visible select-none touch-pan-y">
           <svg id="svgLineChart" class="w-full h-full overflow-visible cursor-crosshair"></svg>
-          <!-- 第一頁互動懸浮明細卡（自動鎖定在最高曲線點的正上方） -->
           <div id="mainChartTooltip" class="hidden absolute z-30 pointer-events-none px-2.5 py-1.5 rounded-xl bg-slate-900/95 backdrop-blur-md border border-amber-500/50 shadow-2xl text-[11px] font-mono space-y-1 whitespace-nowrap">
             <div class="flex items-center justify-between gap-3 border-b border-slate-800 pb-0.5">
               <span id="ttMainDate" class="font-bold text-amber-300">10/5</span>
@@ -662,38 +661,33 @@
           </div>
         </section>
 
-        <!-- 個人總資產成長歷程圖 -->
+        <!-- 總資產成長圖（標題精簡為「總資產成長圖」、移除白色副標、右側固定顯示不跳動） -->
         <section class="rounded-2xl sm:rounded-3xl bg-slate-900/95 border border-slate-800 shadow-xl p-3.5 sm:p-6 space-y-3">
           <div class="flex items-center justify-between gap-2 border-b border-slate-800 pb-2">
-            <div>
-              <h3 class="text-sm sm:text-base font-black text-white flex items-center gap-1.5">
-                <i class="fa-solid fa-chart-line text-amber-400"></i>
-                個人總資產 (總數) 成長歷程圖
-              </h3>
-              <span class="text-[11px] text-slate-400 block mt-0.5">點擊或左右滑動圖表，可檢視各月份總資產與配置明細</span>
-            </div>
-            <div class="flex items-center gap-2 font-mono text-xs font-bold shrink-0">
-              <button type="button" onclick="resetPlanChartSelection()" class="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-950 border border-slate-800 hover:border-amber-500/40 transition" title="點擊恢復顯示最新總數">
-                <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
-                <span id="legPlanLabelPrefix" class="text-slate-300">總數:</span>
-                <b id="legPlanTotalOnly" class="text-amber-400">235.5萬</b>
-              </button>
+            <h3 class="text-sm sm:text-base font-black text-white flex items-center gap-1.5 whitespace-nowrap">
+              <i class="fa-solid fa-chart-line text-amber-400"></i>
+              總資產成長圖
+            </h3>
+            <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-950 border border-slate-800 font-mono text-xs font-bold shrink-0">
+              <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+              <span class="text-slate-300">總數:</span>
+              <b id="legPlanTotalOnly" class="text-amber-400">235.5萬</b>
             </div>
           </div>
 
-          <div id="planChartContainer" class="relative w-full h-[215px] sm:h-[245px] bg-slate-950/80 rounded-2xl p-2 sm:p-4 border border-slate-800/80 overflow-visible select-none touch-pan-y">
+          <div id="planChartContainer" class="relative w-full h-[220px] sm:h-[250px] bg-slate-950/80 rounded-2xl p-2 sm:p-4 border border-slate-800/80 overflow-visible select-none touch-pan-y">
             <svg id="svgPlanTotalChart" class="w-full h-full overflow-visible cursor-crosshair"></svg>
-            <!-- 第四頁互動懸浮資產明細卡（顯示在點的上方，不寫幾月結算） -->
-            <div id="planChartTooltip" class="hidden absolute z-30 pointer-events-none px-3 py-2 rounded-xl bg-slate-900/95 backdrop-blur-md border border-amber-500/50 shadow-2xl text-[11px] sm:text-xs font-mono space-y-1 min-w-[172px] max-w-[235px]">
-              <div class="flex items-center justify-between gap-2 border-b border-slate-800 pb-1">
+            <!-- 第四頁互動懸浮資產明細卡（高點自動下翻避讓，不裁切、不遮擋標題） -->
+            <div id="planChartTooltip" class="hidden absolute z-30 pointer-events-none px-2.5 py-1.5 rounded-xl bg-slate-900/95 backdrop-blur-md border border-amber-500/50 shadow-2xl text-[11px] font-mono space-y-1 min-w-[166px] max-w-[230px]">
+              <div class="flex items-center justify-between gap-2 border-b border-slate-800 pb-0.5">
                 <span id="ttPlanDate" class="font-bold text-amber-300">2026/1/5</span>
                 <span id="ttPlanWan" class="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-300 font-bold">183.3萬</span>
               </div>
               <div class="flex items-baseline justify-between gap-2">
                 <span class="text-slate-400 text-[10px]">總資產:</span>
-                <span id="ttPlanTotal" class="text-sm sm:text-base font-black text-white">NT$1,833,198</span>
+                <span id="ttPlanTotal" class="text-xs sm:text-sm font-black text-white">NT$1,833,198</span>
               </div>
-              <div id="ttPlanBreakdown" class="grid grid-cols-2 gap-x-2.5 gap-y-0.5 text-[10px] text-slate-300 pt-0.5 border-t border-slate-800/70">
+              <div id="ttPlanBreakdown" class="grid grid-cols-2 gap-x-2 gap-y-0.5 text-[10px] text-slate-300 pt-0.5 border-t border-slate-800/70">
                 <span>台股: <b class="text-cyan-300">38.8萬</b></span>
                 <span>美股: <b class="text-sky-300">48.1萬</b></span>
                 <span>IB: <b class="text-purple-300">14.4萬</b></span>
@@ -1954,6 +1948,9 @@
       const dispBankTotal = document.getElementById('displayBankTotal');
       if (dispBankTotal) dispBankTotal.innerText = isPrivacyMasked ? '••••••' : Math.round(cashTotal).toLocaleString();
 
+      const legTotal = document.getElementById('legPlanTotalOnly');
+      if (legTotal) legTotal.innerText = isPrivacyMasked ? '••••' : `${(totalMv / 10000).toFixed(1)}萬`;
+
       renderSvgDonutChart(twMv, usMv, effectiveIbMv, cashTotal);
 
       if (renderTable) renderHoldingsTable();
@@ -2378,22 +2375,32 @@
       return `${num >= 0 ? '+' : ''}${num.toFixed(2)}%`;
     }
 
-    function positionTooltipAbovePoint(container, svg, tooltip, ptX, ptY) {
+    /* 智慧上下翻轉定位：預設顯示於點的正上方；若接近圖表頂部（如10月高點）則自動下翻於點下方，避免被裁切或遮擋標題 */
+    function positionTooltipSmart(container, svg, tooltip, ptX, topDotY, bottomDotY) {
       if (!container || !svg || !tooltip) return;
       const svgRect = svg.getBoundingClientRect();
       const contRect = container.getBoundingClientRect();
       if (contRect.width <= 0) return;
 
       const dotLeftInCont = (svgRect.left - contRect.left) + ptX;
-      const dotTopInCont = (svgRect.top - contRect.top) + ptY;
+      const dotTopInCont = (svgRect.top - contRect.top) + topDotY;
+      const dotBottomInCont = (svgRect.top - contRect.top) + (bottomDotY !== undefined ? bottomDotY : topDotY);
 
       tooltip.classList.remove('hidden');
-      tooltip.style.top = `${dotTopInCont - 12}px`;
-      tooltip.style.transform = 'translate(-50%, -100%)';
 
+      const tooltipH = tooltip.offsetHeight || 96;
       const halfW = (tooltip.offsetWidth || 168) / 2;
       const clampedLeft = Math.max(halfW + 4, Math.min(contRect.width - halfW - 4, dotLeftInCont));
       tooltip.style.left = `${clampedLeft}px`;
+
+      if (dotTopInCont - tooltipH - 10 >= 4) {
+        tooltip.style.top = `${dotTopInCont - 10}px`;
+        tooltip.style.transform = 'translate(-50%, -100%)';
+      } else {
+        const belowTop = Math.min(contRect.height - tooltipH - 22, dotBottomInCont + 12);
+        tooltip.style.top = `${Math.max(4, belowTop)}px`;
+        tooltip.style.transform = 'translate(-50%, 0)';
+      }
     }
 
     function selectMainChartPoint(idx) {
@@ -2423,15 +2430,6 @@
         if (lbl) lbl.setAttribute('fill', isActive ? '#fbbf24' : '#94a3b8');
       });
 
-      const setLeg = (id, val) => {
-        const el = document.getElementById(id);
-        if (el) el.innerText = formatSignedPctText(val);
-      };
-      setLeg('legendAlphaVal', pt.alpha);
-      setLeg('legendTaiexVal', pt.taiex);
-      setLeg('legendSp500Val', pt.sp500);
-      setLeg('legendNasdaqVal', pt.nasdaq);
-
       const ttDate = document.getElementById('ttMainDate');
       const ttAlpha = document.getElementById('ttMainAlpha');
       const ttTaiex = document.getElementById('ttMainTaiex');
@@ -2445,10 +2443,11 @@
       if (ttNasdaq) ttNasdaq.innerText = formatSignedPctText(pt.nasdaq);
 
       const topDotY = Math.min(pt.yAlpha, pt.yTaiex, pt.ySp500, pt.yNasdaq);
+      const bottomDotY = Math.max(pt.yAlpha, pt.yTaiex, pt.ySp500, pt.yNasdaq);
       const container = document.getElementById('mainChartContainer');
       const svg = document.getElementById('svgLineChart');
       const tooltip = document.getElementById('mainChartTooltip');
-      positionTooltipAbovePoint(container, svg, tooltip, pt.x, topDotY);
+      positionTooltipSmart(container, svg, tooltip, pt.x, topDotY, bottomDotY);
     }
 
     function resetMainChartSelection() {
@@ -2472,15 +2471,6 @@
         if (cNasdaq) cNasdaq.setAttribute('opacity', '0');
         if (lbl) lbl.setAttribute('fill', '#94a3b8');
       });
-
-      const setLeg = (id, val) => {
-        const el = document.getElementById(id);
-        if (el) el.innerText = formatSignedPctText(val);
-      };
-      setLeg('legendAlphaVal', mainChartLatestSummary.alpha);
-      setLeg('legendTaiexVal', mainChartLatestSummary.taiex);
-      setLeg('legendSp500Val', mainChartLatestSummary.sp500);
-      setLeg('legendNasdaqVal', mainChartLatestSummary.nasdaq);
     }
 
     function handleMainChartPointer(clientX) {
@@ -2634,18 +2624,16 @@
           el.innerText = isNaN(num) ? String(val) : `${num >= 0 ? '+' : ''}${num.toFixed(2)}%`;
         }
       };
-      if (selectedMainPointIdx === null) {
-        setLeg('legendAlphaVal', lastAlpha);
-        setLeg('legendTaiexVal', lastTaiex);
-        setLeg('legendSp500Val', lastSp500);
-        setLeg('legendNasdaqVal', lastNasdaq);
-      }
+      setLeg('legendAlphaVal', lastAlpha);
+      setLeg('legendTaiexVal', lastTaiex);
+      setLeg('legendSp500Val', lastSp500);
+      setLeg('legendNasdaqVal', lastNasdaq);
 
       const rect = svg.getBoundingClientRect();
       const W = rect.width > 0 ? rect.width : 750;
       const H = rect.height > 0 ? rect.height : 220;
 
-      const padL = W < 500 ? 44 : 54;
+      const padL = W < 500 ? 40 : 54;
       const padR = W < 500 ? 12 : 20;
       const padT = 18;
       const padB = 26;
@@ -2696,7 +2684,7 @@
       const pathSp500 = makePath(chartData.sp500);
       const pathNasdaq = makePath(chartData.nasdaq);
 
-      const xFontSize = (chartData.labels.length > 8 && W < 520) ? '9.5' : '11';
+      const xFontSize = (chartData.labels.length > 8 && W < 520) ? '9' : '11';
       const xGrid = chartData.labels.map((lbl, i) => {
         const x = getX(i);
         return `
@@ -2720,7 +2708,7 @@
         const labelText = isZero ? '0%' : (lvl > 0 ? `+${lvl}%` : `${lvl}%`);
         return `
           <line x1="${padL}" y1="${y}" x2="${W - padR}" y2="${y}" stroke="${isZero ? '#64748b' : '#1e293b'}" stroke-width="${isZero ? '1.5' : '1'}" stroke-dasharray="${isZero ? '0' : '4 4'}" />
-          <text x="${padL - 6}" y="${y + 4}" fill="${isZero ? '#f8fafc' : '#94a3b8'}" font-size="10.5" font-family="JetBrains Mono" font-weight="bold" text-anchor="end">${labelText}</text>
+          <text x="${padL - 5}" y="${y + 4}" fill="${isZero ? '#f8fafc' : '#94a3b8'}" font-size="10" font-family="JetBrains Mono" font-weight="bold" text-anchor="end">${labelText}</text>
         `;
       }).join('');
 
@@ -2850,11 +2838,6 @@
       const wanStr = isPrivacyMasked ? '••••' : `${(pt.total / 10000).toFixed(1)}萬`;
       const fullTotalStr = isPrivacyMasked ? 'NT$ •••••••' : `NT$${Math.round(pt.total).toLocaleString()}`;
 
-      const legPrefix = document.getElementById('legPlanLabelPrefix');
-      const legTotal = document.getElementById('legPlanTotalOnly');
-      if (legPrefix) legPrefix.innerText = `${pt.label}:`;
-      if (legTotal) legTotal.innerText = fullTotalStr;
-
       const tooltip = document.getElementById('planChartTooltip');
       if (tooltip) {
         const ttDate = document.getElementById('ttPlanDate');
@@ -2877,7 +2860,7 @@
 
         const container = document.getElementById('planChartContainer');
         const svg = document.getElementById('svgPlanTotalChart');
-        positionTooltipAbovePoint(container, svg, tooltip, pt.x, pt.y);
+        positionTooltipSmart(container, svg, tooltip, pt.x, pt.y, pt.y);
       }
     }
 
@@ -2895,14 +2878,6 @@
         if (c) c.setAttribute('opacity', '0');
         if (lbl) lbl.setAttribute('fill', '#94a3b8');
       });
-
-      const lastPt = planChartPoints[planChartPoints.length - 1];
-      const legPrefix = document.getElementById('legPlanLabelPrefix');
-      const legTotal = document.getElementById('legPlanTotalOnly');
-      if (legPrefix) legPrefix.innerText = '總數:';
-      if (legTotal && lastPt) {
-        legTotal.innerText = isPrivacyMasked ? '••••' : `${(lastPt.total / 10000).toFixed(1)}萬`;
-      }
     }
 
     function handlePlanChartPointer(clientX) {
@@ -2932,10 +2907,10 @@
 
       const rect = svg.getBoundingClientRect();
       const W = rect.width > 0 ? rect.width : 750;
-      const H = rect.height > 0 ? rect.height : 210;
+      const H = rect.height > 0 ? rect.height : 220;
 
-      const padL = 44;
-      const padR = 16;
+      const padL = W < 500 ? 38 : 46;
+      const padR = W < 500 ? 12 : 18;
       const padT = 18;
       const padB = 24;
 
@@ -2996,19 +2971,16 @@
         chartW: W
       }));
 
-      const legPrefix = document.getElementById('legPlanLabelPrefix');
       const legTotal = document.getElementById('legPlanTotalOnly');
-      if (selectedPlanPointIdx === null) {
-        if (legPrefix) legPrefix.innerText = '總數:';
-        if (legTotal) legTotal.innerText = isPrivacyMasked ? '••••' : `${(curTotalMv / 10000).toFixed(1)}萬`;
-      }
+      if (legTotal) legTotal.innerText = isPrivacyMasked ? '••••' : `${(curTotalMv / 10000).toFixed(1)}萬`;
 
       const pathTotal = planChartPoints.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(' ');
 
+      const xFontSize = W < 520 ? '9' : '10.5';
       const xGrid = planChartPoints.map((pt, i) => {
         return `
           <line x1="${pt.x.toFixed(1)}" y1="${padT}" x2="${pt.x.toFixed(1)}" y2="${padT + plotH}" stroke="#1e293b" stroke-dasharray="3 3" />
-          <text id="planXLabel-${i}" x="${pt.x.toFixed(1)}" y="${H - 5}" fill="#94a3b8" font-size="10" font-family="JetBrains Mono" font-weight="bold" text-anchor="middle">${pt.label}</text>
+          <text id="planXLabel-${i}" x="${pt.x.toFixed(1)}" y="${H - 5}" fill="#94a3b8" font-size="${xFontSize}" font-family="JetBrains Mono" font-weight="bold" text-anchor="middle">${pt.label}</text>
         `;
       }).join('');
 
@@ -3018,8 +2990,8 @@
         const isTarget = val === 2500000;
         return `
           <line x1="${padL}" y1="${y}" x2="${W - padR}" y2="${y}" stroke="${isTarget ? '#10b981' : '#1e293b'}" stroke-width="${isTarget ? '1.5' : '1'}" stroke-dasharray="${isTarget ? '4 4' : '3 3'}" />
-          <text x="${padL - 6}" y="${y + 4}" fill="${isTarget ? '#10b981' : '#64748b'}" font-size="10" font-family="JetBrains Mono" font-weight="bold" text-anchor="end">${(val / 10000)}萬</text>
-          ${isTarget ? `<text x="${padL + 6}" y="${y - 4}" fill="#10b981" font-size="10" font-family="JetBrains Mono" font-weight="bold">目標 250萬</text>` : ''}
+          <text x="${padL - 5}" y="${y + 4}" fill="${isTarget ? '#10b981' : '#64748b'}" font-size="9.5" font-family="JetBrains Mono" font-weight="bold" text-anchor="end">${(val / 10000)}萬</text>
+          ${isTarget ? `<text x="${padL + 6}" y="${y - 4}" fill="#10b981" font-size="9.5" font-family="JetBrains Mono" font-weight="bold">目標 250萬</text>` : ''}
         `;
       }).join('');
 
