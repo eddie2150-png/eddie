@@ -1055,6 +1055,16 @@
             🔄 同步最新股價
           </button>
         </div>
+
+        <!-- 行情同步狀態診斷框 -->
+        <div id="syncDiagnosticBox" class="hidden p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-[11px] font-mono space-y-1">
+          <div class="flex items-center justify-between">
+            <span class="text-slate-400">上次股價比對結果:</span>
+            <span id="syncDiagSummary" class="text-emerald-400 font-bold">全部成功</span>
+          </div>
+          <div id="syncDiagMissingList" class="text-amber-300 leading-relaxed break-all"></div>
+          <div id="syncDiagRawPreview" class="text-slate-400 text-[10px] leading-relaxed break-all pt-1 border-t border-slate-800/80"></div>
+        </div>
       </div>
 
       <!-- 手機一鍵綁定連結 -->
@@ -1557,22 +1567,104 @@
       try {
         const res = await jsonpRequest(`${gasUrl}?action=quotes`);
         if (res && res.status === 'success') {
-          const quotes = res.quotes || {};
+          const parseCleanNumber = (val) => {
+            if (typeof val === 'number') return val;
+            if (val === null || val === undefined) return NaN;
+            const cleaned = String(val).replace(/NT\$|US\$|TWD|USD|[$,\s]/gi, '').trim();
+            if (!cleaned || cleaned.includes('#')) return NaN;
+            return parseFloat(cleaned);
+          };
+
+          // 建立中文名稱對照股票代號的反查表（支援試算表左欄寫「台積電」、「中鋼」等名稱）
+          const nameToSymbolMap = {};
+          Object.entries(STOCK_DATABASE).forEach(([dbSym, info]) => {
+            if (info && info.name) {
+              const cleanDbName = String(info.name).replace(/\s+/g, '').toUpperCase();
+              nameToSymbolMap[cleanDbName] = dbSym;
+              nameToSymbolMap[cleanDbName.replace(/\(.*?\)/g, '')] = dbSym;
+            }
+          });
+          holdings.forEach(h => {
+            if (h.name && h.symbol) {
+              const cleanHName = String(h.name).replace(/\s+/g, '').toUpperCase();
+              const cleanHSym = String(h.symbol).replace(/\s+/g, '').toUpperCase();
+              nameToSymbolMap[cleanHName] = cleanHSym;
+              nameToSymbolMap[cleanHName.replace(/\(.*?\)/g, '')] = cleanHSym;
+            }
+          });
+
+          const rawQuotes = res.quotes || {};
+          const quotes = {};
+          Object.keys(rawQuotes).forEach(k => {
+            const upperK = String(k || '').replace(/\s+/g, '').toUpperCase();
+            const strippedK = upperK
+              .replace(/^(TPE|TWO|TAI|NASDAQ|NYSEARCA|NYSE|AMEX|BATS|LON|HKG|TYO|INDEXSP|INDEXNASDAQ):\.?/, '')
+              .replace(/\.(TW|TWO|HK|L|T)$/, '');
+            const cleanNum = parseCleanNumber(rawQuotes[k]);
+            if (!isNaN(cleanNum)) {
+              quotes[upperK] = cleanNum;
+              quotes[strippedK] = cleanNum;
+              if (/^0+\d+/.test(strippedK)) {
+                quotes[strippedK.replace(/^0+/, '')] = cleanNum;
+              }
+              if (nameToSymbolMap[strippedK]) {
+                quotes[nameToSymbolMap[strippedK]] = cleanNum;
+              }
+            }
+          });
+
           safeStorage.setItem('eddie_portfolio_quotes_cache', JSON.stringify(quotes));
-          if (res.usdTwd && !isNaN(parseFloat(res.usdTwd))) {
-            usTwdRate = parseFloat(res.usdTwd);
+          const parsedRate = parseCleanNumber(res.usdTwd);
+          if (!isNaN(parsedRate) && parsedRate > 0) {
+            usTwdRate = parsedRate;
             safeStorage.setItem('eddie_portfolio_ustwd', usTwdRate);
           }
 
           let updatedCount = 0;
+          let missingSymbols = [];
           holdings.forEach(h => {
-            const sym = String(h.symbol || '').toUpperCase();
-            const qVal = parseFloat(quotes[sym]);
+            const sym = String(h.symbol || '').replace(/\s+/g, '').toUpperCase();
+            const noZeroSym = sym.replace(/^0+/, '');
+            const cleanName = String(h.name || '').replace(/\s+/g, '').toUpperCase();
+            const shortName = cleanName.replace(/\(.*?\)/g, '');
+            const rawQuote = quotes[sym] !== undefined ? quotes[sym]
+              : quotes[noZeroSym] !== undefined ? quotes[noZeroSym]
+              : quotes[cleanName] !== undefined ? quotes[cleanName]
+              : quotes[shortName];
+            const qVal = parseCleanNumber(rawQuote);
             if (!isNaN(qVal) && qVal > 0) {
               h.currentPrice = qVal;
               updatedCount++;
+            } else {
+              missingSymbols.push(`${sym}(${h.name})`);
             }
           });
+
+          const diagBox = document.getElementById('syncDiagnosticBox');
+          const diagSum = document.getElementById('syncDiagSummary');
+          const diagMissing = document.getElementById('syncDiagMissingList');
+          const diagRaw = document.getElementById('syncDiagRawPreview');
+          if (diagBox && diagSum && diagMissing) {
+            diagBox.classList.remove('hidden');
+            diagSum.innerText = `成功 ${updatedCount} / ${holdings.length} 檔`;
+            if (missingSymbols.length > 0) {
+              diagSum.className = 'text-amber-400 font-bold';
+              diagMissing.innerText = `⚠️ 試算表顯示 #N/A 或未填入 (${missingSymbols.length}檔): ${missingSymbols.join(', ')}`;
+            } else {
+              diagSum.className = 'text-emerald-400 font-bold';
+              diagMissing.innerText = '✨ 所有持股均已成功對齊試算表最新報價！';
+            }
+            if (diagRaw) {
+              const rawEntries = Object.entries(rawQuotes)
+                .filter(([k]) => !/YTD|1Q|1M|1W/i.test(k))
+                .slice(0, 12)
+                .map(([k, v]) => `${k}=${v}`)
+                .join('、');
+              diagRaw.innerText = rawEntries
+                ? `📥 試算表實際回傳預覽: ${rawEntries}`
+                : '⚠️ 試算表回傳為空，請確認工作表分頁名稱是否為「即時行情」';
+            }
+          }
 
           const periodMap = [
             { tf: '1W', suffix: '1W' },
@@ -1604,7 +1696,12 @@
           saveHoldingsState();
           recalculateAll(true);
           renderSvgLineChart();
-          showToast(`✅ 行情同步完成！(更新 ${updatedCount} 檔股價與自然曆指數)`);
+          if (missingSymbols.length > 0) {
+            const previewMissing = missingSymbols.slice(0, 3).join(', ') + (missingSymbols.length > 3 ? ` 等${missingSymbols.length}檔` : '');
+            showToast(`✅ 更新 ${updatedCount} 檔（未抓到: ${previewMissing}）`);
+          } else {
+            showToast(`✅ 行情同步完成！(全部 ${updatedCount} 檔股價已更新)`);
+          }
         } else {
           showToast(`⚠️ 同步未完成: ${(res && res.message) || '請確認試算表設定'}`);
         }
