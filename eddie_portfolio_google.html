@@ -1,0 +1,3477 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Eddie Portfolio">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='1' x2='1' y2='0'%3E%3Cstop offset='0%25' stop-color='%2310b981'/%3E%3Cstop offset='100%25' stop-color='%2322d3ee'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='24' fill='%23060910'/%3E%3Crect x='6' y='6' width='88' height='88' rx='20' fill='url(%23g)' opacity='0.18'/%3E%3Cpath d='M22 68 L42 48 L56 58 L78 30' fill='none' stroke='url(%23g)' stroke-width='9' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='78' cy='30' r='6' fill='%23ffffff'/%3E%3C/svg%3E">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='1' x2='1' y2='0'%3E%3Cstop offset='0%25' stop-color='%2310b981'/%3E%3Cstop offset='100%25' stop-color='%2322d3ee'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' fill='%23060910'/%3E%3Cpath d='M22 68 L42 48 L56 58 L78 30' fill='none' stroke='url(%23g)' stroke-width='9' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='78' cy='30' r='6' fill='%23ffffff'/%3E%3C/svg%3E">
+  <title>Eddie portfolio - 專業資產配置與投資績效儀表板</title>
+  
+  <!-- Tailwind CSS & FontAwesome CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Google Fonts: Inter, JetBrains Mono, Dancing Script, Noto Sans TC -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Inter"', '"Noto Sans TC"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+            script: ['"Dancing Script"', 'cursive']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .hidden { display: none !important; }
+    
+    body {
+      background-color: #060910;
+      color: #f1f5f9;
+      font-family: 'Inter', 'Noto Sans TC', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: calc(3.25rem + env(safe-area-inset-bottom));
+      min-height: 100vh;
+      touch-action: pan-y;
+    }
+
+    @keyframes slideInFromRight {
+      from { opacity: 0.4; transform: translateX(18px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes slideInFromLeft {
+      from { opacity: 0.4; transform: translateX(-18px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .animate-slide-right {
+      animation: slideInFromRight 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .animate-slide-left {
+      animation: slideInFromLeft 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    
+    .app-container {
+      width: 100%;
+      max-width: 1280px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    ::-webkit-scrollbar { width: 4px; height: 4px; }
+    ::-webkit-scrollbar-track { background: #0d1322; }
+    ::-webkit-scrollbar-thumb { background: #2b3758; border-radius: 9999px; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    input:focus { outline: none; box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.4); }
+    .input-table:focus { box-shadow: 0 0 0 1.5px rgba(56, 189, 248, 0.6); }
+    
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    input[type="number"] {
+      -moz-appearance: textfield;
+    }
+
+    netlify-drawer, #netlify-drawer, [data-netlify-drawer], .netlify-badge {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+      height: 0 !important;
+      width: 0 !important;
+      position: absolute !important;
+      z-index: -9999 !important;
+    }
+  </style>
+</head>
+<body class="text-slate-100 flex flex-col justify-between selection:bg-emerald-500 selection:text-black">
+
+  <!-- ==================== 頂部導航列 (精簡三圖示 + 簡潔時間顯示) ==================== -->
+  <header class="sticky top-0 z-40 bg-slate-950/92 backdrop-blur-md border-b border-slate-800/80">
+    <div class="app-container px-2.5 sm:px-5 py-2 flex items-center justify-between gap-2">
+      
+      <!-- 左側：草寫標題與精簡互通時間 -->
+      <div class="flex items-center gap-2 sm:gap-2.5 min-w-0">
+        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-gradient-to-tr from-emerald-500 via-teal-400 to-cyan-400 flex items-center justify-center shadow-sm shadow-emerald-500/20 shrink-0">
+          <i class="fa-solid fa-chart-line text-slate-950 font-black text-xs sm:text-sm"></i>
+        </div>
+        <div class="min-w-0">
+          <h1 class="font-script text-xl sm:text-2xl font-bold tracking-wide bg-gradient-to-r from-white via-emerald-200 to-cyan-300 bg-clip-text text-transparent select-none leading-none">
+            Eddie portfolio
+          </h1>
+          <span class="text-[10px] sm:text-[11px] text-slate-400 font-mono block tracking-tight leading-none mt-1">
+            互通: <span id="topBarSyncTime" class="text-cyan-400 font-bold">11/08 21:57</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- 右側：3 個獨立圓角方框 Icon（隱藏遮罩 / 即時更新 / 齒輪設定） -->
+      <div class="flex items-center gap-2 shrink-0">
+        <!-- 1. 隱藏金額遮罩 -->
+        <button onclick="togglePrivacyMask()" class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-slate-900 hover:bg-slate-800 active:scale-95 border border-slate-700/90 flex items-center justify-center transition shadow-sm" title="切換隱私金額遮罩">
+          <i id="privacyEyeIcon" class="fa-solid fa-eye text-xs sm:text-sm text-slate-300"></i>
+        </button>
+
+        <!-- 2. 同步 GOOGLEFINANCE 最新行情 -->
+        <button onclick="syncLiveQuotes()" id="btnSyncQuotes" class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-slate-900 hover:bg-slate-800 active:scale-95 border border-slate-700/90 flex items-center justify-center transition shadow-sm" title="同步 GOOGLEFINANCE 最新行情">
+          <i id="syncQuotesIcon" class="fa-solid fa-arrows-rotate text-xs sm:text-sm text-cyan-400"></i>
+        </button>
+
+        <!-- 3. 齒輪設定（包含上傳、下載、月初匯入與網址綁定） -->
+        <button onclick="openSyncModal()" class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-slate-900 hover:bg-slate-800 active:scale-95 border border-slate-700/90 flex items-center justify-center transition shadow-sm" title="設定與跨裝置雲端同步">
+          <i class="fa-solid fa-gear text-xs sm:text-sm text-amber-400"></i>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ==================== 主內容區域 ==================== -->
+  <main class="app-container flex-1 px-2 pt-2 pb-1 sm:p-5 space-y-2.5 sm:space-y-4">
+
+    <!-- ==================== 【第一介面】總覽績效與大盤對比 (Tab 1) ==================== -->
+    <div id="tabView-1" class="tab-content space-y-2.5 sm:space-y-4">
+      
+      <!-- 主資產 KPI 看板（融合淨資產增值金額＋成長率、備用現金金額＋現金比例） -->
+      <section class="p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border border-slate-800 shadow-xl space-y-2">
+        <div class="flex items-center justify-between gap-2">
+          <span class="text-[13px] sm:text-sm font-extrabold tracking-wider text-emerald-400 flex items-center gap-1.5 whitespace-nowrap">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 shrink-0 animate-pulse"></span>
+            個人總資產淨值
+          </span>
+          <span id="kpiVsNov1Badge" class="text-[11px] sm:text-xs px-2.5 py-0.5 rounded-full font-mono font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 whitespace-nowrap shrink-0">
+            11/01 結算基準
+          </span>
+        </div>
+
+        <div class="flex items-center">
+          <span id="kpiTotalMarketValue" class="text-[28px] sm:text-5xl font-black font-mono tracking-tight text-white leading-tight">
+            NT$2,355,244
+          </span>
+        </div>
+
+        <div id="kpiBaselineSubText" class="text-[11px] sm:text-sm text-slate-300 font-medium leading-relaxed">
+          <span class="inline-block">投資獲利: <span class="font-mono text-rose-400 font-bold">+NT$389,346</span></span>
+          <span class="text-slate-600 mx-0.5">｜</span>
+          <span class="inline-block">淨資產增值: <span class="font-mono text-emerald-300 font-bold">+NT$522,046 (+28.48%)</span></span>
+        </div>
+
+        <div class="grid grid-cols-3 gap-2 pt-2 border-t border-slate-800/80 text-xs sm:text-sm">
+          <div>
+            <span class="text-slate-400 text-[11px] sm:text-xs font-bold block">投入總本金</span>
+            <span id="kpiTotalCost" class="text-[13px] sm:text-lg font-black font-mono text-white block mt-0.5">NT$1,457,739</span>
+          </div>
+          <div>
+            <span class="text-slate-400 text-[11px] sm:text-xs font-bold block">投資總獲利</span>
+            <span id="kpiTotalPnlText" class="text-[13px] sm:text-lg font-black font-mono text-rose-400 block mt-0.5">+NT$389,346</span>
+          </div>
+          <div>
+            <span class="text-slate-400 text-[11px] sm:text-xs font-bold flex items-center gap-1 whitespace-nowrap">
+              現金活存
+              <span id="kpiCashRatioBadge" class="text-[10px] sm:text-xs font-mono font-extrabold text-emerald-300">(21.6%)</span>
+            </span>
+            <span id="kpiCashTotal" class="text-[13px] sm:text-lg font-black font-mono text-emerald-400 block mt-0.5">NT$508,160</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 關鍵三大績效指標：淨資產 YTD / 年化報酬 (XIRR) / 回撤 DD -->
+      <section class="grid grid-cols-3 gap-2">
+        <div class="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-slate-900/95 border border-slate-800 shadow text-center">
+          <span class="text-[10px] sm:text-xs font-bold text-slate-400 flex items-center justify-center gap-1 whitespace-nowrap" title="今年初至今之整體淨資產成長率 (含主動儲蓄與投資獲利)">
+            <i class="fa-solid fa-arrow-trend-up text-rose-400"></i> 淨資產 YTD
+          </span>
+          <span id="kpiNetYtdReturn" class="text-sm sm:text-xl font-black font-mono text-rose-400 block mt-0.5">
+            +28.48%
+          </span>
+        </div>
+
+        <div class="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-slate-900/95 border border-cyan-500/25 shadow text-center">
+          <span class="text-[10px] sm:text-xs font-bold text-cyan-300 flex items-center justify-center gap-1 whitespace-nowrap" title="排除每月新投入本金干擾，依每筆資金實際投入天數精算之真實年化報酬率 (XIRR)">
+            <i class="fa-solid fa-bullseye text-cyan-400"></i> 年化 (XIRR)
+          </span>
+          <span id="kpiXirrReturn" class="text-sm sm:text-xl font-black font-mono text-cyan-300 block mt-0.5">
+            +31.42%
+          </span>
+        </div>
+
+        <div class="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-slate-900/95 border border-slate-800 shadow text-center">
+          <span class="text-[10px] sm:text-xs font-bold text-slate-400 flex items-center justify-center gap-1 whitespace-nowrap" title="自歷程最高點 (10/5 峰值 254.1萬) 之回撤幅度 (DD / MDD)">
+            <i class="fa-solid fa-shield-halved text-amber-400"></i> 回撤 DD
+          </span>
+          <span id="kpiMDD" class="text-sm sm:text-xl font-black font-mono text-amber-400 block mt-0.5">
+            -7.33%
+          </span>
+        </div>
+      </section>
+
+      <!-- 走勢圖與跨市場對比 -->
+      <section class="p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl bg-slate-900/95 border border-slate-800 shadow-xl space-y-2.5">
+        <div class="flex items-center justify-between gap-2 border-b border-slate-800 pb-2">
+          <div>
+            <h2 class="text-sm sm:text-base font-black text-white flex items-center gap-1.5">
+              <i class="fa-solid fa-chart-spline text-cyan-400"></i>
+              投組 vs 跨市場走勢
+            </h2>
+            <span id="currentPeriodLabel" class="text-[11px] font-mono font-bold text-slate-400 block mt-0.5">
+              自然年度：2026 年初至今日
+            </span>
+          </div>
+
+          <div class="flex items-center gap-1 p-0.5 bg-slate-950 rounded-xl border border-slate-800">
+            <button onclick="switchTimeframe('1W')" id="tfBtn-1W" class="tf-btn px-2.5 py-1 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition" title="本週：週一至今日">
+              週
+            </button>
+            <button onclick="switchTimeframe('1M')" id="tfBtn-1M" class="tf-btn px-2.5 py-1 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition" title="當月：當月1日至今日">
+              月
+            </button>
+            <button onclick="switchTimeframe('1Q')" id="tfBtn-1Q" class="tf-btn px-2.5 py-1 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition" title="當季：自然季初至今日">
+              季
+            </button>
+            <button onclick="switchTimeframe('YTD')" id="tfBtn-YTD" class="tf-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-cyan-600 text-white shadow transition" title="年度：年初至今日">
+              YTD
+            </button>
+          </div>
+        </div>
+
+        <!-- 圖例列（固定呈現當期總結不跳動） -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 font-mono text-xs font-bold">
+          <div class="flex items-center gap-1.5 p-2 rounded-xl bg-slate-950 border border-slate-800 truncate">
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-400 shrink-0"></span>
+            <span class="text-amber-400 truncate">投組: <b id="legendAlphaVal" class="text-white">+28.48%</b></span>
+          </div>
+          <div class="flex items-center gap-1.5 p-2 rounded-xl bg-slate-950 border border-slate-800 truncate">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 shrink-0"></span>
+            <span class="text-emerald-400 truncate">加權: <b id="legendTaiexVal" class="text-white">+45.53%</b></span>
+          </div>
+          <div class="flex items-center gap-1.5 p-2 rounded-xl bg-slate-950 border border-slate-800 truncate">
+            <span class="w-2.5 h-2.5 rounded-full bg-sky-400 shrink-0"></span>
+            <span class="text-sky-400 truncate">標普: <b id="legendSp500Val" class="text-white">+9.66%</b></span>
+          </div>
+          <div class="flex items-center gap-1.5 p-2 rounded-xl bg-slate-950 border border-slate-800 truncate">
+            <span class="w-2.5 h-2.5 rounded-full bg-purple-400 shrink-0"></span>
+            <span class="text-purple-400 truncate">那指: <b id="legendNasdaqVal" class="text-white">+7.88%</b></span>
+          </div>
+        </div>
+
+        <!-- 走勢圖容器（智慧上下翻轉避讓，完整顯示不遮擋綠線與標題） -->
+        <div id="mainChartContainer" class="relative w-full h-[215px] sm:h-[250px] bg-slate-950/80 rounded-2xl p-2 sm:p-3 border border-slate-800/80 overflow-visible select-none touch-pan-y">
+          <svg id="svgLineChart" class="w-full h-full overflow-visible cursor-crosshair"></svg>
+          <div id="mainChartTooltip" class="hidden absolute z-30 pointer-events-none px-2.5 py-1.5 rounded-xl bg-slate-900/95 backdrop-blur-md border border-amber-500/50 shadow-2xl text-[11px] font-mono space-y-1 whitespace-nowrap">
+            <div class="flex items-center justify-between gap-3 border-b border-slate-800 pb-0.5">
+              <span id="ttMainDate" class="font-bold text-amber-300">10/5</span>
+              <span id="ttMainAlpha" class="font-black text-white">投組 +38.65%</span>
+            </div>
+            <div class="flex items-center gap-2.5 text-[10px]">
+              <span>加權 <b id="ttMainTaiex" class="text-emerald-400">+46.54%</b></span>
+              <span>標普 <b id="ttMainSp500" class="text-sky-400">+11.22%</b></span>
+              <span>那指 <b id="ttMainNasdaq" class="text-purple-400">+8.85%</b></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 三大指數看板 -->
+        <div class="grid grid-cols-3 gap-2">
+          <div class="p-2.5 sm:p-3.5 rounded-xl bg-slate-950/80 border border-slate-800">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] sm:text-xs text-slate-300 font-bold truncate">🇹🇼 加權大盤</span>
+              <a href="https://www.google.com/finance/quote/IX0001:TPE" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300" title="在 Google 財經查看加權指數">
+                <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+              </a>
+            </div>
+            <span id="idxTaiexPrice" class="text-[13px] sm:text-base font-black font-mono text-white block mt-0.5">42,711.92</span>
+            <span id="idxTaiexChange" class="text-[11px] font-bold font-mono text-rose-400 block">▲ 4.94%</span>
+          </div>
+
+          <div class="p-2.5 sm:p-3.5 rounded-xl bg-slate-950/80 border border-slate-800">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] sm:text-xs text-slate-300 font-bold truncate">🇺🇸 S&P 500</span>
+              <a href="https://www.google.com/finance/quote/.INX:INDEXSP" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:text-sky-300" title="在 Google 財經查看標普500">
+                <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+              </a>
+            </div>
+            <span id="idxSp500Price" class="text-[13px] sm:text-base font-black font-mono text-white block mt-0.5">7,549.94</span>
+            <span id="idxSp500Change" class="text-[11px] font-bold font-mono text-rose-400 block">▲ 0.31%</span>
+          </div>
+
+          <div class="p-2.5 sm:p-3.5 rounded-xl bg-slate-950/80 border border-slate-800">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] sm:text-xs text-slate-300 font-bold truncate">🇺🇸 那斯達克</span>
+              <a href="https://www.google.com/finance/quote/.IXIC:INDEXNASDAQ" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:text-sky-300" title="在 Google 財經查看那斯達克">
+                <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+              </a>
+            </div>
+            <span id="idxNasdaqPrice" class="text-[13px] sm:text-base font-black font-mono text-white block mt-0.5">25,253.14</span>
+            <span id="idxNasdaqChange" class="text-[11px] font-bold font-mono text-rose-400 block">▲ 1.09%</span>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ==================== 【第二介面】資產配置比例 (Tab 2) ==================== -->
+    <div id="tabView-2" class="tab-content hidden space-y-3 sm:space-y-4">
+      
+      <section class="p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl bg-slate-900/95 border border-slate-800 shadow-xl space-y-3.5 sm:space-y-4">
+        
+        <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+          <div class="flex items-center gap-2">
+            <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-gradient-to-tr from-cyan-500/20 to-teal-500/20 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+              <i class="fa-solid fa-chart-pie text-xs sm:text-sm"></i>
+            </div>
+            <h2 class="text-sm sm:text-lg font-black text-white">資產配置戰略與比例總覽</h2>
+          </div>
+        </div>
+
+        <!-- SVG 甜甜圈圖 + 四大部位卡片 -->
+        <div class="p-3.5 sm:p-6 rounded-2xl bg-slate-950/80 border border-slate-800">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-center">
+            
+            <div class="lg:col-span-5 flex flex-col items-center justify-center">
+              <div class="relative w-64 h-64 sm:w-80 sm:h-80 flex items-center justify-center">
+                <svg id="svgDonutChart" class="w-full h-full -rotate-90"></svg>
+                <div id="donutCenterInfo" class="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none transition-all duration-200 px-2">
+                  <span id="donutCenterLabel" class="text-xs sm:text-sm text-slate-400 font-bold tracking-wider">總資產淨值</span>
+                  <span id="donutCenterTotal" class="text-2xl sm:text-3xl font-black font-mono text-white tracking-tight my-0.5 truncate max-w-[180px]">235.5萬</span>
+                  <span id="donutCenterSub" class="text-xs sm:text-sm text-emerald-400 font-mono font-bold">100% 配置</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 右側：四大核心部位卡片 (2x2 排列) -->
+            <div class="lg:col-span-7 grid grid-cols-2 gap-2.5 sm:gap-3.5 items-stretch">
+              
+              <!-- 🇹🇼 台股 -->
+              <div id="cardBoxTw" class="p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800/90 shadow cursor-pointer transition-all duration-300 flex flex-col justify-between h-full hover:border-cyan-400"
+                   onmouseenter="highlightSegment('tw')"
+                   onmouseleave="resetHighlight()"
+                   ontouchstart="highlightSegment('tw')">
+                <div class="flex items-center justify-between gap-1">
+                  <span class="text-xs sm:text-base font-black text-white flex items-center gap-1.5 truncate">
+                    <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-gradient-to-r from-cyan-400 to-teal-300 shrink-0 shadow-sm shadow-cyan-400/60"></span>
+                    🇹🇼 台股
+                  </span>
+                  <span id="cardPctTw" class="text-xs sm:text-base font-mono font-black text-cyan-300 shrink-0">35.7%</span>
+                </div>
+                <span id="cardMvTw" class="text-base sm:text-2xl font-black font-mono text-white block tracking-tight my-1.5 truncate">NT$840,678</span>
+                <div class="text-[11px] sm:text-sm text-slate-400 flex items-center justify-between pt-1.5 border-t border-slate-800/80 font-medium">
+                  <span class="shrink-0">損益</span>
+                  <span id="cardPnlTw" class="font-mono font-bold text-rose-400 truncate">+NT$217,393</span>
+                </div>
+              </div>
+
+              <!-- 🇺🇸 美股 -->
+              <div id="cardBoxUs" class="p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800/90 shadow cursor-pointer transition-all duration-300 flex flex-col justify-between h-full hover:border-sky-400"
+                   onmouseenter="highlightSegment('us')"
+                   onmouseleave="resetHighlight()"
+                   ontouchstart="highlightSegment('us')">
+                <div class="flex items-center justify-between gap-1">
+                  <span class="text-xs sm:text-base font-black text-white flex items-center gap-1.5 truncate">
+                    <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-gradient-to-r from-sky-400 to-blue-400 shrink-0 shadow-sm shadow-sky-400/60"></span>
+                    🇺🇸 美股
+                  </span>
+                  <span id="cardPctUs" class="text-xs sm:text-base font-mono font-black text-sky-300 shrink-0">31.3%</span>
+                </div>
+                <span id="cardMvUs" class="text-base sm:text-2xl font-black font-mono text-white block tracking-tight my-1.5 truncate">NT$738,172</span>
+                <div class="text-[11px] sm:text-sm text-slate-400 flex items-center justify-between pt-1.5 border-t border-slate-800/80 font-medium">
+                  <span class="shrink-0">損益</span>
+                  <span id="cardPnlUs" class="font-mono font-bold text-rose-400 truncate">+NT$145,546</span>
+                </div>
+              </div>
+
+              <!-- 🌐 IB 部位 -->
+              <div id="cardBoxIb" class="p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800/90 shadow cursor-pointer transition-all duration-300 flex flex-col justify-between h-full hover:border-purple-400"
+                   onmouseenter="highlightSegment('ib')"
+                   onmouseleave="resetHighlight()"
+                   ontouchstart="highlightSegment('ib')">
+                <div class="flex items-center justify-between gap-1">
+                  <span class="text-xs sm:text-base font-black text-white flex items-center gap-1.5 truncate">
+                    <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-gradient-to-r from-fuchsia-400 to-purple-400 shrink-0 shadow-sm shadow-purple-400/60"></span>
+                    🌐 IB
+                  </span>
+                  <span id="cardPctIb" class="text-xs sm:text-base font-mono font-black text-purple-300 shrink-0">11.4%</span>
+                </div>
+                <span id="cardMvIb" class="text-base sm:text-2xl font-black font-mono text-white block tracking-tight my-1.5 truncate">NT$268,234</span>
+                <div class="text-[11px] sm:text-sm text-slate-400 flex items-center justify-between pt-1.5 border-t border-slate-800/80 font-medium">
+                  <span class="shrink-0">損益</span>
+                  <span id="cardPnlIb" class="font-mono font-bold text-rose-400 truncate">+NT$23,092</span>
+                </div>
+              </div>
+
+              <!-- 💵 現金活存 -->
+              <div id="cardBoxCash" class="p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800/90 shadow cursor-pointer transition-all duration-300 flex flex-col justify-between h-full hover:border-emerald-400"
+                   onmouseenter="highlightSegment('cash')"
+                   onmouseleave="resetHighlight()"
+                   ontouchstart="highlightSegment('cash')">
+                <div class="flex items-center justify-between gap-1">
+                  <span class="text-xs sm:text-base font-black text-white flex items-center gap-1.5 truncate">
+                    <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-gradient-to-r from-emerald-400 to-teal-300 shrink-0 shadow-sm shadow-emerald-400/60"></span>
+                    💵 現金
+                  </span>
+                  <span id="cardPctCash" class="text-xs sm:text-base font-mono font-black text-emerald-300 shrink-0">21.6%</span>
+                </div>
+                <span id="cardMvCash" class="text-base sm:text-2xl font-black font-mono text-emerald-400 block tracking-tight my-1.5 truncate">NT$508,160</span>
+                <div class="text-[11px] sm:text-sm text-slate-400 flex items-center justify-between pt-1.5 border-t border-slate-800/80 font-medium">
+                  <span class="shrink-0">機動性</span>
+                  <span class="font-mono font-bold text-emerald-300 truncate">100% 隨時買進</span>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 股票資產結構：總股票資產、大盤 ETF（台美股）與個股（台美股）比例 -->
+        <div class="p-3.5 sm:p-5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3.5">
+          <div class="flex items-center justify-between flex-wrap gap-2">
+            <h3 class="text-sm sm:text-base font-black text-white flex items-center gap-2">
+              <i class="fa-solid fa-layer-group text-cyan-400"></i>
+              股票資產結構：大盤 ETF vs 個股
+            </h3>
+            <div class="flex items-center gap-1.5 text-xs sm:text-sm font-mono font-black bg-slate-900 px-2.5 py-1 rounded-xl border border-cyan-500/30">
+              <span class="text-slate-300">總股票資產:</span>
+              <span id="equityTotalMvVal" class="text-white">NT$1,847,084</span>
+              <span id="equityTotalAssetPct" class="text-cyan-400">(78.4%)</span>
+            </div>
+          </div>
+
+          <!-- 總股票內部結構進度條（大盤 ETF vs 個股 vs IB） -->
+          <div class="space-y-1.5">
+            <div class="w-full h-2.5 rounded-full bg-slate-900 overflow-hidden flex border border-slate-800">
+              <div id="barEquityEtf" class="h-full bg-gradient-to-r from-cyan-400 to-teal-400 transition-all duration-300" style="width: 47.4%"></div>
+              <div id="barEquityStock" class="h-full bg-gradient-to-r from-amber-400 to-orange-400 transition-all duration-300" style="width: 38.1%"></div>
+              <div id="barEquityIb" class="h-full bg-gradient-to-r from-purple-400 to-fuchsia-400 transition-all duration-300" style="width: 14.5%"></div>
+            </div>
+            <div class="flex items-center justify-between flex-wrap gap-2 text-[11px] sm:text-xs font-mono text-slate-400">
+              <div class="flex items-center gap-3 flex-wrap">
+                <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-cyan-400"></span>大盤 ETF <b id="subBarEtfPct" class="text-cyan-300">47.4%</b></span>
+                <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-400"></span>個股部位 <b id="subBarStockPct" class="text-amber-300">38.1%</b></span>
+                <span id="subBarIbWrap" class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-purple-400"></span>IB 部位 <b id="subBarIbPct" class="text-purple-300">14.5%</b></span>
+              </div>
+              <span class="text-[10px] sm:text-[11px] text-slate-500">括號為佔總資產 / 佔總股票比例</span>
+            </div>
+          </div>
+
+          <!-- 大盤 ETF & 個股 雙欄明細卡片（各含總數 + 台美股個別比例） -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            
+            <!-- 1. 大盤 ETF 比例卡片（總數 + 台股 ETF + 美股 ETF） -->
+            <div class="p-3.5 rounded-2xl bg-slate-900/95 border border-cyan-500/25 space-y-2.5">
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-xs sm:text-sm font-black text-cyan-300 flex items-center gap-1.5">
+                  <i class="fa-solid fa-chart-area"></i>
+                  大盤 ETF 總數
+                </span>
+                <div class="flex items-center gap-1.5 font-mono text-[11px] sm:text-xs font-black">
+                  <span class="px-2 py-0.5 rounded-lg bg-cyan-950/90 text-cyan-300 border border-cyan-500/30">
+                    總資產 <b id="etfTotalAssetPct">37.1%</b>
+                  </span>
+                  <span class="px-2 py-0.5 rounded-lg bg-slate-950 text-slate-300 border border-slate-800">
+                    股票 <b id="etfTotalEquityPct">47.4%</b>
+                  </span>
+                </div>
+              </div>
+
+              <div class="flex items-baseline justify-between">
+                <span id="etfBreakdownTotalMv" class="text-lg sm:text-2xl font-black font-mono text-white">NT$874,698</span>
+                <span class="text-[11px] font-mono text-slate-400">台美股比例 <b id="etfTwUsSplitText" class="text-cyan-300">52.5% : 47.5%</b></span>
+              </div>
+
+              <!-- 台美股 ETF 雙色比例條 -->
+              <div class="w-full h-1.5 rounded-full bg-slate-950 overflow-hidden flex">
+                <div id="barTwEtf" class="h-full bg-teal-400 transition-all duration-300" style="width: 52.5%"></div>
+                <div id="barUsEtf" class="h-full bg-sky-400 transition-all duration-300" style="width: 47.5%"></div>
+              </div>
+
+              <!-- 台股 ETF vs 美股 ETF 個別明細 -->
+              <div class="grid grid-cols-2 gap-2 pt-1">
+                <div class="p-2.5 rounded-xl bg-slate-950/90 border border-slate-800 space-y-1">
+                  <div class="flex items-center justify-between text-[11px] sm:text-xs font-bold">
+                    <span class="text-teal-300">🇹🇼 台股 ETF</span>
+                    <span id="twEtfAssetPct" class="font-mono font-black text-teal-300">19.5%</span>
+                  </div>
+                  <span id="twEtfMvVal" class="text-xs sm:text-base font-black font-mono text-white block truncate">NT$459,224</span>
+                  <div class="flex items-center justify-between text-[10px] sm:text-[11px] font-mono text-slate-400">
+                    <span>佔ETF <b id="twEtfSharePct" class="text-slate-200">52.5%</b></span>
+                    <span>佔股 <b id="twEtfEquityPct" class="text-slate-200">24.9%</b></span>
+                  </div>
+                </div>
+
+                <div class="p-2.5 rounded-xl bg-slate-950/90 border border-slate-800 space-y-1">
+                  <div class="flex items-center justify-between text-[11px] sm:text-xs font-bold">
+                    <span class="text-sky-300">🇺🇸 美股 ETF</span>
+                    <span id="usEtfAssetPct" class="font-mono font-black text-sky-300">17.6%</span>
+                  </div>
+                  <span id="usEtfMvVal" class="text-xs sm:text-base font-black font-mono text-white block truncate">NT$415,475</span>
+                  <div class="flex items-center justify-between text-[10px] sm:text-[11px] font-mono text-slate-400">
+                    <span>佔ETF <b id="usEtfSharePct" class="text-slate-200">47.5%</b></span>
+                    <span>佔股 <b id="usEtfEquityPct" class="text-slate-200">22.5%</b></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. 個股比例卡片（總數 + 台股個股 + 美股個股） -->
+            <div class="p-3.5 rounded-2xl bg-slate-900/95 border border-amber-500/25 space-y-2.5">
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-xs sm:text-sm font-black text-amber-300 flex items-center gap-1.5">
+                  <i class="fa-solid fa-crosshairs"></i>
+                  個股部位總數
+                </span>
+                <div class="flex items-center gap-1.5 font-mono text-[11px] sm:text-xs font-black">
+                  <span class="px-2 py-0.5 rounded-lg bg-amber-950/90 text-amber-300 border border-amber-500/30">
+                    總資產 <b id="stockTotalAssetPct">29.9%</b>
+                  </span>
+                  <span class="px-2 py-0.5 rounded-lg bg-slate-950 text-slate-300 border border-slate-800">
+                    股票 <b id="stockTotalEquityPct">38.1%</b>
+                  </span>
+                </div>
+              </div>
+
+              <div class="flex items-baseline justify-between">
+                <span id="stockBreakdownTotalMv" class="text-lg sm:text-2xl font-black font-mono text-white">NT$704,152</span>
+                <span class="text-[11px] font-mono text-slate-400">台美股比例 <b id="stockTwUsSplitText" class="text-amber-300">54.2% : 45.8%</b></span>
+              </div>
+
+              <!-- 台美股 個股雙色比例條 -->
+              <div class="w-full h-1.5 rounded-full bg-slate-950 overflow-hidden flex">
+                <div id="barTwStock" class="h-full bg-amber-400 transition-all duration-300" style="width: 54.2%"></div>
+                <div id="barUsStock" class="h-full bg-orange-400 transition-all duration-300" style="width: 45.8%"></div>
+              </div>
+
+              <!-- 台股個股 vs 美股個股 個別明細 -->
+              <div class="grid grid-cols-2 gap-2 pt-1">
+                <div class="p-2.5 rounded-xl bg-slate-950/90 border border-slate-800 space-y-1">
+                  <div class="flex items-center justify-between text-[11px] sm:text-xs font-bold">
+                    <span class="text-amber-300">🇹🇼 台股個股</span>
+                    <span id="twStockAssetPct" class="font-mono font-black text-amber-300">16.2%</span>
+                  </div>
+                  <span id="twStockMvVal" class="text-xs sm:text-base font-black font-mono text-white block truncate">NT$381,454</span>
+                  <div class="flex items-center justify-between text-[10px] sm:text-[11px] font-mono text-slate-400">
+                    <span>佔個股 <b id="twStockSharePct" class="text-slate-200">54.2%</b></span>
+                    <span>佔股 <b id="twStockEquityPct" class="text-slate-200">20.7%</b></span>
+                  </div>
+                </div>
+
+                <div class="p-2.5 rounded-xl bg-slate-950/90 border border-slate-800 space-y-1">
+                  <div class="flex items-center justify-between text-[11px] sm:text-xs font-bold">
+                    <span class="text-orange-300">🇺🇸 美股個股</span>
+                    <span id="usStockAssetPct" class="font-mono font-black text-orange-300">13.7%</span>
+                  </div>
+                  <span id="usStockMvVal" class="text-xs sm:text-base font-black font-mono text-white block truncate">NT$322,697</span>
+                  <div class="flex items-center justify-between text-[10px] sm:text-[11px] font-mono text-slate-400">
+                    <span>佔個股 <b id="usStockSharePct" class="text-slate-200">45.8%</b></span>
+                    <span>佔股 <b id="usStockEquityPct" class="text-slate-200">17.5%</b></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 個別標的資產佔比排行（預設全部收合，點擊即可展開檢視全部 17 檔） -->
+        <div class="p-3.5 sm:p-5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3">
+          <div onclick="toggleWeightRankingExpand()" class="flex items-center justify-between gap-2 cursor-pointer select-none">
+            <h3 class="text-sm sm:text-base font-black text-white flex items-center gap-2">
+              <i class="fa-solid fa-ranking-star text-cyan-400"></i>
+              個別標的資產佔比排行
+            </h3>
+            <button type="button" id="btnToggleWeightRanking" class="px-2.5 py-1 rounded-xl bg-slate-900 hover:bg-slate-800 text-cyan-300 border border-cyan-500/30 text-[11px] sm:text-xs font-bold transition flex items-center gap-1 shrink-0">
+              <span id="textToggleWeightRanking">展開排行 (17)</span>
+              <i id="iconToggleWeightRanking" class="fa-solid fa-chevron-down text-[10px]"></i>
+            </button>
+          </div>
+          <div id="individualWeightRankingList" class="hidden space-y-2 pt-2 border-t border-slate-800">
+            <!-- 動態由 JavaScript 渲染全部標的權重 -->
+          </div>
+        </div>
+
+        <!-- 各大銀行活存明細 -->
+        <div class="p-3.5 sm:p-5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3">
+          <div class="flex items-center justify-between flex-wrap gap-2">
+            <h3 class="text-sm sm:text-base font-black text-slate-200 flex items-center gap-2">
+              <i class="fa-solid fa-building-columns text-sky-400"></i>
+              各大銀行活存明細
+            </h3>
+            <span class="text-xs sm:text-sm font-mono font-black text-emerald-400 bg-emerald-950/70 px-2.5 py-1 rounded-xl border border-emerald-500/30">
+              活存總額: NT$<span id="displayBankTotal">508,160</span>
+            </span>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 text-xs sm:text-sm font-bold">
+            <div class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
+              <span class="text-slate-300 block">郵局:</span>
+              <input type="number" step="any" inputmode="decimal" id="bankInput-post" value="231845" oninput="handleBankDepositChange('post', this.value)" class="bank-input w-full py-1 px-2 rounded-lg bg-slate-950 border border-slate-700 text-white font-mono font-bold text-sm focus:outline-none focus:border-emerald-500">
+            </div>
+            <div class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
+              <span class="text-slate-300 block">華南:</span>
+              <input type="number" step="any" inputmode="decimal" id="bankInput-huanan" value="103707" oninput="handleBankDepositChange('huanan', this.value)" class="bank-input w-full py-1 px-2 rounded-lg bg-slate-950 border border-slate-700 text-white font-mono font-bold text-sm focus:outline-none focus:border-emerald-500">
+            </div>
+            <div class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
+              <span class="text-slate-300 block">元大:</span>
+              <input type="number" step="any" inputmode="decimal" id="bankInput-yuanta" value="93673" oninput="handleBankDepositChange('yuanta', this.value)" class="bank-input w-full py-1 px-2 rounded-lg bg-slate-950 border border-slate-700 text-white font-mono font-bold text-sm focus:outline-none focus:border-emerald-500">
+            </div>
+            <div class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
+              <span class="text-slate-300 block">國泰:</span>
+              <input type="number" step="any" inputmode="decimal" id="bankInput-cathay" value="44259" oninput="handleBankDepositChange('cathay', this.value)" class="bank-input w-full py-1 px-2 rounded-lg bg-slate-950 border border-slate-700 text-white font-mono font-bold text-sm focus:outline-none focus:border-emerald-500">
+            </div>
+            <div class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
+              <span class="text-slate-300 block">LineBank:</span>
+              <input type="number" step="any" inputmode="decimal" id="bankInput-linebank" value="33798" oninput="handleBankDepositChange('linebank', this.value)" class="bank-input w-full py-1 px-2 rounded-lg bg-slate-950 border border-slate-700 text-white font-mono font-bold text-sm focus:outline-none focus:border-emerald-500">
+            </div>
+            <div class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
+              <span class="text-slate-300 block">合庫:</span>
+              <input type="number" step="any" inputmode="decimal" id="bankInput-tcb" value="878" oninput="handleBankDepositChange('tcb', this.value)" class="bank-input w-full py-1 px-2 rounded-lg bg-slate-950 border border-slate-700 text-white font-mono font-bold text-sm focus:outline-none focus:border-emerald-500">
+            </div>
+          </div>
+        </div>
+
+        <!-- 核心策略：大盤 ETF 目標比例試算 -->
+        <div class="p-3.5 sm:p-5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3.5">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm sm:text-base font-black text-white flex items-center gap-2">
+              <i class="fa-solid fa-sliders text-emerald-400"></i>
+              核心策略：大盤 ETF 目標比例試算
+            </h3>
+            <span class="text-xs px-2.5 py-0.5 rounded-xl bg-slate-900 text-emerald-400 font-mono font-bold border border-emerald-500/30">
+              目標 60% 指數化
+            </span>
+          </div>
+
+          <div class="space-y-2 p-3.5 rounded-xl bg-slate-900 border border-slate-800">
+            <div class="flex justify-between items-center text-xs sm:text-sm font-bold">
+              <span class="text-slate-200">大盤 ETF 規劃目標比率:</span>
+              <span id="displaySliderVal" class="text-base sm:text-lg font-mono font-black text-emerald-400">60%</span>
+            </div>
+            <input type="range" min="30" max="80" step="5" value="60" id="etfRatioSlider" oninput="handleSliderChange(this.value)" class="w-full accent-emerald-500 cursor-pointer h-2 bg-slate-800 rounded-lg">
+            <div class="flex justify-between text-[11px] sm:text-xs text-slate-400 font-mono">
+              <span>30% 成長</span>
+              <span>60% 平衡</span>
+              <span>80% 防禦</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+              <span class="text-xs sm:text-sm font-extrabold text-cyan-300 block">📊 大盤 ETF 目前市值</span>
+              <span id="valEtfCurrent" class="text-lg sm:text-xl font-black font-mono text-white block">NT$874,696</span>
+              <div class="p-2 rounded-lg bg-slate-950 border border-slate-800">
+                <span class="text-xs text-slate-400 block">距離 60% 目標差額:</span>
+                <span id="gapEtfText" class="text-xs sm:text-sm font-black font-mono text-amber-400 block mt-0.5">需再加碼 +NT$538,450</span>
+              </div>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+              <span class="text-xs sm:text-sm font-extrabold text-amber-300 block">🎯 個股部位目前市值</span>
+              <span id="valSingleCurrent" class="text-lg sm:text-xl font-black font-mono text-white block">NT$704,154</span>
+              <div class="p-2 rounded-lg bg-slate-950 border border-slate-800">
+                <span class="text-xs text-slate-400 block">對比 15% 上限水位:</span>
+                <span id="gapSingleText" class="text-xs sm:text-sm font-black font-mono text-rose-400 block mt-0.5">超重 +NT$350,867 (宜止盈)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+
+    <!-- ==================== 【第三介面】持股庫存明細 (Tab 3 - 隱私遮罩全面保護版) ==================== -->
+    <div id="tabView-3" class="tab-content hidden space-y-2 sm:space-y-3">
+      
+      <!-- 精巧頂部篩選與新增列 -->
+      <section class="p-2 sm:p-3 rounded-xl sm:rounded-2xl bg-slate-900/95 border border-slate-800 shadow-lg">
+        <div class="flex items-center justify-between gap-1.5">
+          <div class="flex items-center gap-1 p-0.5 bg-slate-950 rounded-lg sm:rounded-xl border border-slate-800 overflow-x-auto no-scrollbar flex-1">
+            <button onclick="filterHoldings('ALL')" id="filterBtn-ALL" class="filter-btn px-2 py-1 sm:px-2.5 rounded-md sm:rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600 text-white transition whitespace-nowrap">
+              全部(<span id="count-ALL">17</span>)
+            </button>
+            <button onclick="filterHoldings('TW')" id="filterBtn-TW" class="filter-btn px-2 py-1 sm:px-2.5 rounded-md sm:rounded-lg text-[11px] sm:text-xs font-bold text-slate-400 hover:text-white transition whitespace-nowrap">
+              🇹🇼台股(<span id="count-TW">11</span>)
+            </button>
+            <button onclick="filterHoldings('US')" id="filterBtn-US" class="filter-btn px-2 py-1 sm:px-2.5 rounded-md sm:rounded-lg text-[11px] sm:text-xs font-bold text-slate-400 hover:text-white transition whitespace-nowrap">
+              🇺🇸美股(<span id="count-US">6</span>)
+            </button>
+            <button onclick="filterHoldings('IB')" id="filterBtn-IB" class="filter-btn px-2 py-1 sm:px-2.5 rounded-md sm:rounded-lg text-[11px] sm:text-xs font-bold text-slate-400 hover:text-white transition whitespace-nowrap">
+              🌐IB(<span id="count-IB">0</span>)
+            </button>
+            <button onclick="filterHoldings('ETF')" id="filterBtn-ETF" class="filter-btn px-2 py-1 sm:px-2.5 rounded-md sm:rounded-lg text-[11px] sm:text-xs font-bold text-slate-400 hover:text-white transition whitespace-nowrap">
+              ETF(<span id="count-ETF">6</span>)
+            </button>
+            <button onclick="filterHoldings('STOCK')" id="filterBtn-STOCK" class="filter-btn px-2 py-1 sm:px-2.5 rounded-md sm:rounded-lg text-[11px] sm:text-xs font-bold text-slate-400 hover:text-white transition whitespace-nowrap">
+              個股(<span id="count-STOCK">11</span>)
+            </button>
+          </div>
+
+          <button onclick="openAddHoldingModal()" class="px-2.5 py-1.5 sm:px-3 rounded-lg sm:rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-xs font-bold text-white transition flex items-center gap-1 shadow whitespace-nowrap shrink-0">
+            <i class="fa-solid fa-plus text-[10px]"></i>
+            <span>新增</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- 持股庫存明細表格 -->
+      <section class="rounded-xl sm:rounded-2xl bg-slate-900/95 border border-slate-800 shadow-xl overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full table-fixed text-left border-collapse font-sans">
+            <colgroup>
+              <col class="w-[84px] sm:w-[190px]">
+              <col class="w-[52px] sm:w-[110px]">
+              <col class="w-[54px] sm:w-[110px]">
+              <col class="w-[54px] sm:w-[110px]">
+              <col class="w-[56px] sm:w-[130px]">
+              <col class="w-[56px] sm:w-[140px]">
+              <col class="w-[22px] sm:w-[44px]">
+            </colgroup>
+            <thead>
+              <tr class="bg-slate-950 text-slate-400 font-mono text-[11px] sm:text-xs border-b border-slate-800">
+                <th class="py-2.5 pl-2 pr-1 sm:px-3.5 font-bold text-slate-200 text-left">標的 / 名稱</th>
+                <th class="py-2.5 px-1 sm:px-2.5 font-bold text-right">股數</th>
+                <th class="py-2.5 px-1 sm:px-2.5 font-bold text-right">均價</th>
+                <th class="py-2.5 px-1 sm:px-2.5 font-bold text-right">市價</th>
+                <th class="py-2.5 px-1 sm:px-3 font-bold text-right"><span class="sm:hidden">市值</span><span class="hidden sm:inline">市值(NTD)</span></th>
+                <th class="py-2.5 px-1 sm:px-3 font-bold text-right"><span class="sm:hidden">損益</span><span class="hidden sm:inline">累積損益</span></th>
+                <th class="py-2.5 px-0.5 text-center">刪</th>
+              </tr>
+            </thead>
+            <tbody id="holdingsTableBody" class="divide-y divide-slate-800/60 font-mono">
+              <!-- 動態渲染持股行 -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ==================== 【第四介面】未來計畫與歷史紀錄 (Tab 4) ==================== -->
+    <div id="tabView-4" class="tab-content hidden space-y-3 sm:space-y-4">
+      
+      <div id="planContent-2026" class="space-y-3 sm:space-y-4">
+        
+        <section class="p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl bg-slate-900/95 border border-slate-800 shadow-xl space-y-3.5 sm:space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-2">
+            <div>
+              <span class="text-xs font-extrabold uppercase tracking-wider text-emerald-400">Milestone</span>
+              <h2 class="text-base sm:text-2xl font-black text-white mt-0.5">2026 期望達成總資產：NT$ 2,500,000</h2>
+            </div>
+            <span class="text-xs px-2.5 py-1 rounded-xl bg-slate-950 text-slate-300 font-bold border border-slate-800 self-start sm:self-auto">
+              2026 年底結算
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
+            <div class="lg:col-span-7 space-y-2">
+              <div class="flex justify-between items-baseline font-mono">
+                <span class="text-xs sm:text-base text-slate-300 font-bold">2026 目標達成率:</span>
+                <span id="planTargetPct" class="text-2xl sm:text-4xl font-black text-emerald-400">94.21%</span>
+              </div>
+              <div class="w-full h-3.5 rounded-full bg-slate-950 overflow-hidden border border-slate-800 p-0.5">
+                <div id="planProgressBar" class="h-full rounded-full bg-gradient-to-r from-emerald-500 to-cyan-400 transition-all duration-500" style="width: 94.21%"></div>
+              </div>
+              <div class="flex justify-between text-xs sm:text-sm font-bold pt-1">
+                <span class="text-slate-400">目前總資產: <span id="planCurrentMv" class="text-white font-mono font-black">NT$2,355,244</span></span>
+                <span class="text-slate-400">距離達標僅差: <span id="planGapValue" class="text-amber-400 font-mono font-black">NT$144,756</span></span>
+              </div>
+            </div>
+
+            <div class="lg:col-span-5 p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-1.5">
+              <div class="flex items-center justify-between">
+                <span class="text-xs sm:text-sm font-bold text-slate-300 flex items-center gap-1.5">
+                  <i class="fa-solid fa-calendar-check text-emerald-400"></i> 每期定期定額投入
+                </span>
+                <span class="text-xs text-slate-400 font-mono">年預算: NT$<span id="yearlyDepositSum">540,000</span></span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-sm font-mono text-slate-400 font-bold">NT$</span>
+                <input type="number" step="1000" inputmode="decimal" id="inlineMonthlyDepositInput" value="45000" oninput="handleMonthlyDepositInput(this.value)" class="w-full py-1.5 px-3 rounded-xl bg-slate-900 border border-slate-700 text-base sm:text-xl font-mono font-black text-emerald-400 focus:outline-none focus:border-emerald-500">
+              </div>
+            </div>
+          </div>
+
+          <!-- 長期千萬資產階梯進度 -->
+          <div class="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-2.5">
+            <div class="flex justify-between items-center text-xs sm:text-sm font-bold">
+              <span class="text-slate-300 flex items-center gap-1.5">
+                <i class="fa-solid fa-stairs text-cyan-400"></i> 長期千萬資產階梯進度
+              </span>
+              <span id="ladderOverallPct" class="text-cyan-400 font-mono font-black">23.55% (距千萬)</span>
+            </div>
+            <div class="w-full h-2.5 rounded-full bg-slate-900 overflow-hidden border border-slate-800 p-0.5">
+              <div id="ladderProgressBar" class="h-full rounded-full bg-gradient-to-r from-cyan-500 via-sky-400 to-violet-500 transition-all duration-500" style="width: 23.55%"></div>
+            </div>
+            <div class="grid grid-cols-3 gap-2 text-center text-xs font-bold pt-0.5">
+              <div class="p-2 rounded-xl bg-slate-900/90 border border-emerald-500/30">
+                <span class="text-slate-400 block text-[11px]">2026 首年</span>
+                <span class="text-emerald-400 font-mono font-black block text-sm">250 萬</span>
+              </div>
+              <div class="p-2 rounded-xl bg-slate-900/90 border border-cyan-500/30">
+                <span class="text-slate-400 block text-[11px]">2030 中期</span>
+                <span class="text-cyan-400 font-mono font-black block text-sm">500 萬</span>
+              </div>
+              <div class="p-2 rounded-xl bg-slate-900/90 border border-violet-500/30">
+                <span class="text-slate-400 block text-[11px]">2035 長期</span>
+                <span class="text-violet-400 font-mono font-black block text-sm">1,000 萬</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 總資產成長圖 -->
+        <section class="rounded-2xl sm:rounded-3xl bg-slate-900/95 border border-slate-800 shadow-xl p-3.5 sm:p-6 space-y-3">
+          <div class="flex items-center justify-between gap-2 border-b border-slate-800 pb-2">
+            <h3 class="text-sm sm:text-base font-black text-white flex items-center gap-1.5 whitespace-nowrap">
+              <i class="fa-solid fa-chart-line text-amber-400"></i>
+              總資產成長圖
+            </h3>
+            <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-950 border border-slate-800 font-mono text-xs font-bold shrink-0">
+              <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+              <span class="text-slate-300">總數:</span>
+              <b id="legPlanTotalOnly" class="text-amber-400">235.5萬</b>
+            </div>
+          </div>
+
+          <div id="planChartContainer" class="relative w-full h-[220px] sm:h-[250px] bg-slate-950/80 rounded-2xl p-2 sm:p-4 border border-slate-800/80 overflow-visible select-none touch-pan-y">
+            <svg id="svgPlanTotalChart" class="w-full h-full overflow-visible cursor-crosshair"></svg>
+            <!-- 第四頁互動懸浮資產明細卡 -->
+            <div id="planChartTooltip" class="hidden absolute z-30 pointer-events-none px-2.5 py-1.5 rounded-xl bg-slate-900/95 backdrop-blur-md border border-amber-500/50 shadow-2xl text-[11px] font-mono space-y-1 min-w-[166px] max-w-[230px]">
+              <div class="flex items-center justify-between gap-2 border-b border-slate-800 pb-0.5">
+                <span id="ttPlanDate" class="font-bold text-amber-300">2026/1/5</span>
+                <span id="ttPlanWan" class="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-300 font-bold">183.3萬</span>
+              </div>
+              <div class="flex items-baseline justify-between gap-2">
+                <span class="text-slate-400 text-[10px]">總資產:</span>
+                <span id="ttPlanTotal" class="text-xs sm:text-sm font-black text-white">NT$1,833,198</span>
+              </div>
+              <div id="ttPlanBreakdown" class="grid grid-cols-2 gap-x-2 gap-y-0.5 text-[10px] text-slate-300 pt-0.5 border-t border-slate-800/70">
+                <span>台股: <b class="text-cyan-300">38.8萬</b></span>
+                <span>美股: <b class="text-sky-300">48.1萬</b></span>
+                <span>IB: <b class="text-purple-300">14.4萬</b></span>
+                <span>現金: <b class="text-emerald-300">82.0萬</b></span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2026 年歷史資產總表（含每月操作覆盤備忘錄） -->
+        <section class="rounded-2xl sm:rounded-3xl bg-slate-900/95 border border-slate-800 shadow-xl overflow-hidden space-y-3 p-3.5 sm:p-6">
+          <div onclick="toggleHistory2026()" class="flex items-center justify-between cursor-pointer select-none">
+            <h3 class="text-xs sm:text-base font-black text-white flex items-center gap-1.5">
+              <i class="fa-solid fa-clock-rotate-left text-cyan-400"></i>
+              2026 年度每月資產歷程紀錄總表
+            </h3>
+            <button type="button" id="btnToggleHistory2026" class="px-3 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold transition flex items-center gap-1.5 border border-slate-700 shrink-0">
+              <i id="iconToggleHistory2026" class="fa-solid fa-chevron-down text-cyan-400"></i>
+              <span id="textToggleHistory2026">展開紀錄</span>
+            </button>
+          </div>
+
+          <div id="history2026TableContainer" class="overflow-x-auto transition-all duration-300 hidden pt-2 border-t border-slate-800">
+            <table class="w-full text-left text-xs sm:text-sm border-collapse font-mono min-w-[720px]">
+              <thead>
+                <tr class="bg-slate-950 text-slate-400 border-b border-slate-800">
+                  <th class="py-2 px-3">時間</th>
+                  <th class="py-2 px-3">台股市值</th>
+                  <th class="py-2 px-3">美股市值</th>
+                  <th class="py-2 px-3">IB 市值</th>
+                  <th class="py-2 px-3">現金</th>
+                  <th class="py-2 px-3 font-bold text-white">總數</th>
+                  <th class="py-2 px-3">累積本金</th>
+                  <th class="py-2 px-3 text-rose-400">累積總損益</th>
+                  <th class="py-2 px-3 text-amber-300 font-sans min-w-[165px]">當月操作覆盤筆記</th>
+                </tr>
+              </thead>
+              <tbody id="historyTableBody" class="divide-y divide-slate-800/60 text-slate-300">
+                <!-- 動態由 JavaScript 渲染 -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ==================== 固定底部導航列 ==================== -->
+  <nav class="fixed bottom-0 left-0 right-0 z-50 bg-slate-950/95 backdrop-blur-md border-t border-slate-800 px-2.5 py-1" style="padding-bottom: calc(0.25rem + env(safe-area-inset-bottom));">
+    <div class="app-container grid grid-cols-4 gap-1.5 sm:gap-2">
+      <button onclick="switchMainTab(1)" id="mainTab-1" class="main-tab-btn py-1 px-1.5 rounded-xl sm:rounded-2xl text-emerald-400 bg-slate-900 border border-emerald-500/40 flex items-center justify-center gap-1.5 transition shadow-sm">
+        <i class="fa-solid fa-gauge-high text-sm sm:text-lg"></i>
+        <span class="text-[11px] sm:text-sm font-black leading-tight text-center">總覽<br>績效</span>
+      </button>
+      <button onclick="switchMainTab(2)" id="mainTab-2" class="main-tab-btn py-1 px-1.5 rounded-xl sm:rounded-2xl text-slate-400 hover:text-white flex items-center justify-center gap-1.5 transition">
+        <i class="fa-solid fa-pie-chart text-sm sm:text-lg"></i>
+        <span class="text-[11px] sm:text-sm font-black leading-tight text-center">資產<br>比例</span>
+      </button>
+      <button onclick="switchMainTab(3)" id="mainTab-3" class="main-tab-btn py-1 px-1.5 rounded-xl sm:rounded-2xl text-slate-400 hover:text-white flex items-center justify-center gap-1.5 transition">
+        <i class="fa-solid fa-list-check text-sm sm:text-lg"></i>
+        <span class="text-[11px] sm:text-sm font-black leading-tight text-center">持股<br>庫存</span>
+      </button>
+      <button onclick="switchMainTab(4)" id="mainTab-4" class="main-tab-btn py-1 px-1.5 rounded-xl sm:rounded-2xl text-slate-400 hover:text-white flex items-center justify-center gap-1.5 transition">
+        <i class="fa-solid fa-bullseye text-sm sm:text-lg"></i>
+        <span class="text-[11px] sm:text-sm font-black leading-tight text-center">未來<br>計畫</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ==================== 彈窗 1：新增持股標的 ==================== -->
+  <div id="addHoldingModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-md w-full p-5 space-y-3.5 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
+        <h3 class="text-sm sm:text-base font-black text-white flex items-center gap-2">
+          <i class="fa-solid fa-plus-circle text-emerald-400"></i>
+          新增持股標的
+        </h3>
+        <button onclick="closeAddHoldingModal()" class="w-7 h-7 rounded-lg bg-slate-800/80 text-slate-400 hover:text-white flex items-center justify-center shrink-0">
+          <i class="fa-solid fa-xmark text-sm"></i>
+        </button>
+      </div>
+
+      <div class="space-y-3 text-xs sm:text-sm font-bold">
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-1">
+            <label class="text-slate-400">股票代號 (自動帶出名稱與屬性):</label>
+            <span id="autoCategoryBadge" onclick="toggleDetectedCategory()" title="系統已自動判斷 ETF / 個股（點擊可手動切換）" class="cursor-pointer text-[11px] px-2 py-0.5 rounded-full font-mono font-bold bg-slate-800 text-slate-400 border border-slate-700 transition select-none">
+              🤖 自動判定：待輸入
+            </span>
+            <input type="hidden" id="newHoldCategory" value="ETF">
+          </div>
+          <input type="text" id="newHoldSymbol" oninput="handleSymbolAutoLookup(this.value)" placeholder="例如: QLD, VT, 2330, NVDA, VOO, 0050" class="w-full py-2 px-3 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono uppercase focus:outline-none focus:border-emerald-500">
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="text-slate-400 block mb-1">股票名稱 (自動帶出):</label>
+            <input type="text" id="newHoldName" oninput="this.dataset.autoFilled='0'" placeholder="輸入代號自動帶出" class="w-full py-2 px-3 rounded-xl bg-slate-950 border border-slate-700 text-white focus:outline-none">
+          </div>
+          <div>
+            <label class="text-slate-400 block mb-1">市場 / 券商:</label>
+            <select id="newHoldMarket" onchange="userSelectedMarketManually = true; calculateAddHoldingPreview();" class="w-full py-2 px-3 rounded-xl bg-slate-950 border border-slate-700 text-white focus:outline-none">
+              <option value="TW">🇹🇼 台灣股票 (TWD)</option>
+              <option value="US">🇺🇸 美國股票 (USD)</option>
+              <option value="IB">🌐 IB 海外券商 (USD)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-2">
+          <div>
+            <label class="text-slate-400 block mb-1">持有股數:</label>
+            <input type="number" step="any" inputmode="decimal" id="newHoldShares" oninput="calculateAddHoldingPreview()" placeholder="股數" class="w-full py-2 px-3 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono focus:outline-none">
+          </div>
+          <div>
+            <label class="text-slate-400 block mb-1">買入均價:</label>
+            <input type="number" step="any" inputmode="decimal" id="newHoldAvgPrice" oninput="calculateAddHoldingPreview()" placeholder="成本" class="w-full py-2 px-3 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono focus:outline-none">
+          </div>
+          <div>
+            <label class="text-slate-400 block mb-1">當前市價:</label>
+            <input type="number" step="any" inputmode="decimal" id="newHoldCurrentPrice" oninput="this.dataset.autoFilled='0'; calculateAddHoldingPreview();" placeholder="市價" class="w-full py-2 px-3 rounded-xl bg-slate-950 border border-slate-700 text-emerald-400 font-mono font-bold focus:outline-none">
+          </div>
+        </div>
+
+        <div class="p-3 rounded-2xl bg-slate-950/90 border border-slate-800 flex items-center justify-between font-mono text-xs">
+          <div>
+            <span class="text-slate-400 block text-[10px]">試算總市值 (NTD)</span>
+            <span id="previewMvVal" class="text-sm sm:text-base font-black text-white">NT$ 0</span>
+          </div>
+          <div class="text-right">
+            <span class="text-slate-400 block text-[10px]">預計損益 (NTD)</span>
+            <span id="previewPnlVal" class="text-sm sm:text-base font-black text-rose-400">+NT$ 0</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-800">
+        <button onclick="closeAddHoldingModal()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs sm:text-sm font-bold transition">
+          取消
+        </button>
+        <button onclick="confirmAddHolding()" class="px-5 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs sm:text-sm font-black shadow-lg transition">
+          確認新增
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 彈窗 2：設定與跨裝置雲端同步 ==================== -->
+  <div id="syncModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-md w-full p-5 space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
+        <h3 class="text-sm sm:text-base font-black text-white flex items-center gap-2">
+          <i class="fa-solid fa-cloud-arrow-up text-amber-400"></i>
+          設定與跨裝置雲端同步
+        </h3>
+        <button onclick="closeSyncModal()" class="w-7 h-7 rounded-lg bg-slate-800/80 text-slate-400 hover:text-white flex items-center justify-center shrink-0">
+          <i class="fa-solid fa-xmark text-sm"></i>
+        </button>
+      </div>
+
+      <!-- 雙向雲端備份與還原 -->
+      <div class="p-3.5 rounded-2xl bg-slate-950/90 border border-slate-800 space-y-2.5">
+        <div class="flex items-center justify-between text-xs font-bold">
+          <span class="text-slate-300">最後雲端互通時間:</span>
+          <span id="modalSyncTimeDisplay" class="font-mono text-cyan-400">2026/11/08 21:57:12</span>
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <button onclick="uploadToCloud()" class="py-2.5 px-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs sm:text-sm font-black flex items-center justify-center gap-1.5 shadow transition">
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+            上傳至雲端
+          </button>
+          <button onclick="downloadFromCloud()" class="py-2.5 px-3 rounded-xl bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-500 hover:to-indigo-500 text-white text-xs sm:text-sm font-black flex items-center justify-center gap-1.5 shadow transition">
+            <i class="fa-solid fa-cloud-arrow-down"></i>
+            從雲端下載
+          </button>
+        </div>
+      </div>
+
+      <!-- Google Apps Script 網址設定 -->
+      <div class="space-y-2 text-xs font-bold">
+        <div class="flex items-center justify-between">
+          <label class="text-slate-300">Google Apps Script 網頁應用程式網址:</label>
+          <span id="urlSavedStatus" class="hidden text-emerald-400 font-mono text-[11px]">✓ 已綁定</span>
+        </div>
+        <input type="url" id="googleScriptUrlInput" oninput="handleUrlInputLive(this.value)" placeholder="https://script.google.com/macros/s/.../exec" class="w-full py-2 px-3 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono text-xs focus:outline-none focus:border-amber-400">
+        <div class="flex items-center gap-2 pt-1">
+          <button onclick="saveGoogleUrlExplicitly()" class="flex-1 py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-emerald-500/30 font-black transition">
+            💾 儲存網址
+          </button>
+          <button onclick="importFromGoogleSheets()" class="flex-1 py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-cyan-500/30 font-black transition">
+            🔄 同步最新股價
+          </button>
+        </div>
+      </div>
+
+      <!-- 手機一鍵綁定連結 -->
+      <div class="pt-2 border-t border-slate-800">
+        <button onclick="copyMobileMagicLink()" class="w-full py-2.5 px-3 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/40 text-xs sm:text-sm font-black flex items-center justify-center gap-2 transition">
+          <i class="fa-solid fa-mobile-screen-button"></i>
+          複製「手機一鍵綁定網址」
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 底部 Toast 通知提示框 ==================== -->
+  <div id="toast" class="fixed bottom-16 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 rounded-2xl bg-slate-900/95 backdrop-blur-md border border-slate-700 text-white text-xs sm:text-sm font-bold shadow-2xl flex items-center gap-3 transition-all duration-300 translate-y-20 opacity-0 pointer-events-none whitespace-nowrap max-w-[92vw]">
+    <span id="toastMsg" class="truncate">操作完成</span>
+    <button id="toastUndoBtn" class="hidden px-2.5 py-1 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 text-xs font-black pointer-events-auto shrink-0">
+      復原
+    </button>
+  </div>
+
+  <!-- ==================== 核心應用程式腳本 ==================== -->
+  <script>
+    const safeStorage = (() => {
+      const mem = {};
+      return {
+        getItem(k) {
+          try { return window.localStorage.getItem(k); } catch (e) { return mem[k] || null; }
+        },
+        setItem(k, v) {
+          try { window.localStorage.setItem(k, v); } catch (e) { mem[k] = String(v); }
+        },
+        removeItem(k) {
+          try { window.localStorage.removeItem(k); } catch (e) { delete mem[k]; }
+        }
+      };
+    })();
+
+    /* 1. 常數與真實基準設定 (100% 依據 2026/11/01 結算月報) */
+    let usTwdRate = 32.3899;
+    const IB_COST_NTD = 245141.62;
+    const IB_MARKET_NTD = 268234.26;
+    const TARGET_2026_GOAL = 2500000;
+    const NOV_01_MV = 2355244;
+    const OFFICIAL_TOTAL_COST = 1457739;
+    const OFFICIAL_TOTAL_PNL = 389346;
+
+    let lastSyncTimestamp = safeStorage.getItem('alphatrack_last_sync_time') || '2026/11/08 21:57:12';
+
+    /* 17 檔持股清單 (統一連結至 Google 財經) */
+    const DEFAULT_HOLDINGS = [
+      // 台股部位 (11 檔)
+      { id: 'tw-0050', market: 'TW', symbol: '0050', name: '元大台灣50', category: 'ETF', shares: 2803, avgPrice: 78.78, currentPrice: 104.95, link: 'https://www.google.com/finance/quote/0050:TPE' },
+      { id: 'tw-00923', market: 'TW', symbol: '00923', name: '群益台ESG低碳50', category: 'ETF', shares: 3430, avgPrice: 20.77, currentPrice: 38.16, link: 'https://www.google.com/finance/quote/00923:TPE' },
+      { id: 'tw-2002', market: 'TW', symbol: '2002', name: '中鋼', category: 'STOCK', shares: 3000, avgPrice: 21.71, currentPrice: 19.25, link: 'https://www.google.com/finance/quote/2002:TPE' },
+      { id: 'tw-2383', market: 'TW', symbol: '2383', name: '台光電', category: 'STOCK', shares: 4, avgPrice: 4358.00, currentPrice: 4675.00, link: 'https://www.google.com/finance/quote/2383:TPE' },
+      { id: 'tw-2308', market: 'TW', symbol: '2308', name: '台達電', category: 'STOCK', shares: 21, avgPrice: 1989.71, currentPrice: 1335.00, link: 'https://www.google.com/finance/quote/2308:TPE' },
+      { id: 'tw-2330', market: 'TW', symbol: '2330', name: '台積電', category: 'STOCK', shares: 15, avgPrice: 2286.87, currentPrice: 2370.00, link: 'https://www.google.com/finance/quote/2330:TPE' },
+      { id: 'tw-2454', market: 'TW', symbol: '2454', name: '聯發科', category: 'STOCK', shares: 49, avgPrice: 1755.98, currentPrice: 3915.00, link: 'https://www.google.com/finance/quote/2454:TPE' },
+      { id: 'tw-2646', market: 'TW', symbol: '2646', name: '星宇航空', category: 'STOCK', shares: 1137, avgPrice: 28.04, currentPrice: 19.75, link: 'https://www.google.com/finance/quote/2646:TPE' },
+      { id: 'tw-3017', market: 'TW', symbol: '3017', name: '奇鋐', category: 'STOCK', shares: 8, avgPrice: 2126.75, currentPrice: 3095.00, link: 'https://www.google.com/finance/quote/3017:TPE' },
+      { id: 'tw-3081', market: 'TW', symbol: '3081', name: '聯亞', category: 'STOCK', shares: 1, avgPrice: 0.00, currentPrice: 2370.00, link: 'https://www.google.com/finance?q=3081' },
+      { id: 'tw-00631l', market: 'TW', symbol: '00631L', name: '元大台灣50正2', category: 'ETF', shares: 1000, avgPrice: 33.93, currentPrice: 34.16, link: 'https://www.google.com/finance/quote/00631L:TPE' },
+
+      // 美股部位 (6 檔)
+      { id: 'us-voo', market: 'US', symbol: 'VOO', name: '先鋒標普500 ETF', category: 'ETF', shares: 13.71258, avgPrice: 598.63, currentPrice: 694.81, link: 'https://www.google.com/finance/quote/VOO:NYSEARCA' },
+      { id: 'us-qqq', market: 'US', symbol: 'QQQ', name: '那斯達克100 ETF', category: 'ETF', shares: 3.49593, avgPrice: 499.53, currentPrice: 690.49, link: 'https://www.google.com/finance/quote/QQQ:NASDAQ' },
+      { id: 'us-nvda', market: 'US', symbol: 'NVDA', name: '輝達', category: 'STOCK', shares: 22, avgPrice: 140.23, currentPrice: 204.64, link: 'https://www.google.com/finance/quote/NVDA:NASDAQ' },
+      { id: 'us-msft', market: 'US', symbol: 'MSFT', name: '微軟', category: 'STOCK', shares: 3, avgPrice: 468.84, currentPrice: 521.91, link: 'https://www.google.com/finance/quote/MSFT:NASDAQ' },
+      { id: 'us-goog', market: 'US', symbol: 'GOOG', name: 'Alphabet (谷歌)', category: 'STOCK', shares: 14, avgPrice: 237.09, currentPrice: 278.22, link: 'https://www.google.com/finance/quote/GOOG:NASDAQ' },
+      { id: 'us-qqqm', market: 'US', symbol: 'QQQM', name: '那斯達克微型 ETF', category: 'ETF', shares: 3.11494, avgPrice: 295.38, currentPrice: 284.34, link: 'https://www.google.com/finance/quote/QQQM:NASDAQ' }
+    ];
+
+    const STOCK_DATABASE = {
+      // 台股 ETF
+      '0050': { name: '元大台灣50', market: 'TW', category: 'ETF', price: 104.95, link: 'https://www.google.com/finance/quote/0050:TPE' },
+      '006208': { name: '富邦台50', market: 'TW', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/006208:TPE' },
+      '00923': { name: '群益台ESG低碳50', market: 'TW', category: 'ETF', price: 38.16, link: 'https://www.google.com/finance/quote/00923:TPE' },
+      '00631L': { name: '元大台灣50正2', market: 'TW', category: 'ETF', price: 34.16, link: 'https://www.google.com/finance/quote/00631L:TPE' },
+      '00675L': { name: '富邦臺灣加權正2', market: 'TW', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/00675L:TPE' },
+      '00685L': { name: '群益臺灣加權正2', market: 'TW', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/00685L:TPE' },
+      '00670L': { name: '富邦NASDAQ正2', market: 'TW', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/00670L:TPE' },
+      '00662': { name: '富邦NASDAQ', market: 'TW', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/00662:TPE' },
+      '00757': { name: '統一FANG+', market: 'TW', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/00757:TPE' },
+      '0056': { name: '元大高股息', market: 'TW', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/0056:TPE' },
+      '00878': { name: '國泰永續高股息', market: 'TW', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/00878:TPE' },
+      '00919': { name: '群益台灣精選高息', market: 'TW', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/00919:TPE' },
+      '00929': { name: '復華台灣科技優息', market: 'TW', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/00929:TPE' },
+      '00713': { name: '元大台灣高息低波', market: 'TW', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/00713:TPE' },
+      '00679B': { name: '元大美債20年', market: 'TW', category: 'ETF', price: 0, link: 'https://www.google.com/finance?q=00679B' },
+      '00687B': { name: '國泰20年美債', market: 'TW', category: 'ETF', price: 0, link: 'https://www.google.com/finance?q=00687B' },
+
+      // 台股個股
+      '2330': { name: '台積電', market: 'TW', category: 'STOCK', price: 2370.00, link: 'https://www.google.com/finance/quote/2330:TPE' },
+      '2454': { name: '聯發科', market: 'TW', category: 'STOCK', price: 3915.00, link: 'https://www.google.com/finance/quote/2454:TPE' },
+      '2308': { name: '台達電', market: 'TW', category: 'STOCK', price: 1335.00, link: 'https://www.google.com/finance/quote/2308:TPE' },
+      '2383': { name: '台光電', market: 'TW', category: 'STOCK', price: 4675.00, link: 'https://www.google.com/finance/quote/2383:TPE' },
+      '3017': { name: '奇鋐', market: 'TW', category: 'STOCK', price: 3095.00, link: 'https://www.google.com/finance/quote/3017:TPE' },
+      '2002': { name: '中鋼', market: 'TW', category: 'STOCK', price: 19.25, link: 'https://www.google.com/finance/quote/2002:TPE' },
+      '2646': { name: '星宇航空', market: 'TW', category: 'STOCK', price: 19.75, link: 'https://www.google.com/finance/quote/2646:TPE' },
+      '3081': { name: '聯亞', market: 'TW', category: 'STOCK', price: 2370.00, link: 'https://www.google.com/finance?q=3081' },
+      '2317': { name: '鴻海', market: 'TW', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/2317:TPE' },
+      '2382': { name: '廣達', market: 'TW', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/2382:TPE' },
+      '3231': { name: '緯創', market: 'TW', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/3231:TPE' },
+      '6669': { name: '緯穎', market: 'TW', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/6669:TPE' },
+      '2881': { name: '富邦金', market: 'TW', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/2881:TPE' },
+      '2882': { name: '國泰金', market: 'TW', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/2882:TPE' },
+      '2891': { name: '中信金', market: 'TW', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/2891:TPE' },
+
+      // 美股 & IB 海外 ETF（含槓桿型、指數型、英股 UCITS）
+      'VOO': { name: '先鋒標普500 ETF', market: 'US', category: 'ETF', price: 694.81, link: 'https://www.google.com/finance/quote/VOO:NYSEARCA' },
+      'QQQ': { name: '那斯達克100 ETF', market: 'US', category: 'ETF', price: 690.49, link: 'https://www.google.com/finance/quote/QQQ:NASDAQ' },
+      'QQQM': { name: '那斯達克微型 ETF', market: 'US', category: 'ETF', price: 284.34, link: 'https://www.google.com/finance/quote/QQQM:NASDAQ' },
+      'QLD': { name: 'ProShares 兩倍做多納指100 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/QLD:NYSEARCA' },
+      'TQQQ': { name: 'ProShares 三倍做多納指100 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/TQQQ:NASDAQ' },
+      'SSO': { name: 'ProShares 兩倍做多標普500 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/SSO:NYSEARCA' },
+      'UPRO': { name: 'ProShares 三倍做多標普500 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/UPRO:NYSEARCA' },
+      'SQQQ': { name: 'ProShares 三倍做空納指100 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/SQQQ:NASDAQ' },
+      'SOXL': { name: 'Direxion 三倍做多半導體 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/SOXL:NYSEARCA' },
+      'VT': { name: '先鋒全世界股票 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/VT:NYSEARCA' },
+      'VTI': { name: '先鋒美國整體股市 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/VTI:NYSEARCA' },
+      'VXUS': { name: '先鋒美國以外全世界 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/VXUS:NASDAQ' },
+      'SPY': { name: 'SPDR 標普500 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/SPY:NYSEARCA' },
+      'IVV': { name: 'iShares 核心標普500 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/IVV:NYSEARCA' },
+      'SPLG': { name: 'SPDR 投資組合標普500 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/SPLG:NYSEARCA' },
+      'SCHD': { name: '嘉信美國紅利股息 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/SCHD:NYSEARCA' },
+      'SCHG': { name: '嘉信美國大型成長 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/SCHG:NYSEARCA' },
+      'VUG': { name: '先鋒成長股 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/VUG:NYSEARCA' },
+      'VGT': { name: '先鋒資訊科技 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/VGT:NYSEARCA' },
+      'SMH': { name: 'VanEck 半導體 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/SMH:NASDAQ' },
+      'SOXX': { name: 'iShares 半導體 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/SOXX:NASDAQ' },
+      'TLT': { name: 'iShares 20年期以上美國公債 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/TLT:NASDAQ' },
+      'SGOV': { name: 'iShares 0-3月美國國庫券 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/SGOV:NYSEARCA' },
+      'BND': { name: '先鋒總體債券市場 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/BND:NASDAQ' },
+      'GLD': { name: 'SPDR 黃金 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/GLD:NYSEARCA' },
+      'IBIT': { name: 'iShares 比特幣信託 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/IBIT:NASDAQ' },
+      'VWRA': { name: 'Vanguard FTSE 全世界 UCITS ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/VWRA:LON' },
+      'VWRD': { name: 'Vanguard FTSE 全世界配息 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/VWRD:LON' },
+      'CSPX': { name: 'iShares 標普500 UCITS ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/CSPX:LON' },
+      'VUAA': { name: 'Vanguard 標普500 UCITS ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/VUAA:LON' },
+      'SWRD': { name: 'SPDR MSCI 世界 UCITS ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/SWRD:LON' },
+      'EIMI': { name: 'iShares 新興市場 UCITS ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/EIMI:LON' },
+      'EQQQ': { name: 'Invesco 納斯達克100 UCITS ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/EQQQ:LON' },
+      'IB01': { name: 'iShares 0-1年美國國庫券 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/IB01:LON' },
+
+      // 美股個股
+      'NVDA': { name: '輝達', market: 'US', category: 'STOCK', price: 204.64, link: 'https://www.google.com/finance/quote/NVDA:NASDAQ' },
+      'MSFT': { name: '微軟', market: 'US', category: 'STOCK', price: 521.91, link: 'https://www.google.com/finance/quote/MSFT:NASDAQ' },
+      'GOOG': { name: 'Alphabet (谷歌)', market: 'US', category: 'STOCK', price: 278.22, link: 'https://www.google.com/finance/quote/GOOG:NASDAQ' },
+      'GOOGL': { name: 'Alphabet Class A (谷歌)', market: 'US', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/GOOGL:NASDAQ' },
+      'AAPL': { name: '蘋果', market: 'US', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/AAPL:NASDAQ' },
+      'TSLA': { name: '特斯拉', market: 'US', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/TSLA:NASDAQ' },
+      'AMZN': { name: '亞馬遜', market: 'US', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/AMZN:NASDAQ' },
+      'META': { name: 'Meta Platforms', market: 'US', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/META:NASDAQ' },
+      'AVGO': { name: '博通', market: 'US', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/AVGO:NASDAQ' },
+      'AMD': { name: '超微半導體', market: 'US', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/AMD:NASDAQ' },
+      'TSM': { name: '台積電 ADR', market: 'US', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/TSM:NYSE' },
+      'ASML': { name: '艾司摩爾', market: 'US', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/ASML:NASDAQ' },
+      'ARM': { name: '安謀控股', market: 'US', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/ARM:NASDAQ' },
+      'PLTR': { name: 'Palantir Technologies', market: 'US', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/PLTR:NASDAQ' },
+      'NFLX': { name: '網飛 Netflix', market: 'US', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/NFLX:NASDAQ' },
+      'COST': { name: '好市多 Costco', market: 'US', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/COST:NASDAQ' },
+      'BRK.B': { name: '波克夏海瑟威 B', market: 'US', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/BRK.B:NYSE' },
+      'MU': { name: '美光科技', market: 'US', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/MU:NASDAQ' },
+      'QCOM': { name: '高通', market: 'US', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/QCOM:NASDAQ' },
+      'LLY': { name: '禮來製藥', market: 'US', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/LLY:NYSE' }
+    };
+
+    function getGoogleFinanceUrl(symbol, market) {
+      const sym = String(symbol || '').trim().toUpperCase();
+      if (!sym) return 'https://www.google.com/finance';
+      if (STOCK_DATABASE[sym] && STOCK_DATABASE[sym].link && STOCK_DATABASE[sym].link.includes('google.com/finance')) {
+        return STOCK_DATABASE[sym].link;
+      }
+      if (market === 'TW' || /^\d/.test(sym)) {
+        return `https://www.google.com/finance/quote/${sym}:TPE`;
+      }
+      return `https://www.google.com/finance?q=${encodeURIComponent(sym)}`;
+    }
+
+    let historyMonthlyData = [
+      { date: '2026/1/5', tw: 388010, us: 480585, ib: 144157, cash: 820446, total: 1833198, principal: 879489, pnl: 133263, memo: '年初盤點基準，保留充裕現金等待佈局' },
+      { date: '2026/2/5', tw: 389094, us: 479257, ib: 133134, cash: 842789, total: 1844274, principal: 964601, pnl: 36884, memo: '定期定額穩健加碼，維持核心 ETF 部位' },
+      { date: '2026/3/5', tw: 437780, us: 477370, ib: 218081, cash: 671858, total: 1805089, principal: 1040069, pnl: 93162, memo: '逢低動用現金分批承接台股與 IB 部位' },
+      { date: '2026/4/5', tw: 457818, us: 491791, ib: 218032, cash: 708236, total: 1875877, principal: 1076070, pnl: 91571, memo: '盤勢震盪整理，持續累積庫存張數' },
+      { date: '2026/5/9', tw: 691086, us: 611044, ib: 296661, cash: 639668, total: 2238459, principal: 1142103, pnl: 456689, memo: '台美科技股主升段啟動，淨值突破 220 萬' },
+      { date: '2026/6/6', tw: 830718, us: 605127, ib: 291308, cash: 587613, total: 2314766, principal: 1224146, pnl: 503008, memo: '台股權值股走強，累積總損益突破 50 萬' },
+      { date: '2026/7/5', tw: 867206, us: 613720, ib: 293733, cash: 557899, total: 2332558, principal: 1271482, pnl: 503177, memo: '高檔震盪續抱核心大盤部位' },
+      { date: '2026/8/2', tw: 751615, us: 640405, ib: 260767, cash: 569674, total: 2222461, principal: 1245783, pnl: 407004, memo: '8月回檔修正，冷靜抱緊不殺低' },
+      { date: '2026/9/5', tw: 785966, us: 670054, ib: 273295, cash: 661788, total: 2391103, principal: 1249046, pnl: 480269, memo: '資產迅速收復失土並拉高現金防禦水位' },
+      { date: '2026/10/5', tw: 885031, us: 701690, ib: 295974, cash: 658948, total: 2541643, principal: 1288671, pnl: 594024, memo: '創年度 254.1 萬新高，首度突破 250 萬目標' },
+      { date: '2026/11/1', tw: 840678, us: 738172, ib: 268234, cash: 508160, total: 2355244, principal: 1457739, pnl: 389346, memo: '加碼投入本金至 145.7 萬，等待年底行情' }
+    ];
+
+    let currentMonthMemo = '持續追蹤大盤 ETF 比例與 XIRR 年化報酬';
+
+    let holdings = [];
+    let deletedHoldingBackup = null;
+    let activeFilter = 'ALL';
+    let targetEtfRatio = 60;
+    let isHistory2026Collapsed = true;
+    let isWeightRankingExpanded = false;
+    let activeTimeframe = 'YTD';
+    let isPrivacyMasked = false;
+    let currentMainTab = 1;
+
+    let bankDeposits = {
+      post: 231845,
+      huanan: 103707,
+      yuanta: 93673,
+      cathay: 44259,
+      linebank: 33798,
+      tcb: 878
+    };
+
+    let monthlyDeposit = 45000;
+
+    let liveSyncedMetrics = {
+      '1W': { taiex: null, sp500: null, nasdaq: null },
+      '1M': { taiex: null, sp500: null, nasdaq: null },
+      '1Q': { taiex: null, sp500: null, nasdaq: null },
+      'YTD': { taiex: null, sp500: null, nasdaq: null }
+    };
+
+    let liveIndicesState = {
+      taiex: { price: 42711.92, pct: 4.94 },
+      sp500: { price: 7549.94, pct: 0.31 },
+      nasdaq: { price: 25253.14, pct: 1.09 }
+    };
+
+    /* 2. 本機狀態讀寫與核心工具函式 */
+    function getCashTotal() {
+      return Object.values(bankDeposits).reduce((sum, val) => sum + (parseFloat(val) || 0), 0);
+    }
+
+    function formatMasked(str) {
+      return isPrivacyMasked ? '••••••' : str;
+    }
+
+    function saveHoldingsState() {
+      safeStorage.setItem('eddie_portfolio_holdings', JSON.stringify(holdings));
+    }
+
+    function saveBankDepositsState() {
+      safeStorage.setItem('eddie_portfolio_banks', JSON.stringify(bankDeposits));
+    }
+
+    function saveHistoryMemosState() {
+      const memoMap = {};
+      historyMonthlyData.forEach(row => {
+        memoMap[row.date] = row.memo || '';
+      });
+      memoMap['CURRENT'] = currentMonthMemo || '';
+      safeStorage.setItem('eddie_portfolio_memos', JSON.stringify(memoMap));
+    }
+
+    function updateHistoryMemo(idx, val) {
+      if (idx === 'CURRENT') {
+        currentMonthMemo = val;
+      } else if (historyMonthlyData[idx]) {
+        historyMonthlyData[idx].memo = val;
+      }
+      saveHistoryMemosState();
+    }
+
+    function syncInputFields() {
+      Object.keys(bankDeposits).forEach(key => {
+        const el = document.getElementById(`bankInput-${key}`);
+        if (el) el.value = bankDeposits[key];
+      });
+      const depEl = document.getElementById('inlineMonthlyDepositInput');
+      if (depEl) depEl.value = monthlyDeposit;
+      const savedUrl = safeStorage.getItem('eddie_gas_url') || '';
+      const urlEl = document.getElementById('googleScriptUrlInput');
+      if (urlEl) urlEl.value = savedUrl;
+      const statusEl = document.getElementById('urlSavedStatus');
+      if (statusEl) {
+        if (savedUrl) statusEl.classList.remove('hidden');
+        else statusEl.classList.add('hidden');
+      }
+    }
+
+    function loadSavedState() {
+      try {
+        const savedHoldings = safeStorage.getItem('eddie_portfolio_holdings');
+        if (savedHoldings) {
+          const parsed = JSON.parse(savedHoldings);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            holdings = parsed.map(h => ({
+              ...h,
+              link: getGoogleFinanceUrl(h.symbol, h.market)
+            }));
+          } else {
+            holdings = JSON.parse(JSON.stringify(DEFAULT_HOLDINGS));
+          }
+        } else {
+          holdings = JSON.parse(JSON.stringify(DEFAULT_HOLDINGS));
+        }
+      } catch (e) {
+        holdings = JSON.parse(JSON.stringify(DEFAULT_HOLDINGS));
+      }
+
+      try {
+        const savedBanks = safeStorage.getItem('eddie_portfolio_banks');
+        if (savedBanks) bankDeposits = { ...bankDeposits, ...JSON.parse(savedBanks) };
+      } catch (e) {}
+
+      const savedDep = safeStorage.getItem('eddie_portfolio_monthly_dep');
+      if (savedDep && !isNaN(parseFloat(savedDep))) monthlyDeposit = parseFloat(savedDep);
+
+      const savedRate = safeStorage.getItem('eddie_portfolio_ustwd');
+      if (savedRate && !isNaN(parseFloat(savedRate))) usTwdRate = parseFloat(savedRate);
+
+      try {
+        const savedMetrics = safeStorage.getItem('eddie_portfolio_metrics');
+        if (savedMetrics) liveSyncedMetrics = { ...liveSyncedMetrics, ...JSON.parse(savedMetrics) };
+      } catch (e) {}
+
+      try {
+        const savedIdx = safeStorage.getItem('eddie_portfolio_indices');
+        if (savedIdx) {
+          liveIndicesState = { ...liveIndicesState, ...JSON.parse(savedIdx) };
+          updateIndicesDisplay();
+        }
+      } catch (e) {}
+
+      try {
+        const savedMemos = safeStorage.getItem('eddie_portfolio_memos');
+        if (savedMemos) {
+          const memoMap = JSON.parse(savedMemos);
+          historyMonthlyData.forEach(row => {
+            if (memoMap[row.date] !== undefined) row.memo = memoMap[row.date];
+          });
+          if (memoMap['CURRENT'] !== undefined) currentMonthMemo = memoMap['CURRENT'];
+        }
+      } catch (e) {}
+
+      syncInputFields();
+    }
+
+    function updateIndicesDisplay() {
+      const setIdx = (priceId, chgId, obj) => {
+        const pEl = document.getElementById(priceId);
+        const cEl = document.getElementById(chgId);
+        if (pEl && obj.price) pEl.innerText = Number(obj.price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        if (cEl && obj.pct !== null && !isNaN(obj.pct)) {
+          const up = obj.pct >= 0;
+          cEl.innerText = `${up ? '▲' : '▼'} ${Math.abs(obj.pct).toFixed(2)}%`;
+          cEl.className = `text-[11px] font-bold font-mono block ${up ? 'text-rose-400' : 'text-emerald-400'}`;
+        }
+      };
+      setIdx('idxTaiexPrice', 'idxTaiexChange', liveIndicesState.taiex);
+      setIdx('idxSp500Price', 'idxSp500Change', liveIndicesState.sp500);
+      setIdx('idxNasdaqPrice', 'idxNasdaqChange', liveIndicesState.nasdaq);
+    }
+
+    /* 3. 頂部三功能按鈕：隱私遮罩、即時更新、雲端同步設定 */
+    function togglePrivacyMask() {
+      isPrivacyMasked = !isPrivacyMasked;
+      const icon = document.getElementById('privacyEyeIcon');
+      if (icon) {
+        icon.className = isPrivacyMasked
+          ? 'fa-solid fa-eye-slash text-xs sm:text-sm text-amber-400'
+          : 'fa-solid fa-eye text-xs sm:text-sm text-slate-300';
+      }
+      recalculateAll(true);
+      showToast(isPrivacyMasked ? '🙈 已開啟金額隱私遮罩' : '👁️ 已恢復顯示實際金額');
+    }
+
+    function updateSyncTimeDisplay() {
+      const modalEl = document.getElementById('modalSyncTimeDisplay');
+      if (modalEl) modalEl.innerText = lastSyncTimestamp;
+
+      const topEl = document.getElementById('topBarSyncTime');
+      if (topEl) {
+        const d = new Date(lastSyncTimestamp);
+        if (!isNaN(d.getTime())) {
+          const mm = String(d.getMonth() + 1).padStart(2, '0');
+          const dd = String(d.getDate()).padStart(2, '0');
+          const hh = String(d.getHours()).padStart(2, '0');
+          const min = String(d.getMinutes()).padStart(2, '0');
+          topEl.innerText = `${mm}/${dd} ${hh}:${min}`;
+        } else {
+          const m = String(lastSyncTimestamp).match(/(\d{1,2}\/\d{1,2})\s+(\d{1,2}:\d{2})/);
+          topEl.innerText = m ? `${m[1]} ${m[2]}` : String(lastSyncTimestamp).slice(0, 11);
+        }
+      }
+    }
+
+    function openSyncModal() {
+      syncInputFields();
+      updateSyncTimeDisplay();
+      const modal = document.getElementById('syncModal');
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeSyncModal() {
+      const modal = document.getElementById('syncModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function handleUrlInputLive(val) {
+      const trimmed = val.trim();
+      if (trimmed) {
+        safeStorage.setItem('eddie_gas_url', trimmed);
+        const statusEl = document.getElementById('urlSavedStatus');
+        if (statusEl) statusEl.classList.remove('hidden');
+      }
+    }
+
+    function saveGoogleUrlExplicitly() {
+      const inp = document.getElementById('googleScriptUrlInput');
+      const val = inp ? inp.value.trim() : '';
+      if (!val) {
+        showToast('❌ 請先輸入 Apps Script 網址');
+        return;
+      }
+      safeStorage.setItem('eddie_gas_url', val);
+      const statusEl = document.getElementById('urlSavedStatus');
+      if (statusEl) statusEl.classList.remove('hidden');
+      showToast('✅ Apps Script 網址已永久儲存在本機！');
+    }
+
+    function copyMobileMagicLink() {
+      const gasUrl = safeStorage.getItem('eddie_gas_url') || '';
+      if (!gasUrl) {
+        showToast('❌ 請先儲存 Apps Script 網址再複製綁定連結');
+        return;
+      }
+      const baseUrl = window.location.href.split('?')[0].split('#')[0];
+      const magicUrl = `${baseUrl}?gas=${encodeURIComponent(gasUrl)}`;
+      const tempInput = document.createElement('input');
+      tempInput.value = magicUrl;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      try {
+        document.execCommand('copy');
+        showToast('📲 已複製一鍵綁定網址！貼到手機 LINE 點開即可');
+      } catch (e) {
+        showToast('⚠️ 複製失敗，請手動複製網址列');
+      }
+      document.body.removeChild(tempInput);
+    }
+
+    function checkMagicLinkGasUrl() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const gasParam = params.get('gas');
+        if (gasParam && gasParam.startsWith('http')) {
+          safeStorage.setItem('eddie_gas_url', gasParam.trim());
+          if (window.history && window.history.replaceState) {
+            window.history.replaceState({}, document.title, window.location.pathname);
+          }
+          return true;
+        }
+      } catch (e) {}
+      return false;
+    }
+
+    function jsonpRequest(url) {
+      return new Promise((resolve, reject) => {
+        const cbName = 'gas_cb_' + Date.now() + '_' + Math.floor(Math.random() * 10000);
+        const script = document.createElement('script');
+        const timeout = setTimeout(() => {
+          cleanup();
+          reject(new Error('連線逾時，請檢查網路或 Apps Script 部署權限'));
+        }, 12000);
+
+        function cleanup() {
+          clearTimeout(timeout);
+          delete window[cbName];
+          if (script.parentNode) script.parentNode.removeChild(script);
+        }
+
+        window[cbName] = (data) => {
+          cleanup();
+          resolve(data);
+        };
+
+        const sep = url.includes('?') ? '&' : '?';
+        script.src = `${url}${sep}callback=${cbName}`;
+        script.onerror = () => {
+          cleanup();
+          reject(new Error('無法連線至 Google Apps Script'));
+        };
+        document.body.appendChild(script);
+      });
+    }
+
+    async function syncLiveQuotes() {
+      const gasUrl = safeStorage.getItem('eddie_gas_url') || '';
+      if (!gasUrl) {
+        openSyncModal();
+        showToast('⚠️ 請先貼上並儲存 Apps Script 網址');
+        return;
+      }
+      const icon = document.getElementById('syncQuotesIcon');
+      if (icon) icon.classList.add('fa-spin');
+      showToast('🔄 正在同步 GOOGLEFINANCE 最新行情...');
+
+      try {
+        const res = await jsonpRequest(`${gasUrl}?action=quotes`);
+        if (res && res.status === 'success') {
+          const quotes = res.quotes || {};
+          safeStorage.setItem('eddie_portfolio_quotes_cache', JSON.stringify(quotes));
+          if (res.usdTwd && !isNaN(parseFloat(res.usdTwd))) {
+            usTwdRate = parseFloat(res.usdTwd);
+            safeStorage.setItem('eddie_portfolio_ustwd', usTwdRate);
+          }
+
+          let updatedCount = 0;
+          holdings.forEach(h => {
+            const sym = String(h.symbol || '').toUpperCase();
+            const qVal = parseFloat(quotes[sym]);
+            if (!isNaN(qVal) && qVal > 0) {
+              h.currentPrice = qVal;
+              updatedCount++;
+            }
+          });
+
+          const periodMap = [
+            { tf: '1W', suffix: '1W' },
+            { tf: '1M', suffix: '1M' },
+            { tf: '1Q', suffix: '1Q' },
+            { tf: 'YTD', suffix: 'YTD' }
+          ];
+          periodMap.forEach(p => {
+            const twVal = parseFloat(quotes[`台灣大盤${p.suffix}`]);
+            const spVal = parseFloat(quotes[`標普${p.suffix}`]);
+            const nasVal = parseFloat(quotes[`那斯達克${p.suffix}`]);
+            if (!isNaN(twVal)) liveSyncedMetrics[p.tf].taiex = twVal;
+            if (!isNaN(spVal)) liveSyncedMetrics[p.tf].sp500 = spVal;
+            if (!isNaN(nasVal)) liveSyncedMetrics[p.tf].nasdaq = nasVal;
+          });
+          safeStorage.setItem('eddie_portfolio_metrics', JSON.stringify(liveSyncedMetrics));
+
+          if (res.indices) {
+            if (res.indices.taiex && res.indices.taiex.price) liveIndicesState.taiex.price = res.indices.taiex.price;
+            if (res.indices.sp500 && res.indices.sp500.price) liveIndicesState.sp500.price = res.indices.sp500.price;
+            if (res.indices.nasdaq && res.indices.nasdaq.price) liveIndicesState.nasdaq.price = res.indices.nasdaq.price;
+            if (liveSyncedMetrics['1W'].taiex !== null) liveIndicesState.taiex.pct = liveSyncedMetrics['1W'].taiex;
+            if (liveSyncedMetrics['1W'].sp500 !== null) liveIndicesState.sp500.pct = liveSyncedMetrics['1W'].sp500;
+            if (liveSyncedMetrics['1W'].nasdaq !== null) liveIndicesState.nasdaq.pct = liveSyncedMetrics['1W'].nasdaq;
+            safeStorage.setItem('eddie_portfolio_indices', JSON.stringify(liveIndicesState));
+            updateIndicesDisplay();
+          }
+
+          saveHoldingsState();
+          recalculateAll(true);
+          renderSvgLineChart();
+          showToast(`✅ 行情同步完成！(更新 ${updatedCount} 檔股價與自然曆指數)`);
+        } else {
+          showToast(`⚠️ 同步未完成: ${(res && res.message) || '請確認試算表設定'}`);
+        }
+      } catch (err) {
+        showToast(`❌ 同步失敗: ${err.message}`);
+      } finally {
+        if (icon) icon.classList.remove('fa-spin');
+      }
+    }
+
+    async function uploadToCloud() {
+      const gasUrl = safeStorage.getItem('eddie_gas_url') || '';
+      if (!gasUrl) {
+        showToast('❌ 請先輸入並儲存 Apps Script 網址');
+        return;
+      }
+      showToast('☁️ 正在上傳備份至雲端...');
+      const slimHoldings = holdings.map(h => ({
+        id: h.id,
+        market: h.market,
+        symbol: h.symbol,
+        name: h.name,
+        category: h.category,
+        shares: h.shares,
+        avgPrice: h.avgPrice,
+        currentPrice: h.currentPrice
+      }));
+      const memoMap = {};
+      historyMonthlyData.forEach(row => { memoMap[row.date] = row.memo || ''; });
+      memoMap['CURRENT'] = currentMonthMemo || '';
+
+      const payloadObj = {
+        holdings: slimHoldings,
+        bankDeposits,
+        monthlyDeposit,
+        usTwdRate,
+        liveSyncedMetrics,
+        memoMap
+      };
+      try {
+        const res = await jsonpRequest(`${gasUrl}?action=upload&payload=${encodeURIComponent(JSON.stringify(payloadObj))}`);
+        if (res && res.status === 'success') {
+          lastSyncTimestamp = res.timestamp || new Date().toLocaleString('zh-TW', { hour12: false });
+          safeStorage.setItem('alphatrack_last_sync_time', lastSyncTimestamp);
+          updateSyncTimeDisplay();
+          showToast('🎉 成功上傳雲端！手機打開按「從雲端下載」即可同步');
+        } else {
+          showToast(`⚠️ 上傳未完成: ${(res && res.message) || '請至試算表部署「新版本」Apps Script'}`);
+        }
+      } catch (err) {
+        showToast(`❌ 上傳失敗: ${err.message}`);
+      }
+    }
+
+    async function downloadFromCloud(silent = false) {
+      const gasUrl = safeStorage.getItem('eddie_gas_url') || '';
+      if (!gasUrl) {
+        if (!silent) showToast('❌ 請先輸入並儲存 Apps Script 網址');
+        return;
+      }
+      if (!silent) showToast('☁️ 正在從雲端下載最新資料...');
+      try {
+        const res = await jsonpRequest(`${gasUrl}?action=download`);
+        if (res && res.status === 'success' && res.data) {
+          const d = res.data;
+          if (Array.isArray(d.holdings) && d.holdings.length > 0) {
+            holdings = d.holdings.map(item => ({
+              ...item,
+              link: getGoogleFinanceUrl(item.symbol, item.market)
+            }));
+            saveHoldingsState();
+          }
+          if (d.bankDeposits) {
+            bankDeposits = { ...bankDeposits, ...d.bankDeposits };
+            saveBankDepositsState();
+          }
+          if (d.monthlyDeposit) {
+            monthlyDeposit = parseFloat(d.monthlyDeposit) || 45000;
+            safeStorage.setItem('eddie_portfolio_monthly_dep', monthlyDeposit);
+          }
+          if (d.usTwdRate) {
+            usTwdRate = parseFloat(d.usTwdRate) || 32.3899;
+            safeStorage.setItem('eddie_portfolio_ustwd', usTwdRate);
+          }
+          if (d.liveSyncedMetrics) {
+            liveSyncedMetrics = { ...liveSyncedMetrics, ...d.liveSyncedMetrics };
+            safeStorage.setItem('eddie_portfolio_metrics', JSON.stringify(liveSyncedMetrics));
+          }
+          if (d.memoMap) {
+            historyMonthlyData.forEach(row => {
+              if (d.memoMap[row.date] !== undefined) row.memo = d.memoMap[row.date];
+            });
+            if (d.memoMap['CURRENT'] !== undefined) currentMonthMemo = d.memoMap['CURRENT'];
+            saveHistoryMemosState();
+          }
+          if (res.timestamp) {
+            lastSyncTimestamp = res.timestamp;
+            safeStorage.setItem('alphatrack_last_sync_time', lastSyncTimestamp);
+            updateSyncTimeDisplay();
+          }
+          syncInputFields();
+          recalculateAll(true);
+          renderSvgLineChart();
+          showToast('✅ 已從雲端成功同步最新資料！');
+        } else {
+          showToast(`⚠️ 下載未完成: ${(res && res.message) || '雲端尚無備份資料'}`);
+        }
+      } catch (err) {
+        showToast(`❌ 下載失敗: ${err.message}`);
+      }
+    }
+
+    async function importFromGoogleSheets() {
+      await syncLiveQuotes();
+    }
+
+    /* 4. 分頁切換與手機左右滑動手勢 */
+    function switchMainTab(tabIdx, slideDir = null) {
+      if (tabIdx < 1 || tabIdx > 4) return;
+      currentMainTab = tabIdx;
+
+      document.querySelectorAll('.tab-content').forEach((el, idx) => {
+        el.classList.remove('animate-slide-right', 'animate-slide-left');
+        if (idx + 1 === tabIdx) {
+          el.classList.remove('hidden');
+          if (slideDir === 'left') el.classList.add('animate-slide-right');
+          if (slideDir === 'right') el.classList.add('animate-slide-left');
+        } else {
+          el.classList.add('hidden');
+        }
+      });
+
+      document.querySelectorAll('.main-tab-btn').forEach((btn, idx) => {
+        if (idx + 1 === tabIdx) {
+          btn.className = 'main-tab-btn py-1 px-1.5 rounded-xl sm:rounded-2xl text-emerald-400 bg-slate-900 border border-emerald-500/40 flex items-center justify-center gap-1.5 transition shadow-sm';
+        } else {
+          btn.className = 'main-tab-btn py-1 px-1.5 rounded-xl sm:rounded-2xl text-slate-400 hover:text-white flex items-center justify-center gap-1.5 transition';
+        }
+      });
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      if (tabIdx === 1) renderSvgLineChart();
+      if (tabIdx === 2) recalculateAll(false);
+      if (tabIdx === 4) renderPlanSvgCharts();
+    }
+
+    function initSwipeNavigation() {
+      let startX = 0, startY = 0, ignoreSwipe = false;
+      document.addEventListener('touchstart', (e) => {
+        if (!e.touches || e.touches.length !== 1) return;
+        const target = e.target;
+        if (
+          target.closest('input, select, textarea, #mainChartContainer, #planChartContainer, #history2026TableContainer, .no-scrollbar, #syncModal, #addHoldingModal') ||
+          e.touches[0].clientX < 24 ||
+          e.touches[0].clientX > window.innerWidth - 24
+        ) {
+          ignoreSwipe = true;
+          return;
+        }
+        ignoreSwipe = false;
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+      }, { passive: true });
+
+      document.addEventListener('touchend', (e) => {
+        if (ignoreSwipe || !e.changedTouches || e.changedTouches.length !== 1) return;
+        const dx = e.changedTouches[0].clientX - startX;
+        const dy = e.changedTouches[0].clientY - startY;
+        if (Math.abs(dx) > 65 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+          if (dx < 0 && currentMainTab < 4) {
+            switchMainTab(currentMainTab + 1, 'left');
+          } else if (dx > 0 && currentMainTab > 1) {
+            switchMainTab(currentMainTab - 1, 'right');
+          }
+        }
+      }, { passive: true });
+    }
+
+    /* 5. 第二頁甜甜圈圖與互動高亮 */
+    function renderSvgDonutChart(twMv, usMv, ibMv, cashMv) {
+      const svg = document.getElementById('svgDonutChart');
+      if (!svg) return;
+
+      const total = Math.max(twMv + usMv + ibMv + cashMv, 1);
+      const segments = [
+        { key: 'tw', label: '🇹🇼 台股', val: twMv, color: '#22d3ee' },
+        { key: 'us', label: '🇺🇸 美股', val: usMv, color: '#38bdf8' },
+        { key: 'ib', label: '🌐 IB', val: ibMv, color: '#c084fc' },
+        { key: 'cash', label: '💵 現金', val: cashMv, color: '#34d399' }
+      ];
+
+      const radius = 38;
+      const circumference = 2 * Math.PI * radius;
+      let offset = 0;
+
+      const circlesHtml = segments.map(seg => {
+        const pct = seg.val / total;
+        const dashLen = pct * circumference;
+        const dashOffset = -offset;
+        offset += dashLen;
+        return `
+          <circle id="donutSeg-${seg.key}" cx="50" cy="50" r="${radius}"
+                  fill="transparent"
+                  stroke="${seg.color}"
+                  stroke-width="11"
+                  stroke-dasharray="${dashLen.toFixed(2)} ${circumference.toFixed(2)}"
+                  stroke-dashoffset="${dashOffset.toFixed(2)}"
+                  class="transition-all duration-300 cursor-pointer"
+                  onmouseenter="highlightSegment('${seg.key}')"
+                  onmouseleave="resetHighlight()" />
+        `;
+      }).join('');
+
+      svg.setAttribute('viewBox', '0 0 100 100');
+      svg.innerHTML = `
+        <circle cx="50" cy="50" r="${radius}" fill="transparent" stroke="#0f172a" stroke-width="11" />
+        ${circlesHtml}
+      `;
+
+      const centerTotal = document.getElementById('donutCenterTotal');
+      if (centerTotal) {
+        centerTotal.innerText = isPrivacyMasked ? '••••' : `${(total / 10000).toFixed(1)}萬`;
+      }
+    }
+
+    function highlightSegment(key) {
+      const keys = ['tw', 'us', 'ib', 'cash'];
+      keys.forEach(k => {
+        const seg = document.getElementById(`donutSeg-${k}`);
+        if (seg) {
+          seg.setAttribute('stroke-width', k === key ? '13.5' : '9.5');
+          seg.setAttribute('opacity', k === key ? '1' : '0.45');
+        }
+      });
+    }
+
+    function resetHighlight() {
+      const keys = ['tw', 'us', 'ib', 'cash'];
+      keys.forEach(k => {
+        const seg = document.getElementById(`donutSeg-${k}`);
+        if (seg) {
+          seg.setAttribute('stroke-width', '11');
+          seg.setAttribute('opacity', '1');
+        }
+      });
+    }
+
+    /* 6. 第三頁篩選、修改與刪除復原 */
+    function filterHoldings(filterKey) {
+      activeFilter = filterKey;
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('bg-emerald-600', 'text-white');
+        btn.classList.add('text-slate-400');
+      });
+      const activeBtn = document.getElementById(`filterBtn-${filterKey}`);
+      if (activeBtn) {
+        activeBtn.classList.remove('text-slate-400');
+        activeBtn.classList.add('bg-emerald-600', 'text-white');
+      }
+      renderHoldingsTable();
+    }
+
+    function updateHoldingField(id, field, rawVal) {
+      const item = holdings.find(h => h.id === id);
+      if (!item) return;
+      item[field] = parseFloat(rawVal) || 0;
+      saveHoldingsState();
+      recalculateAll(false);
+
+      const shares = parseFloat(item.shares) || 0;
+      const avg = parseFloat(item.avgPrice) || 0;
+      const cur = parseFloat(item.currentPrice) || 0;
+      const costNtd = item.market === 'TW' ? shares * avg : shares * avg * usTwdRate;
+      const mvNtd = item.market === 'TW' ? shares * cur : shares * cur * usTwdRate;
+      const pnlNtd = mvNtd - costNtd;
+      const pnlPct = costNtd > 0 ? (pnlNtd / costNtd) * 100 : 0;
+
+      const mvEl = document.getElementById(`rowMv-${id}`);
+      if (mvEl) mvEl.innerText = isPrivacyMasked ? '••••••' : Math.round(mvNtd).toLocaleString();
+
+      const pnlEl = document.getElementById(`rowPnl-${id}`);
+      if (pnlEl) {
+        const maskedRowPnl = isPrivacyMasked
+          ? (pnlNtd >= 0 ? '+••••' : '-••••')
+          : `${pnlNtd >= 0 ? '+' : ''}${Math.round(pnlNtd).toLocaleString()}`;
+        pnlEl.innerHTML = `
+          <span class="${pnlNtd >= 0 ? 'text-rose-400' : 'text-emerald-400'} block leading-tight">${maskedRowPnl}</span>
+          <span class="block text-[9px] sm:text-[10px] leading-tight ${pnlNtd >= 0 ? 'text-rose-300' : 'text-emerald-300'}">${pnlPct >= 0 ? '+' : ''}${pnlPct.toFixed(1)}%</span>
+        `;
+      }
+    }
+
+    function deleteHolding(id) {
+      const idx = holdings.findIndex(h => h.id === id);
+      if (idx === -1) return;
+      deletedHoldingBackup = { index: idx, item: holdings[idx] };
+      holdings.splice(idx, 1);
+      saveHoldingsState();
+      recalculateAll(true);
+      showToast(`🗑️ 已刪除 ${deletedHoldingBackup.item.symbol}`, true);
+    }
+
+    function undoDeleteHolding() {
+      if (!deletedHoldingBackup) return;
+      holdings.splice(deletedHoldingBackup.index, 0, deletedHoldingBackup.item);
+      deletedHoldingBackup = null;
+      saveHoldingsState();
+      recalculateAll(true);
+      showToast('↩️ 已復原刪除的標的');
+    }
+
+    function handleBankDepositChange(bankKey, rawVal) {
+      bankDeposits[bankKey] = parseFloat(rawVal) || 0;
+      saveBankDepositsState();
+      recalculateAll(false);
+    }
+
+    function handleMonthlyDepositInput(rawVal) {
+      monthlyDeposit = parseFloat(rawVal) || 0;
+      safeStorage.setItem('eddie_portfolio_monthly_dep', monthlyDeposit);
+      recalculateAll(false);
+    }
+
+    function toggleHistory2026() {
+      isHistory2026Collapsed = !isHistory2026Collapsed;
+      const box = document.getElementById('history2026TableContainer');
+      const icon = document.getElementById('iconToggleHistory2026');
+      const txt = document.getElementById('textToggleHistory2026');
+      if (box) box.classList.toggle('hidden', isHistory2026Collapsed);
+      if (icon) icon.className = isHistory2026Collapsed ? 'fa-solid fa-chevron-down text-cyan-400' : 'fa-solid fa-chevron-up text-cyan-400';
+      if (txt) txt.innerText = isHistory2026Collapsed ? '展開紀錄' : '收合紀錄';
+    }
+
+    /* 7. 全局資產試算引擎 */
+    function recalculateAll(renderTable = false) {
+      let twMv = 0, twCost = 0;
+      let usMv = 0, usCost = 0;
+      let ibMv = 0, ibCost = 0;
+      let hasIbHolding = false;
+
+      let twEtfMv = 0, usEtfMv = 0;
+      let twStockMv = 0, usStockMv = 0;
+
+      holdings.forEach(h => {
+        const sh = parseFloat(h.shares) || 0;
+        const avg = parseFloat(h.avgPrice) || 0;
+        const cur = parseFloat(h.currentPrice) || 0;
+
+        if (h.market === 'TW') {
+          const mv = sh * cur;
+          const cost = sh * avg;
+          twMv += mv;
+          twCost += cost;
+          if (h.category === 'ETF') twEtfMv += mv;
+          else twStockMv += mv;
+        } else if (h.market === 'IB') {
+          hasIbHolding = true;
+          ibMv += sh * cur * usTwdRate;
+          ibCost += sh * avg * usTwdRate;
+        } else {
+          const mv = sh * cur * usTwdRate;
+          const cost = sh * avg * usTwdRate;
+          usMv += mv;
+          usCost += cost;
+          if (h.category === 'ETF') usEtfMv += mv;
+          else usStockMv += mv;
+        }
+      });
+
+      const effectiveIbMv = hasIbHolding ? ibMv : IB_MARKET_NTD;
+      const effectiveIbCost = hasIbHolding ? ibCost : IB_COST_NTD;
+      const cashTotal = getCashTotal();
+      const totalEquityMv = twMv + usMv + effectiveIbMv;
+      const totalMv = totalEquityMv + cashTotal;
+      const totalCost = twCost + usCost + effectiveIbCost;
+      const investmentPnl = totalEquityMv - totalCost;
+      const startYearMv = historyMonthlyData[0].total;
+      const netAssetGain = totalMv - startYearMv;
+      const netYtdPct = (netAssetGain / startYearMv) * 100;
+      const cashRatioPct = (cashTotal / Math.max(totalMv, 1)) * 100;
+
+      // 更新篩選按鈕數量
+      const setCount = (id, n) => { const el = document.getElementById(id); if (el) el.innerText = n; };
+      setCount('count-ALL', holdings.length);
+      setCount('count-TW', holdings.filter(h => h.market === 'TW').length);
+      setCount('count-US', holdings.filter(h => h.market === 'US').length);
+      setCount('count-IB', holdings.filter(h => h.market === 'IB').length);
+      setCount('count-ETF', holdings.filter(h => h.category === 'ETF').length);
+      setCount('count-STOCK', holdings.filter(h => h.category === 'STOCK').length);
+
+      // 第一頁總資產 KPI
+      const mvEl = document.getElementById('kpiTotalMarketValue');
+      if (mvEl) mvEl.innerText = isPrivacyMasked ? 'NT$ •••••••' : `NT$${Math.round(totalMv).toLocaleString()}`;
+
+      const badgeEl = document.getElementById('kpiVsNov1Badge');
+      if (badgeEl) {
+        const diff = totalMv - NOV_01_MV;
+        if (Math.abs(diff) < 10) {
+          badgeEl.innerText = '11/01 結算基準';
+          badgeEl.className = 'text-[11px] sm:text-xs px-2.5 py-0.5 rounded-full font-mono font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 whitespace-nowrap shrink-0';
+        } else {
+          const diffPct = (diff / NOV_01_MV) * 100;
+          const sign = diff >= 0 ? '+' : '';
+          badgeEl.innerText = isPrivacyMasked
+            ? `vs 11/01: ${sign}${diffPct.toFixed(2)}%`
+            : `vs 11/01: ${sign}${diffPct.toFixed(2)}% (${sign}${(diff / 10000).toFixed(1)}萬)`;
+          badgeEl.className = `text-[11px] sm:text-xs px-2.5 py-0.5 rounded-full font-mono font-bold border whitespace-nowrap shrink-0 ${diff >= 0 ? 'bg-rose-500/15 text-rose-300 border-rose-500/30' : 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30'}`;
+        }
+      }
+
+      const subEl = document.getElementById('kpiBaselineSubText');
+      if (subEl) {
+        const pnlStr = isPrivacyMasked ? '••••••' : `${investmentPnl >= 0 ? '+' : ''}NT$${Math.round(investmentPnl).toLocaleString()}`;
+        const gainStr = isPrivacyMasked ? '••••••' : `${netAssetGain >= 0 ? '+' : ''}NT$${Math.round(netAssetGain).toLocaleString()}`;
+        const ytdSignStr = `${netYtdPct >= 0 ? '+' : ''}${netYtdPct.toFixed(2)}%`;
+        subEl.innerHTML = `<span class="inline-block">投資獲利: <span class="font-mono ${investmentPnl >= 0 ? 'text-rose-400' : 'text-emerald-400'} font-bold">${pnlStr}</span></span> <span class="text-slate-600 mx-0.5">｜</span> <span class="inline-block">淨資產增值: <span class="font-mono text-emerald-300 font-bold">${gainStr} (${ytdSignStr})</span></span>`;
+      }
+
+      const costEl = document.getElementById('kpiTotalCost');
+      if (costEl) costEl.innerText = formatMasked(`NT$${Math.round(totalCost).toLocaleString()}`);
+
+      const pnlTextEl = document.getElementById('kpiTotalPnlText');
+      if (pnlTextEl) {
+        pnlTextEl.innerText = isPrivacyMasked ? '••••••' : `${investmentPnl >= 0 ? '+' : ''}NT$${Math.round(investmentPnl).toLocaleString()}`;
+        pnlTextEl.className = `text-[13px] sm:text-lg font-black font-mono block mt-0.5 ${investmentPnl >= 0 ? 'text-rose-400' : 'text-emerald-400'}`;
+      }
+
+      const cashRatioEl = document.getElementById('kpiCashRatioBadge');
+      if (cashRatioEl) cashRatioEl.innerText = `(${cashRatioPct.toFixed(1)}%)`;
+
+      const cashEl = document.getElementById('kpiCashTotal');
+      if (cashEl) cashEl.innerText = formatMasked(`NT$${Math.round(cashTotal).toLocaleString()}`);
+
+      // 三大精簡績效指標 (淨資產 YTD / 年化報酬 XIRR / 回撤 DD)
+      const ytdEl = document.getElementById('kpiNetYtdReturn');
+      if (ytdEl) {
+        ytdEl.innerText = `${netYtdPct >= 0 ? '+' : ''}${netYtdPct.toFixed(2)}%`;
+        ytdEl.className = `text-sm sm:text-xl font-black font-mono block mt-0.5 ${netYtdPct >= 0 ? 'text-rose-400' : 'text-emerald-400'}`;
+      }
+
+      const xirrPct = calculatePortfolioXIRR(totalEquityMv);
+      const xirrEl = document.getElementById('kpiXirrReturn');
+      if (xirrEl) {
+        xirrEl.innerText = `${xirrPct >= 0 ? '+' : ''}${xirrPct.toFixed(2)}%`;
+        xirrEl.className = `text-sm sm:text-xl font-black font-mono block mt-0.5 ${xirrPct >= 0 ? 'text-cyan-300' : 'text-emerald-400'}`;
+      }
+
+      const peakMv = Math.max(...historyMonthlyData.map(d => d.total), totalMv);
+      const mddPct = ((totalMv - peakMv) / peakMv) * 100;
+      const mddEl = document.getElementById('kpiMDD');
+      if (mddEl) mddEl.innerText = `${mddPct.toFixed(2)}%`;
+
+      // 第二頁四大部位卡片
+      const safeTotal = Math.max(totalMv, 1);
+      const setCard = (pctId, mvId, pnlId, mv, pnl) => {
+        const pEl = document.getElementById(pctId);
+        const mEl = document.getElementById(mvId);
+        const lEl = document.getElementById(pnlId);
+        if (pEl) pEl.innerText = `${((mv / safeTotal) * 100).toFixed(1)}%`;
+        if (mEl) mEl.innerText = formatMasked(`NT$${Math.round(mv).toLocaleString()}`);
+        if (lEl && pnl !== null) {
+          lEl.innerText = isPrivacyMasked ? '••••' : `${pnl >= 0 ? '+' : ''}NT$${Math.round(pnl).toLocaleString()}`;
+          lEl.className = `font-mono font-bold truncate ${pnl >= 0 ? 'text-rose-400' : 'text-emerald-400'}`;
+        }
+      };
+      setCard('cardPctTw', 'cardMvTw', 'cardPnlTw', twMv, twMv - twCost);
+      setCard('cardPctUs', 'cardMvUs', 'cardPnlUs', usMv, usMv - usCost);
+      setCard('cardPctIb', 'cardMvIb', 'cardPnlIb', effectiveIbMv, effectiveIbMv - effectiveIbCost);
+      setCard('cardPctCash', 'cardMvCash', null, cashTotal, null);
+
+      const bankTotEl = document.getElementById('displayBankTotal');
+      if (bankTotEl) bankTotEl.innerText = isPrivacyMasked ? '••••••' : Math.round(cashTotal).toLocaleString();
+
+      // 第二頁：總股票資產、大盤 ETF（台美股）與個股（台美股）結構比例
+      const totalEtfMv = twEtfMv + usEtfMv;
+      const totalStockMv = twStockMv + usStockMv;
+      const safeEquity = Math.max(totalEquityMv, 1);
+
+      const eqMvEl = document.getElementById('equityTotalMvVal');
+      const eqPctEl = document.getElementById('equityTotalAssetPct');
+      if (eqMvEl) eqMvEl.innerText = formatMasked(`NT$${Math.round(totalEquityMv).toLocaleString()}`);
+      if (eqPctEl) eqPctEl.innerText = `(${((totalEquityMv / safeTotal) * 100).toFixed(1)}%)`;
+
+      const etfEqPct = (totalEtfMv / safeEquity) * 100;
+      const stkEqPct = (totalStockMv / safeEquity) * 100;
+      const ibEqPct = (effectiveIbMv / safeEquity) * 100;
+
+      const barEtf = document.getElementById('barEquityEtf');
+      const barStk = document.getElementById('barEquityStock');
+      const barIb = document.getElementById('barEquityIb');
+      if (barEtf) barEtf.style.width = `${etfEqPct.toFixed(1)}%`;
+      if (barStk) barStk.style.width = `${stkEqPct.toFixed(1)}%`;
+      if (barIb) barIb.style.width = `${ibEqPct.toFixed(1)}%`;
+
+      const subEtf = document.getElementById('subBarEtfPct');
+      const subStk = document.getElementById('subBarStockPct');
+      const subIb = document.getElementById('subBarIbPct');
+      if (subEtf) subEtf.innerText = `${etfEqPct.toFixed(1)}%`;
+      if (subStk) subStk.innerText = `${stkEqPct.toFixed(1)}%`;
+      if (subIb) subIb.innerText = `${ibEqPct.toFixed(1)}%`;
+
+      // 大盤 ETF 總數與台美股明細
+      const setText = (id, val) => { const el = document.getElementById(id); if (el) el.innerText = val; };
+      setText('etfTotalAssetPct', `${((totalEtfMv / safeTotal) * 100).toFixed(1)}%`);
+      setText('etfTotalEquityPct', `${etfEqPct.toFixed(1)}%`);
+      setText('etfBreakdownTotalMv', formatMasked(`NT$${Math.round(totalEtfMv).toLocaleString()}`));
+
+      const safeEtf = Math.max(totalEtfMv, 1);
+      const twEtfShare = (twEtfMv / safeEtf) * 100;
+      const usEtfShare = (usEtfMv / safeEtf) * 100;
+      setText('etfTwUsSplitText', `${twEtfShare.toFixed(1)}% : ${usEtfShare.toFixed(1)}%`);
+      const barTwEtf = document.getElementById('barTwEtf');
+      const barUsEtf = document.getElementById('barUsEtf');
+      if (barTwEtf) barTwEtf.style.width = `${twEtfShare.toFixed(1)}%`;
+      if (barUsEtf) barUsEtf.style.width = `${usEtfShare.toFixed(1)}%`;
+
+      setText('twEtfAssetPct', `${((twEtfMv / safeTotal) * 100).toFixed(1)}%`);
+      setText('twEtfMvVal', formatMasked(`NT$${Math.round(twEtfMv).toLocaleString()}`));
+      setText('twEtfSharePct', `${twEtfShare.toFixed(1)}%`);
+      setText('twEtfEquityPct', `${((twEtfMv / safeEquity) * 100).toFixed(1)}%`);
+
+      setText('usEtfAssetPct', `${((usEtfMv / safeTotal) * 100).toFixed(1)}%`);
+      setText('usEtfMvVal', formatMasked(`NT$${Math.round(usEtfMv).toLocaleString()}`));
+      setText('usEtfSharePct', `${usEtfShare.toFixed(1)}%`);
+      setText('usEtfEquityPct', `${((usEtfMv / safeEquity) * 100).toFixed(1)}%`);
+
+      // 個股部位總數與台美股明細
+      setText('stockTotalAssetPct', `${((totalStockMv / safeTotal) * 100).toFixed(1)}%`);
+      setText('stockTotalEquityPct', `${stkEqPct.toFixed(1)}%`);
+      setText('stockBreakdownTotalMv', formatMasked(`NT$${Math.round(totalStockMv).toLocaleString()}`));
+
+      const safeStk = Math.max(totalStockMv, 1);
+      const twStkShare = (twStockMv / safeStk) * 100;
+      const usStkShare = (usStockMv / safeStk) * 100;
+      setText('stockTwUsSplitText', `${twStkShare.toFixed(1)}% : ${usStkShare.toFixed(1)}%`);
+      const barTwStk = document.getElementById('barTwStock');
+      const barUsStk = document.getElementById('barUsStock');
+      if (barTwStk) barTwStk.style.width = `${twStkShare.toFixed(1)}%`;
+      if (barUsStk) barUsStk.style.width = `${usStkShare.toFixed(1)}%`;
+
+      setText('twStockAssetPct', `${((twStockMv / safeTotal) * 100).toFixed(1)}%`);
+      setText('twStockMvVal', formatMasked(`NT$${Math.round(twStockMv).toLocaleString()}`));
+      setText('twStockSharePct', `${twStkShare.toFixed(1)}%`);
+      setText('twStockEquityPct', `${((twStockMv / safeEquity) * 100).toFixed(1)}%`);
+
+      setText('usStockAssetPct', `${((usStockMv / safeTotal) * 100).toFixed(1)}%`);
+      setText('usStockMvVal', formatMasked(`NT$${Math.round(usStockMv).toLocaleString()}`));
+      setText('usStockSharePct', `${usStkShare.toFixed(1)}%`);
+      setText('usStockEquityPct', `${((usStockMv / safeEquity) * 100).toFixed(1)}%`);
+
+      // 核心策略目標比例試算
+      setText('valEtfCurrent', formatMasked(`NT$${Math.round(totalEtfMv).toLocaleString()}`));
+      setText('valSingleCurrent', formatMasked(`NT$${Math.round(totalStockMv).toLocaleString()}`));
+
+      const targetEtfMv = totalMv * (targetEtfRatio / 100);
+      const etfGap = targetEtfMv - totalEtfMv;
+      const gapEtfEl = document.getElementById('gapEtfText');
+      if (gapEtfEl) {
+        if (isPrivacyMasked) {
+          gapEtfEl.innerText = '••••••';
+        } else if (etfGap > 0) {
+          gapEtfEl.innerText = `需再加碼 +NT$${Math.round(etfGap).toLocaleString()}`;
+          gapEtfEl.className = 'text-xs sm:text-sm font-black font-mono text-amber-400 block mt-0.5';
+        } else {
+          gapEtfEl.innerText = `已達標超出 +NT$${Math.round(Math.abs(etfGap)).toLocaleString()}`;
+          gapEtfEl.className = 'text-xs sm:text-sm font-black font-mono text-emerald-400 block mt-0.5';
+        }
+      }
+
+      const maxSingleMv = totalMv * 0.15;
+      const singleGap = totalStockMv - maxSingleMv;
+      const gapSingleEl = document.getElementById('gapSingleText');
+      if (gapSingleEl) {
+        if (isPrivacyMasked) {
+          gapSingleEl.innerText = '••••••';
+        } else if (singleGap > 0) {
+          gapSingleEl.innerText = `超重 +NT$${Math.round(singleGap).toLocaleString()} (宜止盈)`;
+          gapSingleEl.className = 'text-xs sm:text-sm font-black font-mono text-rose-400 block mt-0.5';
+        } else {
+          gapSingleEl.innerText = `安全空間 +NT$${Math.round(Math.abs(singleGap)).toLocaleString()}`;
+          gapSingleEl.className = 'text-xs sm:text-sm font-black font-mono text-emerald-400 block mt-0.5';
+        }
+      }
+
+      // 第四頁：2026 里程碑與千萬階梯進度
+      const goalPct = Math.min((totalMv / TARGET_2026_GOAL) * 100, 100);
+      setText('planTargetPct', `${((totalMv / TARGET_2026_GOAL) * 100).toFixed(2)}%`);
+      const planBar = document.getElementById('planProgressBar');
+      if (planBar) planBar.style.width = `${goalPct.toFixed(2)}%`;
+
+      setText('planCurrentMv', formatMasked(`NT$${Math.round(totalMv).toLocaleString()}`));
+      const planGap = Math.max(TARGET_2026_GOAL - totalMv, 0);
+      setText('planGapValue', formatMasked(`NT$${Math.round(planGap).toLocaleString()}`));
+      setText('yearlyDepositSum', (monthlyDeposit * 12).toLocaleString());
+
+      const ladderPct = (totalMv / 10000000) * 100;
+      setText('ladderOverallPct', `${ladderPct.toFixed(2)}% (距千萬)`);
+      const ladderBar = document.getElementById('ladderProgressBar');
+      if (ladderBar) ladderBar.style.width = `${Math.min(ladderPct, 100).toFixed(2)}%`;
+
+      const legTotal = document.getElementById('legPlanTotalOnly');
+      if (legTotal) legTotal.innerText = isPrivacyMasked ? '••••' : `${(totalMv / 10000).toFixed(1)}萬`;
+
+      // 即時更新第三頁每列市值下方的佔總資產百分比，並渲染第二頁個別標的佔比排行
+      holdings.forEach(h => {
+        const sh = parseFloat(h.shares) || 0;
+        const cur = parseFloat(h.currentPrice) || 0;
+        const mvNtd = h.market === 'TW' ? sh * cur : sh * cur * usTwdRate;
+        const wPct = totalMv > 0 ? (mvNtd / totalMv) * 100 : 0;
+        const rowPctEl = document.getElementById(`rowPct-${h.id}`);
+        if (rowPctEl) {
+          rowPctEl.innerText = isPrivacyMasked ? '••%' : `${wPct.toFixed(1)}%`;
+        }
+      });
+
+      renderHoldingsWeightRanking(totalMv, totalEquityMv);
+
+      renderSvgDonutChart(twMv, usMv, effectiveIbMv, cashTotal);
+
+      if (renderTable) renderHoldingsTable(totalMv);
+
+      renderHistoryTable2026(twMv, usMv, effectiveIbMv, cashTotal, totalMv, totalCost, investmentPnl);
+
+      const tab4 = document.getElementById('tabView-4');
+      if (tab4 && !tab4.classList.contains('hidden')) {
+        renderPlanSvgCharts();
+      }
+    }
+
+    /* 精準現金流內部報酬率 (XIRR) 演算法：扣除每月本金增減時間權重，計算真實年化投資報酬率 */
+    function calculatePortfolioXIRR(currentEquityMv) {
+      if (!historyMonthlyData || historyMonthlyData.length === 0) return 0;
+
+      const parseDateStr = (dStr) => {
+        const parts = dStr.split('/').map(Number);
+        return new Date(parts[0], (parts[1] || 1) - 1, parts[2] || 1);
+      };
+
+      const startDate = parseDateStr(historyMonthlyData[0].date);
+      const nowDate = new Date();
+      const endDate = nowDate > parseDateStr(historyMonthlyData[historyMonthlyData.length - 1].date)
+        ? nowDate
+        : new Date(2026, 10, 16);
+
+      const flows = [];
+      const firstRow = historyMonthlyData[0];
+      const initialEquity = (firstRow.tw || 0) + (firstRow.us || 0) + (firstRow.ib || 0);
+      flows.push({ amount: -initialEquity, years: 0 });
+
+      for (let i = 1; i < historyMonthlyData.length; i++) {
+        const netContribution = (historyMonthlyData[i].principal || 0) - (historyMonthlyData[i - 1].principal || 0);
+        if (Math.abs(netContribution) > 1) {
+          const dt = parseDateStr(historyMonthlyData[i].date);
+          const yrs = Math.max((dt - startDate) / (365 * 24 * 60 * 60 * 1000), 0.001);
+          flows.push({ amount: -netContribution, years: yrs });
+        }
+      }
+
+      const totalYears = Math.max((endDate - startDate) / (365 * 24 * 60 * 60 * 1000), 0.1);
+      flows.push({ amount: currentEquityMv, years: totalYears });
+
+      const npv = (rate) => {
+        let sum = 0;
+        for (let i = 0; i < flows.length; i++) {
+          sum += flows[i].amount / Math.pow(1 + rate, flows[i].years);
+        }
+        return sum;
+      };
+
+      let low = -0.95;
+      let high = 5.0;
+      for (let iter = 0; iter < 60; iter++) {
+        const mid = (low + high) / 2;
+        const val = npv(mid);
+        if (Math.abs(val) < 0.01) return mid * 100;
+        if (val > 0) low = mid;
+        else high = mid;
+      }
+      return ((low + high) / 2) * 100;
+    }
+
+    function toggleWeightRankingExpand() {
+      isWeightRankingExpanded = !isWeightRankingExpanded;
+      recalculateAll(false);
+    }
+
+    function renderHoldingsWeightRanking(totalMv, totalEquityMv) {
+      const container = document.getElementById('individualWeightRankingList');
+      const btnText = document.getElementById('textToggleWeightRanking');
+      const btnIcon = document.getElementById('iconToggleWeightRanking');
+      if (!container) return;
+
+      const ranked = holdings.map(h => {
+        const sh = parseFloat(h.shares) || 0;
+        const cur = parseFloat(h.currentPrice) || 0;
+        const mvNtd = h.market === 'TW' ? sh * cur : sh * cur * usTwdRate;
+        const assetPct = totalMv > 0 ? (mvNtd / totalMv) * 100 : 0;
+        const equityPct = totalEquityMv > 0 ? (mvNtd / totalEquityMv) * 100 : 0;
+        return { ...h, mvNtd, assetPct, equityPct };
+      }).sort((a, b) => b.mvNtd - a.mvNtd);
+
+      if (btnText) {
+        btnText.innerText = isWeightRankingExpanded ? '收合排行' : `展開排行 (${ranked.length})`;
+      }
+      if (btnIcon) {
+        btnIcon.className = isWeightRankingExpanded ? 'fa-solid fa-chevron-up text-[10px]' : 'fa-solid fa-chevron-down text-[10px]';
+      }
+
+      if (!isWeightRankingExpanded) {
+        container.classList.add('hidden');
+        container.innerHTML = '';
+        return;
+      }
+
+      container.classList.remove('hidden');
+      const maxPct = ranked.length > 0 ? Math.max(ranked[0].assetPct, 0.1) : 1;
+
+      container.innerHTML = ranked.map((item, idx) => {
+        const isEtf = item.category === 'ETF';
+        const barWidth = Math.min((item.assetPct / maxPct) * 100, 100);
+        const barColor = isEtf
+          ? 'bg-gradient-to-r from-cyan-400 to-teal-400'
+          : 'bg-gradient-to-r from-amber-400 to-orange-400';
+        const pctColor = isEtf ? 'text-cyan-300' : 'text-amber-300';
+        const rankBadgeClass = idx === 0
+          ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
+          : idx === 1
+            ? 'bg-slate-300/15 text-slate-200 border-slate-400/30'
+            : idx === 2
+              ? 'bg-orange-500/15 text-orange-300 border-orange-500/30'
+              : 'bg-slate-900 text-slate-400 border-slate-800';
+
+        const flag = item.market === 'TW' ? '🇹🇼' : (item.market === 'IB' ? '🌐' : '🇺🇸');
+        const dispAssetPct = isPrivacyMasked ? '••%' : `${item.assetPct.toFixed(1)}%`;
+        const dispEquityPct = isPrivacyMasked ? '••%' : `佔股${item.equityPct.toFixed(1)}%`;
+
+        return `
+          <div class="p-2 sm:p-2.5 rounded-xl bg-slate-900/90 border border-slate-800/90 flex items-center gap-2 sm:gap-3">
+            <span class="w-5 h-5 sm:w-6 sm:h-6 rounded-lg border ${rankBadgeClass} font-mono text-[10px] sm:text-xs font-black flex items-center justify-center shrink-0">
+              ${idx + 1}
+            </span>
+
+            <div class="min-w-0 flex-1 space-y-1">
+              <div class="flex items-center justify-between gap-1.5">
+                <div class="flex items-center gap-1.5 min-w-0">
+                  <span class="font-mono font-black text-xs sm:text-sm text-white shrink-0">${flag} ${item.symbol}</span>
+                  <span class="text-[11px] sm:text-xs text-slate-400 truncate">${item.name}</span>
+                </div>
+                <div class="flex items-baseline gap-1.5 font-mono shrink-0">
+                  <span class="text-xs sm:text-sm font-black ${pctColor}">${dispAssetPct}</span>
+                  <span class="text-[10px] text-slate-500">${dispEquityPct}</span>
+                </div>
+              </div>
+              <div class="w-full h-1.5 rounded-full bg-slate-950 overflow-hidden">
+                <div class="h-full rounded-full ${barColor} transition-all duration-300" style="width: ${isPrivacyMasked ? 0 : barWidth.toFixed(1)}%"></div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderHoldingsTable(totalPortfolioMv) {
+      const tbody = document.getElementById('holdingsTableBody');
+      if (!tbody) return;
+
+      let computedTotalMv = totalPortfolioMv;
+      if (!computedTotalMv) {
+        let sumStockMv = 0;
+        let hasIb = false;
+        holdings.forEach(h => {
+          const sh = parseFloat(h.shares) || 0;
+          const cur = parseFloat(h.currentPrice) || 0;
+          if (h.market === 'IB') hasIb = true;
+          sumStockMv += h.market === 'TW' ? sh * cur : sh * cur * usTwdRate;
+        });
+        computedTotalMv = sumStockMv + (hasIb ? 0 : IB_MARKET_NTD) + getCashTotal();
+      }
+
+      const filtered = holdings.filter(h => {
+        if (activeFilter === 'ALL') return true;
+        if (activeFilter === 'TW' || activeFilter === 'US' || activeFilter === 'IB') return h.market === activeFilter;
+        if (activeFilter === 'ETF' || activeFilter === 'STOCK') return h.category === activeFilter;
+        return true;
+      });
+
+      const groups = [
+        { key: 'TW-ETF', title: '🇹🇼 台股 ETF', badgeColor: 'bg-teal-500/15 text-teal-300 border-teal-500/30', match: h => h.market === 'TW' && h.category === 'ETF' },
+        { key: 'TW-STOCK', title: '🇹🇼 台股個股', badgeColor: 'bg-amber-500/15 text-amber-300 border-amber-500/30', match: h => h.market === 'TW' && h.category === 'STOCK' },
+        { key: 'US-ETF', title: '🇺🇸 美股 ETF', badgeColor: 'bg-sky-500/15 text-sky-300 border-sky-500/30', match: h => h.market === 'US' && h.category === 'ETF' },
+        { key: 'US-STOCK', title: '🇺🇸 美股個股', badgeColor: 'bg-orange-500/15 text-orange-300 border-orange-500/30', match: h => h.market === 'US' && h.category === 'STOCK' },
+        { key: 'IB-ALL', title: '🌐 IB 海外部位', badgeColor: 'bg-purple-500/15 text-purple-300 border-purple-500/30', match: h => h.market === 'IB' }
+      ];
+
+      let html = '';
+      groups.forEach(grp => {
+        const groupHoldings = filtered.filter(grp.match);
+        if (groupHoldings.length === 0) return;
+
+        let subMv = 0, subCost = 0;
+        groupHoldings.forEach(h => {
+          const sh = parseFloat(h.shares) || 0;
+          const avg = parseFloat(h.avgPrice) || 0;
+          const cur = parseFloat(h.currentPrice) || 0;
+          if (h.market === 'TW') {
+            subMv += sh * cur;
+            subCost += sh * avg;
+          } else {
+            subMv += sh * cur * usTwdRate;
+            subCost += sh * avg * usTwdRate;
+          }
+        });
+
+        const subPnl = subMv - subCost;
+        const subPnlPct = subCost > 0 ? (subPnl / subCost) * 100 : 0;
+        const subAssetPct = computedTotalMv > 0 ? (subMv / computedTotalMv) * 100 : 0;
+        const maskedSubPnl = isPrivacyMasked
+          ? (subPnl >= 0 ? '+••••' : '-••••')
+          : `${subPnl >= 0 ? '+' : ''}${Math.round(subPnl).toLocaleString()}`;
+
+        html += `
+          <tr class="bg-slate-950/90 border-t border-b border-slate-800">
+            <td colspan="7" class="py-1.5 px-2 sm:px-3.5">
+              <div class="flex items-center justify-between gap-1 text-[11px] sm:text-xs">
+                <div class="flex items-center gap-1.5 shrink-0">
+                  <span class="px-1.5 py-0.5 rounded-md font-bold border ${grp.badgeColor}">
+                    ${grp.title}
+                  </span>
+                  <span class="text-slate-400 font-mono text-[10px]">(${groupHoldings.length}檔 · ${subAssetPct.toFixed(1)}%)</span>
+                </div>
+                <div class="flex items-center gap-2 font-mono text-[11px] sm:text-xs truncate">
+                  <span class="text-slate-400">小計:<b class="text-white font-bold ml-0.5">${formatMasked('NT$' + Math.round(subMv).toLocaleString())}</b></span>
+                  <span class="${subPnl >= 0 ? 'text-rose-400' : 'text-emerald-400'} font-bold">
+                    ${maskedSubPnl} (${subPnl >= 0 ? '+' : ''}${subPnlPct.toFixed(1)}%)
+                  </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        `;
+
+        groupHoldings.forEach(h => {
+          const shares = parseFloat(h.shares) || 0;
+          const avg = parseFloat(h.avgPrice) || 0;
+          const cur = parseFloat(h.currentPrice) || 0;
+
+          let costNtd = 0, mvNtd = 0;
+          if (h.market === 'TW') {
+            costNtd = shares * avg;
+            mvNtd = shares * cur;
+          } else {
+            costNtd = shares * avg * usTwdRate;
+            mvNtd = shares * cur * usTwdRate;
+          }
+
+          const pnlNtd = mvNtd - costNtd;
+          const pnlPct = costNtd > 0 ? (pnlNtd / costNtd) * 100 : 0;
+          const assetWeightPct = computedTotalMv > 0 ? (mvNtd / computedTotalMv) * 100 : 0;
+
+          const maskedRowMv = isPrivacyMasked ? '••••••' : Math.round(mvNtd).toLocaleString();
+          const maskedRowWeight = isPrivacyMasked ? '••%' : `${assetWeightPct.toFixed(1)}%`;
+          const maskedRowPnl = isPrivacyMasked
+            ? (pnlNtd >= 0 ? '+••••' : '-••••')
+            : `${pnlNtd >= 0 ? '+' : ''}${Math.round(pnlNtd).toLocaleString()}`;
+          const googleFinanceUrl = getGoogleFinanceUrl(h.symbol, h.market);
+
+          html += `
+            <tr class="hover:bg-slate-800/35 transition">
+              <td class="py-2 pl-2 pr-1 sm:px-3.5 align-middle">
+                <div class="flex items-center gap-1">
+                  <a href="${googleFinanceUrl}" target="_blank" rel="noopener noreferrer" title="在 Google 財經查看 ${h.symbol}" class="inline-flex items-center gap-1 font-black text-white hover:text-cyan-300 text-xs sm:text-sm max-w-full group">
+                    <span class="truncate">${h.symbol}</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-[9px] sm:text-[10px] text-cyan-400 group-hover:text-cyan-300 shrink-0"></i>
+                  </a>
+                  <span class="hidden sm:inline-block text-[10px] px-1.5 py-0.2 rounded shrink-0 ${h.category === 'ETF' ? 'bg-cyan-500/15 text-cyan-300' : 'bg-amber-500/15 text-amber-300'}">${h.category}</span>
+                </div>
+                <span class="text-[10px] sm:text-xs text-slate-400 font-sans block truncate">${h.name}</span>
+              </td>
+
+              <td class="py-2 px-0.5 sm:px-2 text-right align-middle">
+                ${isPrivacyMasked
+                  ? '<span class="text-xs font-mono text-slate-400">••••</span>'
+                  : `<input type="number" step="any" inputmode="decimal" value="${h.shares}" oninput="updateHoldingField('${h.id}', 'shares', this.value)" class="input-table w-full py-1 px-1 sm:px-2 rounded-md sm:rounded-lg bg-slate-950 border border-slate-700/90 text-right font-mono text-xs sm:text-sm tracking-tighter sm:tracking-normal text-white">`
+                }
+              </td>
+
+              <td class="py-2 px-0.5 sm:px-2 text-right align-middle">
+                ${isPrivacyMasked
+                  ? '<span class="text-xs font-mono text-slate-400">••••</span>'
+                  : `<input type="number" step="any" inputmode="decimal" value="${h.avgPrice}" oninput="updateHoldingField('${h.id}', 'avgPrice', this.value)" class="input-table w-full py-1 px-1 sm:px-2 rounded-md sm:rounded-lg bg-slate-950 border border-slate-700/90 text-right font-mono text-xs sm:text-sm tracking-tighter sm:tracking-normal text-slate-300">`
+                }
+              </td>
+
+              <td class="py-2 px-0.5 sm:px-2 text-right align-middle">
+                <input type="number" step="any" inputmode="decimal" value="${h.currentPrice}" 
+                       oninput="updateHoldingField('${h.id}', 'currentPrice', this.value)" 
+                       class="input-table w-full py-1 px-1 sm:px-2 rounded-md sm:rounded-lg bg-slate-950 border border-slate-700/90 text-right font-mono text-xs sm:text-sm tracking-tighter sm:tracking-normal text-emerald-400 font-bold">
+              </td>
+
+              <td class="py-2 px-1 sm:px-3 text-right font-black text-white text-xs sm:text-sm tracking-tighter sm:tracking-normal align-middle">
+                <span id="rowMv-${h.id}" class="block leading-tight">${maskedRowMv}</span>
+                <span id="rowPct-${h.id}" class="block text-[9px] sm:text-[10px] leading-tight text-cyan-400 font-semibold">${maskedRowWeight}</span>
+              </td>
+
+              <td id="rowPnl-${h.id}" class="py-2 px-1 sm:px-3 text-right text-[11px] sm:text-xs font-bold tracking-tighter sm:tracking-normal align-middle">
+                <span class="${pnlNtd >= 0 ? 'text-rose-400' : 'text-emerald-400'} block leading-tight">
+                  ${maskedRowPnl}
+                </span>
+                <span class="block text-[9px] sm:text-[10px] leading-tight ${pnlNtd >= 0 ? 'text-rose-300' : 'text-emerald-300'}">
+                  ${pnlPct >= 0 ? '+' : ''}${pnlPct.toFixed(1)}%
+                </span>
+              </td>
+
+              <td class="py-2 px-0.5 text-center align-middle">
+                <button onclick="deleteHolding('${h.id}')" class="p-1 rounded text-slate-500 hover:text-rose-400 hover:bg-rose-500/10 transition" title="刪除此股票">
+                  <i class="fa-solid fa-trash-can text-[11px] sm:text-xs"></i>
+                </button>
+              </td>
+            </tr>
+          `;
+        });
+      });
+
+      tbody.innerHTML = html;
+    }
+
+    /* 10. 自然曆核心走勢圖演算法 */
+    let mainChartPoints = [];
+    let selectedMainPointIdx = null;
+    let mainChartLatestSummary = { alpha: 0, taiex: 0, sp500: 0, nasdaq: 0 };
+
+    function switchTimeframe(tf) {
+      activeTimeframe = tf;
+      selectedMainPointIdx = null;
+      document.querySelectorAll('.tf-btn').forEach(btn => {
+        btn.classList.remove('bg-cyan-600', 'text-white', 'shadow');
+        btn.classList.add('text-slate-400');
+      });
+      const activeBtn = document.getElementById(`tfBtn-${tf}`);
+      if (activeBtn) {
+        activeBtn.classList.remove('text-slate-400');
+        activeBtn.classList.add('bg-cyan-600', 'text-white', 'shadow');
+      }
+      renderSvgLineChart();
+    }
+
+    function formatSignedPctText(val) {
+      const num = Number(val);
+      if (isNaN(num)) return String(val);
+      return `${num >= 0 ? '+' : ''}${num.toFixed(2)}%`;
+    }
+
+    function positionTooltipSmart(container, svg, tooltip, ptX, topDotY, bottomDotY) {
+      if (!container || !svg || !tooltip) return;
+      const svgRect = svg.getBoundingClientRect();
+      const contRect = container.getBoundingClientRect();
+      if (contRect.width <= 0) return;
+
+      const dotLeftInCont = (svgRect.left - contRect.left) + ptX;
+      const dotTopInCont = (svgRect.top - contRect.top) + topDotY;
+      const dotBottomInCont = (svgRect.top - contRect.top) + (bottomDotY !== undefined ? bottomDotY : topDotY);
+
+      tooltip.classList.remove('hidden');
+
+      const tooltipH = tooltip.offsetHeight || 96;
+      const halfW = (tooltip.offsetWidth || 168) / 2;
+      const clampedLeft = Math.max(halfW + 4, Math.min(contRect.width - halfW - 4, dotLeftInCont));
+      tooltip.style.left = `${clampedLeft}px`;
+
+      if (dotTopInCont - tooltipH - 10 >= 4) {
+        tooltip.style.top = `${dotTopInCont - 10}px`;
+        tooltip.style.transform = 'translate(-50%, -100%)';
+      } else {
+        const belowTop = Math.min(contRect.height - tooltipH - 22, dotBottomInCont + 12);
+        tooltip.style.top = `${Math.max(4, belowTop)}px`;
+        tooltip.style.transform = 'translate(-50%, 0)';
+      }
+    }
+
+    function selectMainChartPoint(idx) {
+      if (!mainChartPoints || idx < 0 || idx >= mainChartPoints.length) return;
+      selectedMainPointIdx = idx;
+      const pt = mainChartPoints[idx];
+
+      const crosshair = document.getElementById('mainChartCrosshair');
+      if (crosshair) {
+        crosshair.setAttribute('x1', pt.x.toFixed(1));
+        crosshair.setAttribute('x2', pt.x.toFixed(1));
+        crosshair.classList.remove('hidden');
+      }
+
+      mainChartPoints.forEach((_, i) => {
+        const isActive = (i === idx);
+        const cAlpha = document.getElementById(`mainDotAlpha-${i}`);
+        const cTaiex = document.getElementById(`mainDotTaiex-${i}`);
+        const cSp500 = document.getElementById(`mainDotSp500-${i}`);
+        const cNasdaq = document.getElementById(`mainDotNasdaq-${i}`);
+        const lbl = document.getElementById(`mainXLabel-${i}`);
+
+        if (cAlpha) cAlpha.setAttribute('opacity', isActive ? '1' : '0');
+        if (cTaiex) cTaiex.setAttribute('opacity', isActive ? '1' : '0');
+        if (cSp500) cSp500.setAttribute('opacity', isActive ? '1' : '0');
+        if (cNasdaq) cNasdaq.setAttribute('opacity', isActive ? '1' : '0');
+        if (lbl) lbl.setAttribute('fill', isActive ? '#fbbf24' : '#94a3b8');
+      });
+
+      const ttDate = document.getElementById('ttMainDate');
+      const ttAlpha = document.getElementById('ttMainAlpha');
+      const ttTaiex = document.getElementById('ttMainTaiex');
+      const ttSp500 = document.getElementById('ttMainSp500');
+      const ttNasdaq = document.getElementById('ttMainNasdaq');
+
+      if (ttDate) ttDate.innerText = pt.fullLabel || pt.label;
+      if (ttAlpha) ttAlpha.innerText = `投組 ${formatSignedPctText(pt.alpha)}`;
+      if (ttTaiex) ttTaiex.innerText = formatSignedPctText(pt.taiex);
+      if (ttSp500) ttSp500.innerText = formatSignedPctText(pt.sp500);
+      if (ttNasdaq) ttNasdaq.innerText = formatSignedPctText(pt.nasdaq);
+
+      const topDotY = Math.min(pt.yAlpha, pt.yTaiex, pt.ySp500, pt.yNasdaq);
+      const bottomDotY = Math.max(pt.yAlpha, pt.yTaiex, pt.ySp500, pt.yNasdaq);
+      const container = document.getElementById('mainChartContainer');
+      const svg = document.getElementById('svgLineChart');
+      const tooltip = document.getElementById('mainChartTooltip');
+      positionTooltipSmart(container, svg, tooltip, pt.x, topDotY, bottomDotY);
+    }
+
+    function resetMainChartSelection() {
+      selectedMainPointIdx = null;
+      const crosshair = document.getElementById('mainChartCrosshair');
+      if (crosshair) crosshair.classList.add('hidden');
+
+      const tooltip = document.getElementById('mainChartTooltip');
+      if (tooltip) tooltip.classList.add('hidden');
+
+      mainChartPoints.forEach((_, i) => {
+        const cAlpha = document.getElementById(`mainDotAlpha-${i}`);
+        const cTaiex = document.getElementById(`mainDotTaiex-${i}`);
+        const cSp500 = document.getElementById(`mainDotSp500-${i}`);
+        const cNasdaq = document.getElementById(`mainDotNasdaq-${i}`);
+        const lbl = document.getElementById(`mainXLabel-${i}`);
+
+        if (cAlpha) cAlpha.setAttribute('opacity', '0');
+        if (cTaiex) cTaiex.setAttribute('opacity', '0');
+        if (cSp500) cSp500.setAttribute('opacity', '0');
+        if (cNasdaq) cNasdaq.setAttribute('opacity', '0');
+        if (lbl) lbl.setAttribute('fill', '#94a3b8');
+      });
+    }
+
+    function handleMainChartPointer(clientX) {
+      const svg = document.getElementById('svgLineChart');
+      if (!svg || !mainChartPoints || mainChartPoints.length === 0) return;
+
+      const rect = svg.getBoundingClientRect();
+      if (rect.width <= 0) return;
+      const relX = clientX - rect.left;
+
+      let closestIdx = 0;
+      let minDist = Infinity;
+      mainChartPoints.forEach((pt, i) => {
+        const dist = Math.abs(pt.x - relX);
+        if (dist < minDist) {
+          minDist = dist;
+          closestIdx = i;
+        }
+      });
+
+      selectMainChartPoint(closestIdx);
+    }
+
+    function renderSvgLineChart() {
+      const svg = document.getElementById('svgLineChart');
+      if (!svg) return;
+
+      const now = new Date();
+      const curYear = now.getFullYear();
+      const curMonth = now.getMonth() + 1;
+      const curQuarter = Math.floor(now.getMonth() / 3) + 1;
+
+      let curTwMv = 0, curUsMv = 0, curIbMv = 0;
+      holdings.forEach(h => {
+        const sh = parseFloat(h.shares) || 0, cur = parseFloat(h.currentPrice) || 0;
+        if (h.market === 'TW') curTwMv += sh * cur;
+        else if (h.market === 'IB') curIbMv += sh * cur * usTwdRate;
+        else curUsMv += sh * cur * usTwdRate;
+      });
+      const curTotalMv = curTwMv + curUsMv + (curIbMv || IB_MARKET_NTD) + getCashTotal();
+
+      let chartData = {
+        title: '',
+        labels: [],
+        fullLabels: [],
+        alpha: [],
+        taiex: [],
+        sp500: [],
+        nasdaq: []
+      };
+
+      if (activeTimeframe === '1W') {
+        chartData.title = `自然當週：本週一至今日`;
+        chartData.labels = ['週一', '週二', '週三', '週四', '今日/週五'];
+        chartData.fullLabels = ['週一', '週二', '週三', '週四', '今日/週五'];
+        chartData.alpha = [0.0, 0.25, -0.15, 0.42, 0.58];
+
+        const sTaiex = liveSyncedMetrics['1W'].taiex !== null ? liveSyncedMetrics['1W'].taiex : 0.85;
+        const sSp = liveSyncedMetrics['1W'].sp500 !== null ? liveSyncedMetrics['1W'].sp500 : 0.31;
+        const sNas = liveSyncedMetrics['1W'].nasdaq !== null ? liveSyncedMetrics['1W'].nasdaq : 1.09;
+
+        chartData.taiex = [0.0, 0.35, -0.20, 0.50, sTaiex];
+        chartData.sp500 = [0.0, -0.10, 0.15, -0.05, sSp];
+        chartData.nasdaq = [0.0, -0.25, 0.40, 0.30, sNas];
+
+      } else if (activeTimeframe === '1M') {
+        chartData.title = `自然當月：${curMonth}/01 至今日`;
+        chartData.labels = [`${curMonth}/01`, `${curMonth}/04`, `${curMonth}/07`, `${curMonth}/10`, '今日'];
+        chartData.fullLabels = [`${curMonth}/01`, `${curMonth}/04`, `${curMonth}/07`, `${curMonth}/10`, '今日'];
+
+        const mtdAlpha = ((curTotalMv - NOV_01_MV) / NOV_01_MV) * 100;
+        chartData.alpha = [0.0, 0.35, -0.42, 0.15, parseFloat(mtdAlpha.toFixed(2))];
+
+        const sTaiex = liveSyncedMetrics['1M'].taiex !== null ? liveSyncedMetrics['1M'].taiex : 1.25;
+        const sSp = liveSyncedMetrics['1M'].sp500 !== null ? liveSyncedMetrics['1M'].sp500 : 0.45;
+        const sNas = liveSyncedMetrics['1M'].nasdaq !== null ? liveSyncedMetrics['1M'].nasdaq : 0.88;
+
+        chartData.taiex = [0.0, 0.65, -0.30, 0.85, sTaiex];
+        chartData.sp500 = [0.0, 0.20, -0.15, 0.30, sSp];
+        chartData.nasdaq = [0.0, 0.40, -0.20, 0.60, sNas];
+
+      } else if (activeTimeframe === '1Q') {
+        chartData.title = `自然當季：${curYear} Q${curQuarter} 季初至今日`;
+        
+        if (curQuarter === 4) {
+          chartData.labels = ['Q4初(10/1)', '10/15', '11/1', '11月中', '今日'];
+          chartData.fullLabels = ['Q4初 (10/1)', '10/15', '11/1', '11月中', '今日'];
+          const q4StartTotal = 2541643;
+          const currentQ4Alpha = ((curTotalMv - q4StartTotal) / q4StartTotal) * 100;
+          chartData.alpha = [0.0, -3.50, -7.33, -6.95, parseFloat(currentQ4Alpha.toFixed(2))];
+
+          const sTaiex = liveSyncedMetrics['1Q'].taiex !== null ? liveSyncedMetrics['1Q'].taiex : -4.85;
+          const sSp = liveSyncedMetrics['1Q'].sp500 !== null ? liveSyncedMetrics['1Q'].sp500 : -0.65;
+          const sNas = liveSyncedMetrics['1Q'].nasdaq !== null ? liveSyncedMetrics['1Q'].nasdaq : -0.35;
+
+          chartData.taiex = [0.0, -2.10, -5.69, -5.10, sTaiex];
+          chartData.sp500 = [0.0, 0.40, -0.93, -0.80, sSp];
+          chartData.nasdaq = [0.0, 0.60, -0.75, -0.50, sNas];
+        } else {
+          chartData.labels = [`Q${curQuarter}初`, '月中', '次月', '今日'];
+          chartData.fullLabels = [`Q${curQuarter}初`, '月中', '次月', '今日'];
+          chartData.alpha = [0.0, 1.2, 2.5, 3.1];
+          chartData.taiex = [0.0, 0.8, 1.5, 2.0];
+          chartData.sp500 = [0.0, 0.5, 1.2, 1.8];
+          chartData.nasdaq = [0.0, 0.9, 1.8, 2.4];
+        }
+
+      } else {
+        chartData.title = `自然年度：${curYear} 年初至今日`;
+        chartData.labels = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '今日'];
+        chartData.fullLabels = ['1/5 (1月)', '2/5 (2月)', '3/5 (3月)', '4/5 (4月)', '5/9 (5月)', '6/6 (6月)', '7/5 (7月)', '8/2 (8月)', '9/5 (9月)', '10/5 (10月)', '11/1 (11月)', '今日'];
+
+        const startYearTotal = (historyMonthlyData && historyMonthlyData.length > 0) ? historyMonthlyData[0].total : 1833198;
+        const monthlyAlphaSeries = historyMonthlyData.slice(0, 11).map(h => {
+          return parseFloat((((h.total - startYearTotal) / startYearTotal) * 100).toFixed(2));
+        });
+        while (monthlyAlphaSeries.length < 11) {
+          monthlyAlphaSeries.push(monthlyAlphaSeries[monthlyAlphaSeries.length - 1] || 0);
+        }
+        const currentYtd = parseFloat((((curTotalMv - startYearTotal) / startYearTotal) * 100).toFixed(2));
+        chartData.alpha = [...monthlyAlphaSeries, currentYtd];
+
+        const sTaiex = liveSyncedMetrics['YTD'].taiex !== null ? liveSyncedMetrics['YTD'].taiex : 45.53;
+        const sSp = liveSyncedMetrics['YTD'].sp500 !== null ? liveSyncedMetrics['YTD'].sp500 : 9.66;
+        const sNas = liveSyncedMetrics['YTD'].nasdaq !== null ? liveSyncedMetrics['YTD'].nasdaq : 7.88;
+
+        chartData.taiex  = [0.0, 2.40, 5.85, 11.20, 20.90, 28.40, 35.15, 28.64, 37.80, 46.54, 45.53, sTaiex];
+        chartData.sp500  = [0.0, 1.35, 2.45,  4.60,  7.85,  9.55, 11.25, 11.12, 11.18, 11.22,  9.66, sSp];
+        chartData.nasdaq = [0.0, 1.10, 2.15,  3.85,  6.60,  8.75, 10.85,  9.72,  9.30,  8.85,  7.88, sNas];
+      }
+
+      const periodLabelEl = document.getElementById('currentPeriodLabel');
+      if (periodLabelEl) periodLabelEl.innerText = chartData.title;
+
+      const lastAlpha = chartData.alpha[chartData.alpha.length - 1];
+      const lastTaiex = chartData.taiex[chartData.taiex.length - 1];
+      const lastSp500 = chartData.sp500[chartData.sp500.length - 1];
+      const lastNasdaq = chartData.nasdaq[chartData.nasdaq.length - 1];
+
+      mainChartLatestSummary = {
+        alpha: lastAlpha,
+        taiex: lastTaiex,
+        sp500: lastSp500,
+        nasdaq: lastNasdaq
+      };
+
+      const setLeg = (id, val) => {
+        const el = document.getElementById(id);
+        const num = Number(val);
+        if (el) {
+          el.innerText = isNaN(num) ? String(val) : `${num >= 0 ? '+' : ''}${num.toFixed(2)}%`;
+        }
+      };
+      setLeg('legendAlphaVal', lastAlpha);
+      setLeg('legendTaiexVal', lastTaiex);
+      setLeg('legendSp500Val', lastSp500);
+      setLeg('legendNasdaqVal', lastNasdaq);
+
+      const rect = svg.getBoundingClientRect();
+      const W = rect.width > 0 ? rect.width : 750;
+      const H = rect.height > 0 ? rect.height : 220;
+
+      const padL = W < 500 ? 40 : 54;
+      const padR = W < 500 ? 12 : 20;
+      const padT = 18;
+      const padB = 26;
+
+      const plotW = Math.max(W - padL - padR, 100);
+      const plotH = Math.max(H - padT - padB, 50);
+
+      let allVals = [...chartData.alpha, ...chartData.taiex, ...chartData.sp500, ...chartData.nasdaq, 0];
+      let rawMin = Math.min(...allVals);
+      let rawMax = Math.max(...allVals);
+
+      let rawRange = rawMax - rawMin;
+      let step = 10;
+      if (rawRange <= 2) step = 0.5;
+      else if (rawRange <= 5) step = 1;
+      else if (rawRange <= 12) step = 2;
+      else if (rawRange <= 30) step = 5;
+      else if (rawRange <= 65) step = 10;
+      else step = 20;
+
+      let plotMin = Math.floor(rawMin / step) * step;
+      let plotMax = Math.ceil(rawMax / step) * step;
+
+      if (rawMax >= plotMax - step * 0.2) plotMax += step;
+      if (rawMin <= plotMin + step * 0.2 && plotMin < 0) plotMin -= step;
+
+      const getX = (idx) => padL + (idx / (chartData.labels.length - 1)) * plotW;
+      const getY = (val) => padT + plotH - ((val - plotMin) / (plotMax - plotMin)) * plotH;
+
+      mainChartPoints = chartData.labels.map((lbl, idx) => ({
+        label: lbl,
+        fullLabel: (chartData.fullLabels && chartData.fullLabels[idx]) ? chartData.fullLabels[idx] : lbl,
+        alpha: chartData.alpha[idx],
+        taiex: chartData.taiex[idx],
+        sp500: chartData.sp500[idx],
+        nasdaq: chartData.nasdaq[idx],
+        x: getX(idx),
+        yAlpha: getY(chartData.alpha[idx]),
+        yTaiex: getY(chartData.taiex[idx]),
+        ySp500: getY(chartData.sp500[idx]),
+        yNasdaq: getY(chartData.nasdaq[idx])
+      }));
+
+      const makePath = (arr) => arr.map((v, i) => `${i === 0 ? 'M' : 'L'} ${getX(i).toFixed(1)} ${getY(v).toFixed(1)}`).join(' ');
+
+      const pathAlpha = makePath(chartData.alpha);
+      const pathTaiex = makePath(chartData.taiex);
+      const pathSp500 = makePath(chartData.sp500);
+      const pathNasdaq = makePath(chartData.nasdaq);
+
+      const xFontSize = (chartData.labels.length > 8 && W < 520) ? '9' : '11';
+      const xGrid = chartData.labels.map((lbl, i) => {
+        const x = getX(i);
+        return `
+          <line x1="${x.toFixed(1)}" y1="${padT}" x2="${x.toFixed(1)}" y2="${padT + plotH}" stroke="#1e293b" stroke-dasharray="3 3" />
+          <text id="mainXLabel-${i}" x="${x.toFixed(1)}" y="${H - 6}" fill="#94a3b8" font-size="${xFontSize}" font-family="JetBrains Mono" font-weight="bold" text-anchor="middle">${lbl}</text>
+        `;
+      }).join('');
+
+      let referenceLevels = [];
+      for (let lvl = plotMin; lvl <= plotMax + 0.001; lvl += step) {
+        referenceLevels.push(Math.round(lvl * 10) / 10);
+      }
+      if (!referenceLevels.includes(0)) {
+        referenceLevels.push(0);
+        referenceLevels.sort((a, b) => a - b);
+      }
+
+      const refLines = referenceLevels.map(lvl => {
+        const y = getY(lvl);
+        const isZero = (lvl === 0);
+        const labelText = isZero ? '0%' : (lvl > 0 ? `+${lvl}%` : `${lvl}%`);
+        return `
+          <line x1="${padL}" y1="${y}" x2="${W - padR}" y2="${y}" stroke="${isZero ? '#64748b' : '#1e293b'}" stroke-width="${isZero ? '1.5' : '1'}" stroke-dasharray="${isZero ? '0' : '4 4'}" />
+          <text x="${padL - 5}" y="${y + 4}" fill="${isZero ? '#f8fafc' : '#94a3b8'}" font-size="10" font-family="JetBrains Mono" font-weight="bold" text-anchor="end">${labelText}</text>
+        `;
+      }).join('');
+
+      const interactiveDots = mainChartPoints.map((pt, i) => `
+        <circle id="mainDotTaiex-${i}" cx="${pt.x.toFixed(1)}" cy="${pt.yTaiex.toFixed(1)}" r="3.6" fill="#10b981" stroke="#ffffff" stroke-width="1.5" opacity="0" />
+        <circle id="mainDotSp500-${i}" cx="${pt.x.toFixed(1)}" cy="${pt.ySp500.toFixed(1)}" r="3.6" fill="#38bdf8" stroke="#ffffff" stroke-width="1.5" opacity="0" />
+        <circle id="mainDotNasdaq-${i}" cx="${pt.x.toFixed(1)}" cy="${pt.yNasdaq.toFixed(1)}" r="3.6" fill="#c084fc" stroke="#ffffff" stroke-width="1.5" opacity="0" />
+        <circle id="mainDotAlpha-${i}" cx="${pt.x.toFixed(1)}" cy="${pt.yAlpha.toFixed(1)}" r="5.8" fill="#f59e0b" stroke="#ffffff" stroke-width="2.2" opacity="0" />
+      `).join('');
+
+      svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+      svg.innerHTML = `
+        ${xGrid}
+        ${refLines}
+        <line id="mainChartCrosshair" x1="0" y1="${padT}" x2="0" y2="${padT + plotH}" stroke="#f59e0b" stroke-width="1.2" stroke-dasharray="3 3" class="hidden" />
+        <path d="${pathTaiex}" fill="none" stroke="#10b981" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.88" />
+        <path d="${pathSp500}" fill="none" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.88" />
+        <path d="${pathNasdaq}" fill="none" stroke="#c084fc" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 4" opacity="0.88" />
+        <path d="${pathAlpha}" fill="none" stroke="#f59e0b" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" filter="drop-shadow(0 2px 8px rgba(245, 158, 11, 0.4))" />
+        ${interactiveDots}
+      `;
+
+      if (!svg.dataset.bound) {
+        svg.dataset.bound = '1';
+        svg.addEventListener('touchstart', (e) => {
+          if (e.touches && e.touches.length > 0) {
+            handleMainChartPointer(e.touches[0].clientX);
+          }
+        }, { passive: true });
+        svg.addEventListener('touchmove', (e) => {
+          if (e.touches && e.touches.length > 0) {
+            handleMainChartPointer(e.touches[0].clientX);
+          }
+        }, { passive: true });
+        svg.addEventListener('touchend', () => {
+          resetMainChartSelection();
+        }, { passive: true });
+        svg.addEventListener('mousemove', (e) => {
+          handleMainChartPointer(e.clientX);
+        });
+        svg.addEventListener('mouseleave', () => {
+          resetMainChartSelection();
+        });
+      }
+
+      if (selectedMainPointIdx !== null && selectedMainPointIdx < mainChartPoints.length) {
+        selectMainChartPoint(selectedMainPointIdx);
+      }
+    }
+
+    function handleSliderChange(val) {
+      targetEtfRatio = parseFloat(val) || 60;
+      const disp = document.getElementById('displaySliderVal');
+      if (disp) disp.innerText = `${targetEtfRatio}%`;
+      recalculateAll(false);
+    }
+
+    function renderHistoryTable2026(curTw, curUs, curIb, curCash, curTotal, curCost, curPnl) {
+      const tbody = document.getElementById('historyTableBody');
+      if (!tbody) return;
+
+      const fmtCell = (val) => isPrivacyMasked ? '••••••' : Math.round(val).toLocaleString();
+      const fmtPnlCell = (val) => isPrivacyMasked ? (val >= 0 ? '+••••••' : '-••••••') : `${val >= 0 ? '+' : ''}${Math.round(val).toLocaleString()}`;
+      const escapeAttr = (str) => String(str || '').replace(/"/g, '&quot;');
+
+      const rowsHtml = historyMonthlyData.map((row, idx) => {
+        const isLatestMonth = (idx === historyMonthlyData.length - 1);
+        const rowClass = isLatestMonth ? 'bg-emerald-950/30' : '';
+        const totalClass = isLatestMonth ? 'font-black text-emerald-300' : 'font-bold text-white';
+        const dateClass = isLatestMonth ? 'font-bold text-emerald-400' : '';
+
+        return `
+          <tr class="${rowClass}">
+            <td class="py-2 px-3 ${dateClass}">${row.date}</td>
+            <td class="py-2 px-3">${fmtCell(row.tw)}</td>
+            <td class="py-2 px-3">${fmtCell(row.us)}</td>
+            <td class="py-2 px-3">${fmtCell(row.ib)}</td>
+            <td class="py-2 px-3">${fmtCell(row.cash)}</td>
+            <td class="py-2 px-3 ${totalClass}">${fmtCell(row.total)}</td>
+            <td class="py-2 px-3">${fmtCell(row.principal)}</td>
+            <td class="py-2 px-3 text-rose-400">${fmtPnlCell(row.pnl)}</td>
+            <td class="py-1.5 px-2 font-sans">
+              <input type="text" value="${escapeAttr(row.memo)}" placeholder="點擊記錄當月心得..." onchange="updateHistoryMemo(${idx}, this.value)" class="w-full py-1 px-2 rounded-lg bg-slate-950/80 border border-slate-800 hover:border-slate-700 focus:border-amber-400 text-[11px] sm:text-xs text-slate-200 placeholder-slate-600 transition">
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      const realTimeHtml = `
+        <tr class="bg-cyan-950/40 border-t-2 border-cyan-500/40">
+          <td class="py-2 px-3 font-black text-cyan-300">當前即時</td>
+          <td class="py-2 px-3 font-bold text-white">${fmtCell(curTw || 0)}</td>
+          <td class="py-2 px-3 font-bold text-white">${fmtCell(curUs || 0)}</td>
+          <td class="py-2 px-3">${fmtCell(curIb || 0)}</td>
+          <td class="py-2 px-3 font-bold text-white">${fmtCell(curCash || 0)}</td>
+          <td class="py-2 px-3 font-black text-cyan-300">${fmtCell(curTotal || 0)}</td>
+          <td class="py-2 px-3 font-bold text-white">${fmtCell(curCost || 0)}</td>
+          <td class="py-2 px-3 font-black text-rose-400">${fmtPnlCell(curPnl || 0)}</td>
+          <td class="py-1.5 px-2 font-sans">
+            <input type="text" value="${escapeAttr(currentMonthMemo)}" placeholder="點擊記錄本月覆盤筆記..." onchange="updateHistoryMemo('CURRENT', this.value)" class="w-full py-1 px-2 rounded-lg bg-slate-950/90 border border-cyan-500/30 focus:border-cyan-400 text-[11px] sm:text-xs text-cyan-100 placeholder-slate-500 transition">
+          </td>
+        </tr>
+      `;
+
+      tbody.innerHTML = rowsHtml + realTimeHtml;
+    }
+
+    let planChartPoints = [];
+    let selectedPlanPointIdx = null;
+
+    function selectPlanChartPoint(idx) {
+      if (!planChartPoints || idx < 0 || idx >= planChartPoints.length) return;
+      selectedPlanPointIdx = idx;
+      const pt = planChartPoints[idx];
+
+      const crosshair = document.getElementById('planChartCrosshair');
+      if (crosshair) {
+        crosshair.setAttribute('x1', pt.x.toFixed(1));
+        crosshair.setAttribute('x2', pt.x.toFixed(1));
+        crosshair.classList.remove('hidden');
+      }
+
+      planChartPoints.forEach((p, i) => {
+        const c = document.getElementById(`planPointCircle-${i}`);
+        const lbl = document.getElementById(`planXLabel-${i}`);
+        if (c) {
+          c.setAttribute('opacity', i === idx ? '1' : '0');
+        }
+        if (lbl) {
+          lbl.setAttribute('fill', i === idx ? '#fbbf24' : '#94a3b8');
+        }
+      });
+
+      const wanStr = isPrivacyMasked ? '••••' : `${(pt.total / 10000).toFixed(1)}萬`;
+      const fullTotalStr = isPrivacyMasked ? 'NT$ •••••••' : `NT$${Math.round(pt.total).toLocaleString()}`;
+
+      const tooltip = document.getElementById('planChartTooltip');
+      if (tooltip) {
+        const ttDate = document.getElementById('ttPlanDate');
+        const ttWan = document.getElementById('ttPlanWan');
+        const ttTotal = document.getElementById('ttPlanTotal');
+        const ttBreak = document.getElementById('ttPlanBreakdown');
+
+        if (ttDate) ttDate.innerText = pt.fullDate;
+        if (ttWan) ttWan.innerText = wanStr;
+        if (ttTotal) ttTotal.innerText = fullTotalStr;
+        if (ttBreak) {
+          const fmtSub = (v) => isPrivacyMasked ? '••' : `${(v / 10000).toFixed(1)}萬`;
+          ttBreak.innerHTML = `
+            <span>台股: <b class="text-cyan-300">${fmtSub(pt.tw)}</b></span>
+            <span>美股: <b class="text-sky-300">${fmtSub(pt.us)}</b></span>
+            <span>IB: <b class="text-purple-300">${fmtSub(pt.ib)}</b></span>
+            <span>現金: <b class="text-emerald-300">${fmtSub(pt.cash)}</b></span>
+          `;
+        }
+
+        const container = document.getElementById('planChartContainer');
+        const svg = document.getElementById('svgPlanTotalChart');
+        positionTooltipSmart(container, svg, tooltip, pt.x, pt.y, pt.y);
+      }
+    }
+
+    function resetPlanChartSelection() {
+      selectedPlanPointIdx = null;
+      const crosshair = document.getElementById('planChartCrosshair');
+      if (crosshair) crosshair.classList.add('hidden');
+
+      const tooltip = document.getElementById('planChartTooltip');
+      if (tooltip) tooltip.classList.add('hidden');
+
+      planChartPoints.forEach((p, i) => {
+        const c = document.getElementById(`planPointCircle-${i}`);
+        const lbl = document.getElementById(`planXLabel-${i}`);
+        if (c) c.setAttribute('opacity', '0');
+        if (lbl) lbl.setAttribute('fill', '#94a3b8');
+      });
+    }
+
+    function handlePlanChartPointer(clientX) {
+      const svg = document.getElementById('svgPlanTotalChart');
+      if (!svg || !planChartPoints || planChartPoints.length === 0) return;
+
+      const rect = svg.getBoundingClientRect();
+      if (rect.width <= 0) return;
+      const relX = clientX - rect.left;
+
+      let closestIdx = 0;
+      let minDist = Infinity;
+      planChartPoints.forEach((pt, i) => {
+        const dist = Math.abs(pt.x - relX);
+        if (dist < minDist) {
+          minDist = dist;
+          closestIdx = i;
+        }
+      });
+
+      selectPlanChartPoint(closestIdx);
+    }
+
+    function renderPlanSvgCharts() {
+      const svg = document.getElementById('svgPlanTotalChart');
+      if (!svg) return;
+
+      const rect = svg.getBoundingClientRect();
+      const W = rect.width > 0 ? rect.width : 750;
+      const H = rect.height > 0 ? rect.height : 220;
+
+      const padL = W < 500 ? 38 : 46;
+      const padR = W < 500 ? 12 : 18;
+      const padT = 18;
+      const padB = 24;
+
+      const plotW = Math.max(W - padL - padR, 100);
+      const plotH = Math.max(H - padT - padB, 50);
+
+      let curTwMv = 0, curUsMv = 0, curIbMv = 0;
+      let hasIb = false;
+      holdings.forEach(h => {
+        const sh = parseFloat(h.shares) || 0;
+        const cur = parseFloat(h.currentPrice) || 0;
+        if (h.market === 'TW') {
+          curTwMv += sh * cur;
+        } else if (h.market === 'IB') {
+          hasIb = true;
+          curIbMv += sh * cur * usTwdRate;
+        } else {
+          curUsMv += sh * cur * usTwdRate;
+        }
+      });
+
+      const effectiveCurIb = hasIb ? curIbMv : IB_MARKET_NTD;
+      const curCashMv = getCashTotal();
+      const curTotalMv = Number(curTwMv + curUsMv + effectiveCurIb + curCashMv) || 0;
+
+      const rawSeries = historyMonthlyData.map(h => {
+        const parts = h.date.split('/');
+        const shortLabel = parts.length >= 2 ? `${parts[1]}月` : h.date;
+        return {
+          label: shortLabel,
+          fullDate: h.date,
+          total: h.total,
+          tw: h.tw,
+          us: h.us,
+          ib: h.ib,
+          cash: h.cash
+        };
+      }).concat([{
+        label: '現',
+        fullDate: '當前即時資產',
+        total: curTotalMv,
+        tw: curTwMv,
+        us: curUsMv,
+        ib: effectiveCurIb,
+        cash: curCashMv
+      }]);
+
+      const minVal = 1600000;
+      const maxVal = Math.max(2650000, Math.ceil(curTotalMv / 100000) * 100000 + 100000);
+
+      const getX = (idx) => padL + (idx / Math.max(rawSeries.length - 1, 1)) * plotW;
+      const getY = (val) => padT + plotH - ((val - minVal) / (maxVal - minVal)) * plotH;
+
+      planChartPoints = rawSeries.map((item, idx) => ({
+        ...item,
+        x: getX(idx),
+        y: getY(item.total),
+        chartW: W
+      }));
+
+      const legTotal = document.getElementById('legPlanTotalOnly');
+      if (legTotal) legTotal.innerText = isPrivacyMasked ? '••••' : `${(curTotalMv / 10000).toFixed(1)}萬`;
+
+      const pathTotal = planChartPoints.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(' ');
+
+      const xFontSize = W < 520 ? '9' : '10.5';
+      const xGrid = planChartPoints.map((pt, i) => {
+        return `
+          <line x1="${pt.x.toFixed(1)}" y1="${padT}" x2="${pt.x.toFixed(1)}" y2="${padT + plotH}" stroke="#1e293b" stroke-dasharray="3 3" />
+          <text id="planXLabel-${i}" x="${pt.x.toFixed(1)}" y="${H - 5}" fill="#94a3b8" font-size="${xFontSize}" font-family="JetBrains Mono" font-weight="bold" text-anchor="middle">${pt.label}</text>
+        `;
+      }).join('');
+
+      const yTicks = [1700000, 1900000, 2100000, 2300000, 2500000];
+      const yGrid = yTicks.map(val => {
+        const y = getY(val);
+        const isTarget = val === 2500000;
+        return `
+          <line x1="${padL}" y1="${y}" x2="${W - padR}" y2="${y}" stroke="${isTarget ? '#10b981' : '#1e293b'}" stroke-width="${isTarget ? '1.5' : '1'}" stroke-dasharray="${isTarget ? '4 4' : '3 3'}" />
+          <text x="${padL - 5}" y="${y + 4}" fill="${isTarget ? '#10b981' : '#64748b'}" font-size="9.5" font-family="JetBrains Mono" font-weight="bold" text-anchor="end">${(val / 10000)}萬</text>
+          ${isTarget ? `<text x="${padL + 6}" y="${y - 4}" fill="#10b981" font-size="9.5" font-family="JetBrains Mono" font-weight="bold">目標 250萬</text>` : ''}
+        `;
+      }).join('');
+
+      const pointCircles = planChartPoints.map((pt, i) => {
+        return `
+          <circle id="planPointCircle-${i}" cx="${pt.x.toFixed(1)}" cy="${pt.y.toFixed(1)}"
+                  r="5.8"
+                  fill="#f59e0b"
+                  stroke="#ffffff"
+                  stroke-width="2.2"
+                  opacity="0" />
+        `;
+      }).join('');
+
+      svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+      svg.innerHTML = `
+        ${xGrid}
+        ${yGrid}
+        <line id="planChartCrosshair" x1="0" y1="${padT}" x2="0" y2="${padT + plotH}" stroke="#f59e0b" stroke-width="1.2" stroke-dasharray="3 3" class="hidden" />
+        <path d="${pathTotal}" fill="none" stroke="#f59e0b" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" filter="drop-shadow(0 2px 8px rgba(245, 158, 11, 0.4))" />
+        ${pointCircles}
+      `;
+
+      if (!svg.dataset.bound) {
+        svg.dataset.bound = '1';
+        svg.addEventListener('touchstart', (e) => {
+          if (e.touches && e.touches.length > 0) {
+            handlePlanChartPointer(e.touches[0].clientX);
+          }
+        }, { passive: true });
+        svg.addEventListener('touchmove', (e) => {
+          if (e.touches && e.touches.length > 0) {
+            handlePlanChartPointer(e.touches[0].clientX);
+          }
+        }, { passive: true });
+        svg.addEventListener('touchend', () => {
+          resetPlanChartSelection();
+        }, { passive: true });
+        svg.addEventListener('mousemove', (e) => {
+          handlePlanChartPointer(e.clientX);
+        });
+        svg.addEventListener('mouseleave', () => {
+          resetPlanChartSelection();
+        });
+      }
+
+      if (selectedPlanPointIdx !== null && selectedPlanPointIdx < planChartPoints.length) {
+        selectPlanChartPoint(selectedPlanPointIdx);
+      }
+    }
+
+    /* 13. 彈窗與代號全自動智慧辨識 */
+    let userSelectedMarketManually = false;
+
+    function openAddHoldingModal() {
+      userSelectedMarketManually = false;
+      const symInp = document.getElementById('newHoldSymbol');
+      const nameInp = document.getElementById('newHoldName');
+      const shInp = document.getElementById('newHoldShares');
+      const avgInp = document.getElementById('newHoldAvgPrice');
+      const curInp = document.getElementById('newHoldCurrentPrice');
+
+      if (symInp) symInp.value = '';
+      if (nameInp) { nameInp.value = ''; nameInp.dataset.autoFilled = '1'; }
+      if (shInp) shInp.value = '';
+      if (avgInp) avgInp.value = '';
+      if (curInp) { curInp.value = ''; curInp.dataset.autoFilled = '1'; }
+
+      updateDetectedCategoryBadge(null);
+      calculateAddHoldingPreview();
+
+      const modal = document.getElementById('addHoldingModal');
+      if (modal) modal.classList.remove('hidden');
+      if (symInp) setTimeout(() => symInp.focus(), 60);
+    }
+
+    function closeAddHoldingModal() {
+      const modal = document.getElementById('addHoldingModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function updateDetectedCategoryBadge(category) {
+      const catInput = document.getElementById('newHoldCategory');
+      const badge = document.getElementById('autoCategoryBadge');
+      if (!badge) return;
+
+      if (!category) {
+        if (catInput) catInput.value = 'ETF';
+        badge.innerText = '🤖 自動判定：待輸入';
+        badge.className = 'cursor-pointer text-[11px] px-2 py-0.5 rounded-full font-mono font-bold bg-slate-800 text-slate-400 border border-slate-700 transition select-none';
+        return;
+      }
+
+      if (catInput) catInput.value = category;
+      if (category === 'ETF') {
+        badge.innerText = '🤖 自動判定：大盤 ETF';
+        badge.className = 'cursor-pointer text-[11px] px-2 py-0.5 rounded-full font-mono font-bold bg-cyan-500/15 text-cyan-300 border border-cyan-500/40 transition select-none';
+      } else {
+        badge.innerText = '🤖 自動判定：個股標的';
+        badge.className = 'cursor-pointer text-[11px] px-2 py-0.5 rounded-full font-mono font-bold bg-amber-500/15 text-amber-300 border border-amber-500/40 transition select-none';
+      }
+    }
+
+    function toggleDetectedCategory() {
+      const catInput = document.getElementById('newHoldCategory');
+      if (!catInput) return;
+      const nextCat = catInput.value === 'ETF' ? 'STOCK' : 'ETF';
+      updateDetectedCategoryBadge(nextCat);
+    }
+
+    function autoDetectStockMetadata(sym) {
+      const known = STOCK_DATABASE[sym];
+      const isTwTicker = /^\d/.test(sym);
+      const market = known ? known.market : (isTwTicker ? 'TW' : 'US');
+
+      const etfPattern = /^(00\d+[A-Z]?|QLD|TQQQ|SSO|UPRO|SQQQ|SPXU|SOXL|SOXS|VT|VTI|VXUS|VOO|VOOG|VOOV|VUG|VTV|VGT|VIG|VYMI|VYM|VNQ|BND|BNDW|BNDX|VWRA|VWRD|VUAA|CSPX|SWRD|EIMI|EQQQ|WSML|IB01|DTLA|SPY|SPYG|SPYV|SPLG|IVV|IJH|IJR|IWM|IWF|IWD|IEMG|IEFA|AGG|TLT|IEF|SHY|SGOV|BIL|LQD|HYG|QQQ|QQQM|SCHD|SCHG|SCHB|SCHX|SCHF|SMH|SOXX|ARKK|ARKW|ARKG|XLK|XLF|XLE|XLV|XLI|XLY|XLP|XLU|XLB|XLRE|XLC|DIA|GLD|IAU|SLV|IBIT|FBTC|BITO)$/;
+      const category = known ? known.category : (etfPattern.test(sym) ? 'ETF' : 'STOCK');
+
+      let price = known ? (parseFloat(known.price) || 0) : 0;
+      try {
+        const cachedQuotes = JSON.parse(safeStorage.getItem('eddie_portfolio_quotes_cache') || '{}');
+        const liveQ = parseFloat(cachedQuotes[sym]);
+        if (!isNaN(liveQ) && liveQ > 0) price = liveQ;
+      } catch (e) {}
+
+      return {
+        name: known ? known.name : '',
+        market,
+        category,
+        price
+      };
+    }
+
+    function handleSymbolAutoLookup(val) {
+      const sym = val.trim().toUpperCase();
+      const nameInp = document.getElementById('newHoldName');
+      const mktSel = document.getElementById('newHoldMarket');
+      const curInp = document.getElementById('newHoldCurrentPrice');
+
+      if (!sym) {
+        updateDetectedCategoryBadge(null);
+        if (nameInp && nameInp.dataset.autoFilled !== '0') nameInp.value = '';
+        if (curInp && curInp.dataset.autoFilled !== '0') curInp.value = '';
+        calculateAddHoldingPreview();
+        return;
+      }
+
+      const meta = autoDetectStockMetadata(sym);
+
+      if (nameInp && nameInp.dataset.autoFilled !== '0') {
+        nameInp.value = meta.name;
+      }
+
+      updateDetectedCategoryBadge(meta.category);
+
+      if (mktSel && !userSelectedMarketManually) {
+        mktSel.value = meta.market;
+      }
+
+      if (curInp && curInp.dataset.autoFilled !== '0') {
+        curInp.value = meta.price > 0 ? meta.price : '';
+      }
+
+      calculateAddHoldingPreview();
+    }
+
+    function calculateAddHoldingPreview() {
+      const mkt = document.getElementById('newHoldMarket').value;
+      const sh = parseFloat(document.getElementById('newHoldShares').value) || 0;
+      const avg = parseFloat(document.getElementById('newHoldAvgPrice').value) || 0;
+      const cur = parseFloat(document.getElementById('newHoldCurrentPrice').value) || 0;
+
+      let cost = 0, mv = 0;
+      if (mkt === 'TW') {
+        cost = sh * avg;
+        mv = sh * cur;
+      } else {
+        cost = sh * avg * usTwdRate;
+        mv = sh * cur * usTwdRate;
+      }
+      const pnl = mv - cost;
+
+      const mvEl = document.getElementById('previewMvVal');
+      const pnlEl = document.getElementById('previewPnlVal');
+      if (mvEl) mvEl.innerText = `NT$ ${Math.round(mv).toLocaleString()}`;
+      if (pnlEl) {
+        pnlEl.innerText = `${pnl >= 0 ? '+' : ''}NT$ ${Math.round(pnl).toLocaleString()}`;
+        pnlEl.className = `${pnl >= 0 ? 'text-rose-400' : 'text-emerald-400'}`;
+      }
+    }
+
+    function confirmAddHolding() {
+      const mkt = document.getElementById('newHoldMarket').value;
+      const sym = document.getElementById('newHoldSymbol').value.trim().toUpperCase();
+      const name = document.getElementById('newHoldName').value.trim();
+      const cat = document.getElementById('newHoldCategory').value;
+      const shares = parseFloat(document.getElementById('newHoldShares').value) || 0;
+      const avg = parseFloat(document.getElementById('newHoldAvgPrice').value) || 0;
+      const cur = parseFloat(document.getElementById('newHoldCurrentPrice').value) || 0;
+
+      if (!sym) {
+        showToast('❌ 請輸入股票代號');
+        return;
+      }
+
+      const newId = `${mkt.toLowerCase()}-${sym.toLowerCase()}-${Date.now().toString().slice(-4)}`;
+      const link = getGoogleFinanceUrl(sym, mkt);
+
+      holdings.push({
+        id: newId,
+        market: mkt,
+        symbol: sym,
+        name: name || sym,
+        category: cat,
+        shares: shares,
+        avgPrice: avg,
+        currentPrice: cur || avg,
+        link: link
+      });
+
+      saveHoldingsState();
+      closeAddHoldingModal();
+      recalculateAll(true);
+      showToast(`✅ 已新增 ${sym} (${cat === 'ETF' ? '大盤ETF' : '個股'}) 至持股清單！`);
+    }
+
+    /* 14. Toast 提示 */
+    let toastTimer = null;
+    function showToast(msg, showUndo = false) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toastMsg');
+      const undoBtn = document.getElementById('toastUndoBtn');
+
+      if (!toast || !toastMsg) return;
+
+      toastMsg.innerText = msg;
+      if (undoBtn) {
+        if (showUndo) {
+          undoBtn.classList.remove('hidden');
+          undoBtn.onclick = () => {
+            undoDeleteHolding();
+            toast.classList.add('translate-y-20', 'opacity-0');
+          };
+        } else {
+          undoBtn.classList.add('hidden');
+        }
+      }
+
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, showUndo ? 5000 : 3000);
+    }
+
+    /* 15. 系統初始化入口 */
+    function initApp() {
+      try {
+        const isMagicBound = checkMagicLinkGasUrl();
+        loadSavedState();
+        recalculateAll(true);
+        switchTimeframe('YTD');
+        switchMainTab(1);
+        initSwipeNavigation();
+        updateSyncTimeDisplay();
+
+        if (isMagicBound) {
+          showToast('🎉 已自動綁定雲端網址！正在同步最新資料...');
+          setTimeout(() => downloadFromCloud(true), 600);
+        }
+      } catch (err) {
+        console.warn('Initialization notice:', err);
+        holdings = JSON.parse(JSON.stringify(DEFAULT_HOLDINGS));
+        recalculateAll(true);
+        switchTimeframe('YTD');
+        updateSyncTimeDisplay();
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      window.addEventListener('DOMContentLoaded', initApp);
+    } else {
+      initApp();
+    }
+
+    window.addEventListener('resize', () => {
+      renderSvgLineChart();
+      renderPlanSvgCharts();
+    });
+  </script>
+</body>
+</html>
