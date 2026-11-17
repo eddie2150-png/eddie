@@ -3,6 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Eddie Portfolio">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='1' x2='1' y2='0'%3E%3Cstop offset='0%25' stop-color='%2310b981'/%3E%3Cstop offset='100%25' stop-color='%2322d3ee'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='24' fill='%23060910'/%3E%3Crect x='6' y='6' width='88' height='88' rx='20' fill='url(%23g)' opacity='0.18'/%3E%3Cpath d='M22 68 L42 48 L56 58 L78 30' fill='none' stroke='url(%23g)' stroke-width='9' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='78' cy='30' r='6' fill='%23ffffff'/%3E%3C/svg%3E">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='1' x2='1' y2='0'%3E%3Cstop offset='0%25' stop-color='%2310b981'/%3E%3Cstop offset='100%25' stop-color='%2322d3ee'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' fill='%23060910'/%3E%3Cpath d='M22 68 L42 48 L56 58 L78 30' fill='none' stroke='url(%23g)' stroke-width='9' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='78' cy='30' r='6' fill='%23ffffff'/%3E%3C/svg%3E">
   <title>Eddie portfolio - 專業資產配置與投資績效儀表板</title>
   
   <!-- Tailwind CSS & FontAwesome CDN -->
@@ -76,7 +81,6 @@
     input:focus { outline: none; box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.4); }
     .input-table:focus { box-shadow: 0 0 0 1.5px rgba(56, 189, 248, 0.6); }
     
-    /* 隱藏數字輸入框預設上下箭頭，避免佔用手機窄欄位寬度 */
     input[type="number"]::-webkit-inner-spin-button,
     input[type="number"]::-webkit-outer-spin-button {
       -webkit-appearance: none;
@@ -146,7 +150,7 @@
     <!-- ==================== 【第一介面】總覽績效與大盤對比 (Tab 1) ==================== -->
     <div id="tabView-1" class="tab-content space-y-2.5 sm:space-y-4">
       
-      <!-- 主資產 KPI 看板 -->
+      <!-- 主資產 KPI 看板（融合淨資產增值金額＋成長率、備用現金金額＋現金比例） -->
       <section class="p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border border-slate-800 shadow-xl space-y-2">
         <div class="flex items-center justify-between gap-2">
           <span class="text-[13px] sm:text-sm font-extrabold tracking-wider text-emerald-400 flex items-center gap-1.5 whitespace-nowrap">
@@ -164,52 +168,56 @@
           </span>
         </div>
 
-        <p id="kpiBaselineSubText" class="text-xs sm:text-sm text-slate-400 font-medium">
-          投資獲利: <span class="font-mono text-rose-400 font-bold">+NT$389,346</span> ｜ 淨資產增值: <span class="font-mono text-emerald-300 font-bold">+NT$897,505</span>
-        </p>
+        <div id="kpiBaselineSubText" class="text-[11px] sm:text-sm text-slate-300 font-medium leading-relaxed">
+          <span class="inline-block">投資獲利: <span class="font-mono text-rose-400 font-bold">+NT$389,346</span></span>
+          <span class="text-slate-600 mx-0.5">｜</span>
+          <span class="inline-block">淨資產增值: <span class="font-mono text-emerald-300 font-bold">+NT$522,046 (+28.48%)</span></span>
+        </div>
 
-        <!-- 本金、獲利、活存三欄橫排 -->
-        <div class="grid grid-cols-3 gap-2 pt-2.5 border-t border-slate-800/80">
+        <div class="grid grid-cols-3 gap-2 pt-2 border-t border-slate-800/80 text-xs sm:text-sm">
           <div>
-            <span class="text-[11px] sm:text-xs text-slate-400 font-bold block">投入總本金</span>
-            <span id="kpiTotalCost" class="text-[13px] sm:text-lg font-bold font-mono text-slate-200 block mt-0.5">NT$1,457,739</span>
+            <span class="text-slate-400 text-[11px] sm:text-xs font-bold block">投入總本金</span>
+            <span id="kpiTotalCost" class="text-[13px] sm:text-lg font-black font-mono text-white block mt-0.5">NT$1,457,739</span>
           </div>
           <div>
-            <span class="text-[11px] sm:text-xs text-slate-400 font-bold block">投資總獲利</span>
+            <span class="text-slate-400 text-[11px] sm:text-xs font-bold block">投資總獲利</span>
             <span id="kpiTotalPnlText" class="text-[13px] sm:text-lg font-black font-mono text-rose-400 block mt-0.5">+NT$389,346</span>
           </div>
           <div>
-            <span class="text-[11px] sm:text-xs text-slate-400 font-bold block">備用現金活存</span>
-            <span id="kpiCashTotal" class="text-[13px] sm:text-lg font-bold font-mono text-emerald-400 block mt-0.5">NT$508,160</span>
+            <span class="text-slate-400 text-[11px] sm:text-xs font-bold flex items-center gap-1 whitespace-nowrap">
+              現金活存
+              <span id="kpiCashRatioBadge" class="text-[10px] sm:text-xs font-mono font-extrabold text-emerald-300">(21.6%)</span>
+            </span>
+            <span id="kpiCashTotal" class="text-[13px] sm:text-lg font-black font-mono text-emerald-400 block mt-0.5">NT$508,160</span>
           </div>
         </div>
       </section>
 
-      <!-- 三大核心投資績效卡 -->
+      <!-- 關鍵三大績效指標：淨資產 YTD / 年化報酬 (XIRR) / 回撤 DD -->
       <section class="grid grid-cols-3 gap-2">
-        <div class="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-slate-900/95 border border-slate-800 shadow text-center sm:text-left">
-          <span class="text-[11px] sm:text-xs font-bold text-slate-400 flex items-center justify-center sm:justify-start gap-1 truncate" title="相較 2026/1/5 年初總資產 (183.3萬) 之純淨值成長幅度">
+        <div class="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-slate-900/95 border border-slate-800 shadow text-center">
+          <span class="text-[10px] sm:text-xs font-bold text-slate-400 flex items-center justify-center gap-1 whitespace-nowrap" title="今年初至今之整體淨資產成長率 (含主動儲蓄與投資獲利)">
             <i class="fa-solid fa-arrow-trend-up text-rose-400"></i> 淨資產 YTD
           </span>
-          <span id="kpiCumulativeReturn" class="text-base sm:text-xl font-black font-mono text-rose-400 block mt-0.5">
+          <span id="kpiNetYtdReturn" class="text-sm sm:text-xl font-black font-mono text-rose-400 block mt-0.5">
             +28.48%
           </span>
         </div>
 
-        <div class="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-slate-900/95 border border-slate-800 shadow text-center sm:text-left">
-          <span class="text-[11px] sm:text-xs font-bold text-slate-400 flex items-center justify-center sm:justify-start gap-1 truncate" title="自年初迄今之動態複利年化成長率">
-            <i class="fa-solid fa-bolt text-emerald-400"></i> CAGR (年化)
+        <div class="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-slate-900/95 border border-cyan-500/25 shadow text-center">
+          <span class="text-[10px] sm:text-xs font-bold text-cyan-300 flex items-center justify-center gap-1 whitespace-nowrap" title="排除每月新投入本金干擾，依每筆資金實際投入天數精算之真實年化報酬率 (XIRR)">
+            <i class="fa-solid fa-bullseye text-cyan-400"></i> 年化 (XIRR)
           </span>
-          <span id="kpiCAGR" class="text-base sm:text-xl font-black font-mono text-emerald-400 block mt-0.5">
-            +35.85%
+          <span id="kpiXirrReturn" class="text-sm sm:text-xl font-black font-mono text-cyan-300 block mt-0.5">
+            +31.42%
           </span>
         </div>
 
-        <div class="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-slate-900/95 border border-slate-800 shadow text-center sm:text-left">
-          <span class="text-[11px] sm:text-xs font-bold text-slate-400 flex items-center justify-center sm:justify-start gap-1 truncate" title="自歷程最高點 (10/5 峰值 254.1萬) 之最大回撤幅度">
-            <i class="fa-solid fa-shield-halved text-amber-400"></i> MDD (回撤)
+        <div class="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-slate-900/95 border border-slate-800 shadow text-center">
+          <span class="text-[10px] sm:text-xs font-bold text-slate-400 flex items-center justify-center gap-1 whitespace-nowrap" title="自歷程最高點 (10/5 峰值 254.1萬) 之回撤幅度 (DD / MDD)">
+            <i class="fa-solid fa-shield-halved text-amber-400"></i> 回撤 DD
           </span>
-          <span id="kpiMDD" class="text-base sm:text-xl font-black font-mono text-amber-400 block mt-0.5">
+          <span id="kpiMDD" class="text-sm sm:text-xl font-black font-mono text-amber-400 block mt-0.5">
             -7.33%
           </span>
         </div>
@@ -285,7 +293,7 @@
           <div class="p-2.5 sm:p-3.5 rounded-xl bg-slate-950/80 border border-slate-800">
             <div class="flex items-center justify-between">
               <span class="text-[11px] sm:text-xs text-slate-300 font-bold truncate">🇹🇼 加權大盤</span>
-              <a href="https://tw.stock.yahoo.com/quote/%5ETWII" target="_blank" class="text-cyan-400 hover:text-cyan-300" title="加權指數行情">
+              <a href="https://www.google.com/finance/quote/IX0001:TPE" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300" title="在 Google 財經查看加權指數">
                 <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
               </a>
             </div>
@@ -296,7 +304,7 @@
           <div class="p-2.5 sm:p-3.5 rounded-xl bg-slate-950/80 border border-slate-800">
             <div class="flex items-center justify-between">
               <span class="text-[11px] sm:text-xs text-slate-300 font-bold truncate">🇺🇸 S&P 500</span>
-              <a href="https://tw.stock.yahoo.com/quote/%5EGSPC" target="_blank" class="text-sky-400 hover:text-sky-300" title="標普500行情">
+              <a href="https://www.google.com/finance/quote/.INX:INDEXSP" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:text-sky-300" title="在 Google 財經查看標普500">
                 <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
               </a>
             </div>
@@ -307,7 +315,7 @@
           <div class="p-2.5 sm:p-3.5 rounded-xl bg-slate-950/80 border border-slate-800">
             <div class="flex items-center justify-between">
               <span class="text-[11px] sm:text-xs text-slate-300 font-bold truncate">🇺🇸 那斯達克</span>
-              <a href="https://tw.stock.yahoo.com/quote/%5EIXIC" target="_blank" class="text-sky-400 hover:text-sky-300" title="那斯達克行情">
+              <a href="https://www.google.com/finance/quote/.IXIC:INDEXNASDAQ" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:text-sky-300" title="在 Google 財經查看那斯達克">
                 <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
               </a>
             </div>
@@ -429,6 +437,172 @@
 
             </div>
 
+          </div>
+        </div>
+
+        <!-- 股票資產結構：總股票資產、大盤 ETF（台美股）與個股（台美股）比例 -->
+        <div class="p-3.5 sm:p-5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3.5">
+          <div class="flex items-center justify-between flex-wrap gap-2">
+            <h3 class="text-sm sm:text-base font-black text-white flex items-center gap-2">
+              <i class="fa-solid fa-layer-group text-cyan-400"></i>
+              股票資產結構：大盤 ETF vs 個股
+            </h3>
+            <div class="flex items-center gap-1.5 text-xs sm:text-sm font-mono font-black bg-slate-900 px-2.5 py-1 rounded-xl border border-cyan-500/30">
+              <span class="text-slate-300">總股票資產:</span>
+              <span id="equityTotalMvVal" class="text-white">NT$1,847,084</span>
+              <span id="equityTotalAssetPct" class="text-cyan-400">(78.4%)</span>
+            </div>
+          </div>
+
+          <!-- 總股票內部結構進度條（大盤 ETF vs 個股 vs IB） -->
+          <div class="space-y-1.5">
+            <div class="w-full h-2.5 rounded-full bg-slate-900 overflow-hidden flex border border-slate-800">
+              <div id="barEquityEtf" class="h-full bg-gradient-to-r from-cyan-400 to-teal-400 transition-all duration-300" style="width: 47.4%"></div>
+              <div id="barEquityStock" class="h-full bg-gradient-to-r from-amber-400 to-orange-400 transition-all duration-300" style="width: 38.1%"></div>
+              <div id="barEquityIb" class="h-full bg-gradient-to-r from-purple-400 to-fuchsia-400 transition-all duration-300" style="width: 14.5%"></div>
+            </div>
+            <div class="flex items-center justify-between flex-wrap gap-2 text-[11px] sm:text-xs font-mono text-slate-400">
+              <div class="flex items-center gap-3 flex-wrap">
+                <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-cyan-400"></span>大盤 ETF <b id="subBarEtfPct" class="text-cyan-300">47.4%</b></span>
+                <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-400"></span>個股部位 <b id="subBarStockPct" class="text-amber-300">38.1%</b></span>
+                <span id="subBarIbWrap" class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-purple-400"></span>IB 部位 <b id="subBarIbPct" class="text-purple-300">14.5%</b></span>
+              </div>
+              <span class="text-[10px] sm:text-[11px] text-slate-500">括號為佔總資產 / 佔總股票比例</span>
+            </div>
+          </div>
+
+          <!-- 大盤 ETF & 個股 雙欄明細卡片（各含總數 + 台美股個別比例） -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            
+            <!-- 1. 大盤 ETF 比例卡片（總數 + 台股 ETF + 美股 ETF） -->
+            <div class="p-3.5 rounded-2xl bg-slate-900/95 border border-cyan-500/25 space-y-2.5">
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-xs sm:text-sm font-black text-cyan-300 flex items-center gap-1.5">
+                  <i class="fa-solid fa-chart-area"></i>
+                  大盤 ETF 總數
+                </span>
+                <div class="flex items-center gap-1.5 font-mono text-[11px] sm:text-xs font-black">
+                  <span class="px-2 py-0.5 rounded-lg bg-cyan-950/90 text-cyan-300 border border-cyan-500/30">
+                    總資產 <b id="etfTotalAssetPct">37.1%</b>
+                  </span>
+                  <span class="px-2 py-0.5 rounded-lg bg-slate-950 text-slate-300 border border-slate-800">
+                    股票 <b id="etfTotalEquityPct">47.4%</b>
+                  </span>
+                </div>
+              </div>
+
+              <div class="flex items-baseline justify-between">
+                <span id="etfBreakdownTotalMv" class="text-lg sm:text-2xl font-black font-mono text-white">NT$874,698</span>
+                <span class="text-[11px] font-mono text-slate-400">台美股比例 <b id="etfTwUsSplitText" class="text-cyan-300">52.5% : 47.5%</b></span>
+              </div>
+
+              <!-- 台美股 ETF 雙色比例條 -->
+              <div class="w-full h-1.5 rounded-full bg-slate-950 overflow-hidden flex">
+                <div id="barTwEtf" class="h-full bg-teal-400 transition-all duration-300" style="width: 52.5%"></div>
+                <div id="barUsEtf" class="h-full bg-sky-400 transition-all duration-300" style="width: 47.5%"></div>
+              </div>
+
+              <!-- 台股 ETF vs 美股 ETF 個別明細 -->
+              <div class="grid grid-cols-2 gap-2 pt-1">
+                <div class="p-2.5 rounded-xl bg-slate-950/90 border border-slate-800 space-y-1">
+                  <div class="flex items-center justify-between text-[11px] sm:text-xs font-bold">
+                    <span class="text-teal-300">🇹🇼 台股 ETF</span>
+                    <span id="twEtfAssetPct" class="font-mono font-black text-teal-300">19.5%</span>
+                  </div>
+                  <span id="twEtfMvVal" class="text-xs sm:text-base font-black font-mono text-white block truncate">NT$459,224</span>
+                  <div class="flex items-center justify-between text-[10px] sm:text-[11px] font-mono text-slate-400">
+                    <span>佔ETF <b id="twEtfSharePct" class="text-slate-200">52.5%</b></span>
+                    <span>佔股 <b id="twEtfEquityPct" class="text-slate-200">24.9%</b></span>
+                  </div>
+                </div>
+
+                <div class="p-2.5 rounded-xl bg-slate-950/90 border border-slate-800 space-y-1">
+                  <div class="flex items-center justify-between text-[11px] sm:text-xs font-bold">
+                    <span class="text-sky-300">🇺🇸 美股 ETF</span>
+                    <span id="usEtfAssetPct" class="font-mono font-black text-sky-300">17.6%</span>
+                  </div>
+                  <span id="usEtfMvVal" class="text-xs sm:text-base font-black font-mono text-white block truncate">NT$415,475</span>
+                  <div class="flex items-center justify-between text-[10px] sm:text-[11px] font-mono text-slate-400">
+                    <span>佔ETF <b id="usEtfSharePct" class="text-slate-200">47.5%</b></span>
+                    <span>佔股 <b id="usEtfEquityPct" class="text-slate-200">22.5%</b></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. 個股比例卡片（總數 + 台股個股 + 美股個股） -->
+            <div class="p-3.5 rounded-2xl bg-slate-900/95 border border-amber-500/25 space-y-2.5">
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-xs sm:text-sm font-black text-amber-300 flex items-center gap-1.5">
+                  <i class="fa-solid fa-crosshairs"></i>
+                  個股部位總數
+                </span>
+                <div class="flex items-center gap-1.5 font-mono text-[11px] sm:text-xs font-black">
+                  <span class="px-2 py-0.5 rounded-lg bg-amber-950/90 text-amber-300 border border-amber-500/30">
+                    總資產 <b id="stockTotalAssetPct">29.9%</b>
+                  </span>
+                  <span class="px-2 py-0.5 rounded-lg bg-slate-950 text-slate-300 border border-slate-800">
+                    股票 <b id="stockTotalEquityPct">38.1%</b>
+                  </span>
+                </div>
+              </div>
+
+              <div class="flex items-baseline justify-between">
+                <span id="stockBreakdownTotalMv" class="text-lg sm:text-2xl font-black font-mono text-white">NT$704,152</span>
+                <span class="text-[11px] font-mono text-slate-400">台美股比例 <b id="stockTwUsSplitText" class="text-amber-300">54.2% : 45.8%</b></span>
+              </div>
+
+              <!-- 台美股 個股雙色比例條 -->
+              <div class="w-full h-1.5 rounded-full bg-slate-950 overflow-hidden flex">
+                <div id="barTwStock" class="h-full bg-amber-400 transition-all duration-300" style="width: 54.2%"></div>
+                <div id="barUsStock" class="h-full bg-orange-400 transition-all duration-300" style="width: 45.8%"></div>
+              </div>
+
+              <!-- 台股個股 vs 美股個股 個別明細 -->
+              <div class="grid grid-cols-2 gap-2 pt-1">
+                <div class="p-2.5 rounded-xl bg-slate-950/90 border border-slate-800 space-y-1">
+                  <div class="flex items-center justify-between text-[11px] sm:text-xs font-bold">
+                    <span class="text-amber-300">🇹🇼 台股個股</span>
+                    <span id="twStockAssetPct" class="font-mono font-black text-amber-300">16.2%</span>
+                  </div>
+                  <span id="twStockMvVal" class="text-xs sm:text-base font-black font-mono text-white block truncate">NT$381,454</span>
+                  <div class="flex items-center justify-between text-[10px] sm:text-[11px] font-mono text-slate-400">
+                    <span>佔個股 <b id="twStockSharePct" class="text-slate-200">54.2%</b></span>
+                    <span>佔股 <b id="twStockEquityPct" class="text-slate-200">20.7%</b></span>
+                  </div>
+                </div>
+
+                <div class="p-2.5 rounded-xl bg-slate-950/90 border border-slate-800 space-y-1">
+                  <div class="flex items-center justify-between text-[11px] sm:text-xs font-bold">
+                    <span class="text-orange-300">🇺🇸 美股個股</span>
+                    <span id="usStockAssetPct" class="font-mono font-black text-orange-300">13.7%</span>
+                  </div>
+                  <span id="usStockMvVal" class="text-xs sm:text-base font-black font-mono text-white block truncate">NT$322,697</span>
+                  <div class="flex items-center justify-between text-[10px] sm:text-[11px] font-mono text-slate-400">
+                    <span>佔個股 <b id="usStockSharePct" class="text-slate-200">45.8%</b></span>
+                    <span>佔股 <b id="usStockEquityPct" class="text-slate-200">17.5%</b></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 個別標的資產佔比排行（預設全部收合，點擊即可展開檢視全部 17 檔） -->
+        <div class="p-3.5 sm:p-5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3">
+          <div onclick="toggleWeightRankingExpand()" class="flex items-center justify-between gap-2 cursor-pointer select-none">
+            <h3 class="text-sm sm:text-base font-black text-white flex items-center gap-2">
+              <i class="fa-solid fa-ranking-star text-cyan-400"></i>
+              個別標的資產佔比排行
+            </h3>
+            <button type="button" id="btnToggleWeightRanking" class="px-2.5 py-1 rounded-xl bg-slate-900 hover:bg-slate-800 text-cyan-300 border border-cyan-500/30 text-[11px] sm:text-xs font-bold transition flex items-center gap-1 shrink-0">
+              <span id="textToggleWeightRanking">展開排行 (17)</span>
+              <i id="iconToggleWeightRanking" class="fa-solid fa-chevron-down text-[10px]"></i>
+            </button>
+          </div>
+          <div id="individualWeightRankingList" class="hidden space-y-2 pt-2 border-t border-slate-800">
+            <!-- 動態由 JavaScript 渲染全部標的權重 -->
           </div>
         </div>
 
@@ -661,7 +835,7 @@
           </div>
         </section>
 
-        <!-- 總資產成長圖（標題精簡為「總資產成長圖」、移除白色副標、右側固定顯示不跳動） -->
+        <!-- 總資產成長圖 -->
         <section class="rounded-2xl sm:rounded-3xl bg-slate-900/95 border border-slate-800 shadow-xl p-3.5 sm:p-6 space-y-3">
           <div class="flex items-center justify-between gap-2 border-b border-slate-800 pb-2">
             <h3 class="text-sm sm:text-base font-black text-white flex items-center gap-1.5 whitespace-nowrap">
@@ -677,7 +851,7 @@
 
           <div id="planChartContainer" class="relative w-full h-[220px] sm:h-[250px] bg-slate-950/80 rounded-2xl p-2 sm:p-4 border border-slate-800/80 overflow-visible select-none touch-pan-y">
             <svg id="svgPlanTotalChart" class="w-full h-full overflow-visible cursor-crosshair"></svg>
-            <!-- 第四頁互動懸浮資產明細卡（高點自動下翻避讓，不裁切、不遮擋標題） -->
+            <!-- 第四頁互動懸浮資產明細卡 -->
             <div id="planChartTooltip" class="hidden absolute z-30 pointer-events-none px-2.5 py-1.5 rounded-xl bg-slate-900/95 backdrop-blur-md border border-amber-500/50 shadow-2xl text-[11px] font-mono space-y-1 min-w-[166px] max-w-[230px]">
               <div class="flex items-center justify-between gap-2 border-b border-slate-800 pb-0.5">
                 <span id="ttPlanDate" class="font-bold text-amber-300">2026/1/5</span>
@@ -697,21 +871,21 @@
           </div>
         </section>
 
-        <!-- 2026 年歷史資產總表 -->
+        <!-- 2026 年歷史資產總表（含每月操作覆盤備忘錄） -->
         <section class="rounded-2xl sm:rounded-3xl bg-slate-900/95 border border-slate-800 shadow-xl overflow-hidden space-y-3 p-3.5 sm:p-6">
-          <div class="flex items-center justify-between">
+          <div onclick="toggleHistory2026()" class="flex items-center justify-between cursor-pointer select-none">
             <h3 class="text-xs sm:text-base font-black text-white flex items-center gap-1.5">
               <i class="fa-solid fa-clock-rotate-left text-cyan-400"></i>
               2026 年度每月資產歷程紀錄總表
             </h3>
-            <button onclick="toggleHistory2026()" id="btnToggleHistory2026" class="px-3 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold transition flex items-center gap-1.5 border border-slate-700 shrink-0">
+            <button type="button" id="btnToggleHistory2026" class="px-3 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold transition flex items-center gap-1.5 border border-slate-700 shrink-0">
               <i id="iconToggleHistory2026" class="fa-solid fa-chevron-down text-cyan-400"></i>
               <span id="textToggleHistory2026">展開紀錄</span>
             </button>
           </div>
 
           <div id="history2026TableContainer" class="overflow-x-auto transition-all duration-300 hidden pt-2 border-t border-slate-800">
-            <table class="w-full text-left text-xs sm:text-sm border-collapse font-mono min-w-[550px]">
+            <table class="w-full text-left text-xs sm:text-sm border-collapse font-mono min-w-[720px]">
               <thead>
                 <tr class="bg-slate-950 text-slate-400 border-b border-slate-800">
                   <th class="py-2 px-3">時間</th>
@@ -722,6 +896,7 @@
                   <th class="py-2 px-3 font-bold text-white">總數</th>
                   <th class="py-2 px-3">累積本金</th>
                   <th class="py-2 px-3 text-rose-400">累積總損益</th>
+                  <th class="py-2 px-3 text-amber-300 font-sans min-w-[165px]">當月操作覆盤筆記</th>
                 </tr>
               </thead>
               <tbody id="historyTableBody" class="divide-y divide-slate-800/60 text-slate-300">
@@ -773,18 +948,24 @@
 
       <div class="space-y-3 text-xs sm:text-sm font-bold">
         <div>
-          <label class="text-slate-400 block mb-1">股票代號 (輸入自動帶出名稱):</label>
-          <input type="text" id="newHoldSymbol" oninput="handleSymbolAutoLookup(this.value)" placeholder="例如: 2330, NVDA, VOO, 0050" class="w-full py-2 px-3 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono uppercase focus:outline-none focus:border-emerald-500">
+          <div class="flex items-center justify-between gap-2 mb-1">
+            <label class="text-slate-400">股票代號 (自動帶出名稱與屬性):</label>
+            <span id="autoCategoryBadge" onclick="toggleDetectedCategory()" title="系統已自動判斷 ETF / 個股（點擊可手動切換）" class="cursor-pointer text-[11px] px-2 py-0.5 rounded-full font-mono font-bold bg-slate-800 text-slate-400 border border-slate-700 transition select-none">
+              🤖 自動判定：待輸入
+            </span>
+            <input type="hidden" id="newHoldCategory" value="ETF">
+          </div>
+          <input type="text" id="newHoldSymbol" oninput="handleSymbolAutoLookup(this.value)" placeholder="例如: QLD, VT, 2330, NVDA, VOO, 0050" class="w-full py-2 px-3 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono uppercase focus:outline-none focus:border-emerald-500">
         </div>
 
         <div class="grid grid-cols-2 gap-2">
           <div>
-            <label class="text-slate-400 block mb-1">股票名稱:</label>
-            <input type="text" id="newHoldName" placeholder="自動帶出" class="w-full py-2 px-3 rounded-xl bg-slate-950 border border-slate-700 text-white focus:outline-none">
+            <label class="text-slate-400 block mb-1">股票名稱 (自動帶出):</label>
+            <input type="text" id="newHoldName" oninput="this.dataset.autoFilled='0'" placeholder="輸入代號自動帶出" class="w-full py-2 px-3 rounded-xl bg-slate-950 border border-slate-700 text-white focus:outline-none">
           </div>
           <div>
-            <label class="text-slate-400 block mb-1">市場類型:</label>
-            <select id="newHoldMarket" class="w-full py-2 px-3 rounded-xl bg-slate-950 border border-slate-700 text-white focus:outline-none">
+            <label class="text-slate-400 block mb-1">市場 / 券商:</label>
+            <select id="newHoldMarket" onchange="userSelectedMarketManually = true; calculateAddHoldingPreview();" class="w-full py-2 px-3 rounded-xl bg-slate-950 border border-slate-700 text-white focus:outline-none">
               <option value="TW">🇹🇼 台灣股票 (TWD)</option>
               <option value="US">🇺🇸 美國股票 (USD)</option>
               <option value="IB">🌐 IB 海外券商 (USD)</option>
@@ -792,145 +973,126 @@
           </div>
         </div>
 
-        <div>
-          <label class="text-slate-400 block mb-1">核心屬性:</label>
-          <select id="newHoldCategory" class="w-full py-2 px-3 rounded-xl bg-slate-950 border border-slate-700 text-white focus:outline-none">
-            <option value="ETF">青藍色：大盤指數型 ETF</option>
-            <option value="STOCK">琥珀色：個股標的</option>
-          </select>
-        </div>
-
         <div class="grid grid-cols-3 gap-2">
           <div>
             <label class="text-slate-400 block mb-1">持有股數:</label>
-            <input type="number" step="any" inputmode="decimal" id="newHoldShares" placeholder="股數" oninput="calculateAddHoldingPreview()" class="w-full py-1.5 px-2 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono focus:outline-none">
+            <input type="number" step="any" inputmode="decimal" id="newHoldShares" oninput="calculateAddHoldingPreview()" placeholder="股數" class="w-full py-2 px-3 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono focus:outline-none">
           </div>
           <div>
             <label class="text-slate-400 block mb-1">買入均價:</label>
-            <input type="number" step="any" inputmode="decimal" id="newHoldAvgPrice" placeholder="成本" oninput="calculateAddHoldingPreview()" class="w-full py-1.5 px-2 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono focus:outline-none">
+            <input type="number" step="any" inputmode="decimal" id="newHoldAvgPrice" oninput="calculateAddHoldingPreview()" placeholder="成本" class="w-full py-2 px-3 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono focus:outline-none">
           </div>
           <div>
             <label class="text-slate-400 block mb-1">當前市價:</label>
-            <input type="number" step="any" inputmode="decimal" id="newHoldCurrentPrice" placeholder="市價" oninput="calculateAddHoldingPreview()" class="w-full py-1.5 px-2 rounded-xl bg-slate-950 border border-slate-700 text-emerald-400 font-mono focus:outline-none">
+            <input type="number" step="any" inputmode="decimal" id="newHoldCurrentPrice" oninput="this.dataset.autoFilled='0'; calculateAddHoldingPreview();" placeholder="市價" class="w-full py-2 px-3 rounded-xl bg-slate-950 border border-slate-700 text-emerald-400 font-mono font-bold focus:outline-none">
           </div>
         </div>
 
-        <div id="addPreviewCard" class="p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-mono flex justify-between items-center text-slate-300">
-          <span>試算市值: <b id="previewMvVal" class="text-white">NT$ 0</b></span>
-          <span>預計損益: <b id="previewPnlVal" class="text-rose-400">+NT$ 0</b></span>
+        <div class="p-3 rounded-2xl bg-slate-950/90 border border-slate-800 flex items-center justify-between font-mono text-xs">
+          <div>
+            <span class="text-slate-400 block text-[10px]">試算總市值 (NTD)</span>
+            <span id="previewMvVal" class="text-sm sm:text-base font-black text-white">NT$ 0</span>
+          </div>
+          <div class="text-right">
+            <span class="text-slate-400 block text-[10px]">預計損益 (NTD)</span>
+            <span id="previewPnlVal" class="text-sm sm:text-base font-black text-rose-400">+NT$ 0</span>
+          </div>
         </div>
       </div>
 
       <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-800">
-        <button onclick="closeAddHoldingModal()" class="px-3.5 py-1.5 rounded-xl bg-slate-800 text-slate-300 font-bold hover:bg-slate-700 transition">
+        <button onclick="closeAddHoldingModal()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs sm:text-sm font-bold transition">
           取消
         </button>
-        <button onclick="confirmAddHolding()" class="px-4 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black transition shadow">
+        <button onclick="confirmAddHolding()" class="px-5 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs sm:text-sm font-black shadow-lg transition">
           確認新增
         </button>
       </div>
     </div>
   </div>
 
-  <!-- ==================== 彈窗 2：設定與跨裝置同步 ==================== -->
-  <div id="syncModal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-4">
-    <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-sm w-full p-4 sm:p-5 space-y-3 shadow-2xl max-h-[92vh] overflow-y-auto">
-      
-      <!-- 頂部標題與安全留白關閉鈕 -->
-      <div class="flex items-center justify-between gap-2 border-b border-slate-800 pb-2.5">
-        <h3 class="text-sm sm:text-base font-black text-white flex items-center gap-2 truncate">
-          <i class="fa-solid fa-gear text-amber-400"></i>
-          雲端設定與跨裝置同步
+  <!-- ==================== 彈窗 2：設定與跨裝置雲端同步 ==================== -->
+  <div id="syncModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-md w-full p-5 space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
+        <h3 class="text-sm sm:text-base font-black text-white flex items-center gap-2">
+          <i class="fa-solid fa-cloud-arrow-up text-amber-400"></i>
+          設定與跨裝置雲端同步
         </h3>
-        <button onclick="closeSyncModal()" class="w-7 h-7 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center shrink-0 transition" title="關閉視窗">
+        <button onclick="closeSyncModal()" class="w-7 h-7 rounded-lg bg-slate-800/80 text-slate-400 hover:text-white flex items-center justify-center shrink-0">
           <i class="fa-solid fa-xmark text-sm"></i>
         </button>
       </div>
 
-      <!-- Google 試算表連結 -->
-      <div class="p-3.5 rounded-2xl bg-slate-950 border border-slate-800 space-y-2.5 text-xs">
-        <div class="flex items-center justify-between text-slate-300">
-          <span class="font-bold flex items-center gap-1.5">
-            <i class="fa-solid fa-link text-emerald-400"></i> Apps Script 網址:
-          </span>
-          <span id="urlSavedStatus" class="text-[10px] text-emerald-400 font-mono hidden">✓ 本機已儲存</span>
+      <!-- 雙向雲端備份與還原 -->
+      <div class="p-3.5 rounded-2xl bg-slate-950/90 border border-slate-800 space-y-2.5">
+        <div class="flex items-center justify-between text-xs font-bold">
+          <span class="text-slate-300">最後雲端互通時間:</span>
+          <span id="modalSyncTimeDisplay" class="font-mono text-cyan-400">2026/11/08 21:57:12</span>
         </div>
-        <div class="flex items-center gap-2">
-          <input type="url" id="googleScriptUrlInput" 
-                 oninput="handleUrlInputLive(this.value)"
-                 placeholder="請貼上結尾為 /exec 的 Apps Script 網址" 
-                 class="flex-1 py-1.5 px-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sky-400 font-mono text-[11px] focus:outline-none focus:border-cyan-500">
-          <button onclick="saveGoogleUrlExplicitly()" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs shrink-0 flex items-center gap-1 transition shadow">
-            <i class="fa-solid fa-floppy-disk"></i>
-            <span>儲存</span>
+        <div class="grid grid-cols-2 gap-2">
+          <button onclick="uploadToCloud()" class="py-2.5 px-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs sm:text-sm font-black flex items-center justify-center gap-1.5 shadow transition">
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+            上傳至雲端
+          </button>
+          <button onclick="downloadFromCloud()" class="py-2.5 px-3 rounded-xl bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-500 hover:to-indigo-500 text-white text-xs sm:text-sm font-black flex items-center justify-center gap-1.5 shadow transition">
+            <i class="fa-solid fa-cloud-arrow-down"></i>
+            從雲端下載
           </button>
         </div>
-        <!-- 手機一鍵綁定連結按鈕 -->
-        <button onclick="copyMobileMagicLink()" class="w-full py-2 px-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-cyan-500/40 text-cyan-300 font-bold text-[11px] flex items-center justify-center gap-1.5 transition">
+      </div>
+
+      <!-- Google Apps Script 網址設定 -->
+      <div class="space-y-2 text-xs font-bold">
+        <div class="flex items-center justify-between">
+          <label class="text-slate-300">Google Apps Script 網頁應用程式網址:</label>
+          <span id="urlSavedStatus" class="hidden text-emerald-400 font-mono text-[11px]">✓ 已綁定</span>
+        </div>
+        <input type="url" id="googleScriptUrlInput" oninput="handleUrlInputLive(this.value)" placeholder="https://script.google.com/macros/s/.../exec" class="w-full py-2 px-3 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono text-xs focus:outline-none focus:border-amber-400">
+        <div class="flex items-center gap-2 pt-1">
+          <button onclick="saveGoogleUrlExplicitly()" class="flex-1 py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-emerald-500/30 font-black transition">
+            💾 儲存網址
+          </button>
+          <button onclick="importFromGoogleSheets()" class="flex-1 py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-cyan-500/30 font-black transition">
+            🔄 同步最新股價
+          </button>
+        </div>
+      </div>
+
+      <!-- 手機一鍵綁定連結 -->
+      <div class="pt-2 border-t border-slate-800">
+        <button onclick="copyMobileMagicLink()" class="w-full py-2.5 px-3 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/40 text-xs sm:text-sm font-black flex items-center justify-center gap-2 transition">
           <i class="fa-solid fa-mobile-screen-button"></i>
-          <span>📲 複製「手機一鍵綁定網址」(免手動貼上)</span>
-        </button>
-      </div>
-
-      <!-- 跨裝置互通、月初匯入與即時行情功能群組 -->
-      <div class="p-3.5 rounded-2xl bg-slate-950/90 border border-slate-800 space-y-2 text-[11px]">
-        <div class="flex items-center justify-between font-mono border-b border-slate-800/80 pb-2">
-          <span class="text-slate-400">最後互通時間:</span>
-          <span id="modalSyncTimeDisplay" class="text-cyan-400 font-bold">2026/11/08 21:57:12</span>
-        </div>
-        <div class="grid grid-cols-2 gap-1.5 pt-1 text-slate-300">
-          <button onclick="uploadToCloud()" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 flex items-center gap-1.5 font-bold text-left transition">
-            <i class="fa-solid fa-cloud-arrow-up text-indigo-400"></i>
-            <span>上傳至雲端</span>
-          </button>
-          <button onclick="downloadFromCloud()" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 flex items-center gap-1.5 font-bold text-left transition">
-            <i class="fa-solid fa-cloud-arrow-down text-sky-400"></i>
-            <span>從雲端下載</span>
-          </button>
-          <button onclick="importFromGoogleSheets()" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 flex items-center gap-1.5 font-bold text-left transition">
-            <i class="fa-solid fa-file-import text-emerald-400"></i>
-            <span>月初月報匯入</span>
-          </button>
-          <button onclick="syncLiveQuotes(); closeSyncModal();" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 flex items-center gap-1.5 font-bold text-left transition">
-            <i class="fa-solid fa-arrows-rotate text-cyan-400"></i>
-            <span>更新即時行情</span>
-          </button>
-        </div>
-      </div>
-
-      <div class="flex justify-end pt-1 border-t border-slate-800">
-        <button onclick="closeSyncModal()" class="px-4 py-1.5 rounded-xl bg-slate-800 text-slate-300 font-bold text-xs hover:bg-slate-700 transition">
-          完成關閉
+          複製「手機一鍵綁定網址」
         </button>
       </div>
     </div>
   </div>
 
-  <!-- Toast 提示容器 -->
-  <div id="toast" class="fixed bottom-14 right-3 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
-    <div class="px-3.5 py-2 rounded-2xl bg-slate-900 border border-slate-700 text-white font-bold text-xs shadow-2xl flex items-center gap-2 pointer-events-auto">
-      <span id="toastMsg">操作成功</span>
-      <button id="toastUndoBtn" class="hidden ml-1 px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[11px] font-mono">
-        復原
-      </button>
-    </div>
+  <!-- ==================== 底部 Toast 通知提示框 ==================== -->
+  <div id="toast" class="fixed bottom-16 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 rounded-2xl bg-slate-900/95 backdrop-blur-md border border-slate-700 text-white text-xs sm:text-sm font-bold shadow-2xl flex items-center gap-3 transition-all duration-300 translate-y-20 opacity-0 pointer-events-none whitespace-nowrap max-w-[92vw]">
+    <span id="toastMsg" class="truncate">操作完成</span>
+    <button id="toastUndoBtn" class="hidden px-2.5 py-1 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 text-xs font-black pointer-events-auto shrink-0">
+      復原
+    </button>
   </div>
 
-  <!-- ==================== 核心 JavaScript 腳本 ==================== -->
+  <!-- ==================== 核心應用程式腳本 ==================== -->
   <script>
-    /* 0. 安全本地存儲防護 */
-    const memoryStorage = {};
-    const safeStorage = {
-      getItem(key) {
-        try { return localStorage.getItem(key); } catch (e) { return memoryStorage[key] || null; }
-      },
-      setItem(key, val) {
-        try { localStorage.setItem(key, String(val)); } catch (e) { memoryStorage[key] = String(val); }
-      },
-      removeItem(key) {
-        try { localStorage.removeItem(key); } catch (e) { delete memoryStorage[key]; }
-      }
-    };
+    const safeStorage = (() => {
+      const mem = {};
+      return {
+        getItem(k) {
+          try { return window.localStorage.getItem(k); } catch (e) { return mem[k] || null; }
+        },
+        setItem(k, v) {
+          try { window.localStorage.setItem(k, v); } catch (e) { mem[k] = String(v); }
+        },
+        removeItem(k) {
+          try { window.localStorage.removeItem(k); } catch (e) { delete mem[k]; }
+        }
+      };
+    })();
 
     /* 1. 常數與真實基準設定 (100% 依據 2026/11/01 結算月報) */
     let usTwdRate = 32.3899;
@@ -943,70 +1105,159 @@
 
     let lastSyncTimestamp = safeStorage.getItem('alphatrack_last_sync_time') || '2026/11/08 21:57:12';
 
-    /* 17 檔持股清單 */
+    /* 17 檔持股清單 (統一連結至 Google 財經) */
     const DEFAULT_HOLDINGS = [
       // 台股部位 (11 檔)
-      { id: 'tw-0050', market: 'TW', symbol: '0050', name: '元大台灣50', category: 'ETF', shares: 2803, avgPrice: 78.78, currentPrice: 104.95, link: 'https://tw.stock.yahoo.com/quote/0050.TW' },
-      { id: 'tw-00923', market: 'TW', symbol: '00923', name: '群益台ESG低碳50', category: 'ETF', shares: 3430, avgPrice: 20.77, currentPrice: 38.16, link: 'https://tw.stock.yahoo.com/quote/00923.TW' },
-      { id: 'tw-2002', market: 'TW', symbol: '2002', name: '中鋼', category: 'STOCK', shares: 3000, avgPrice: 21.71, currentPrice: 19.25, link: 'https://tw.stock.yahoo.com/quote/2002.TW' },
-      { id: 'tw-2383', market: 'TW', symbol: '2383', name: '台光電', category: 'STOCK', shares: 4, avgPrice: 4358.00, currentPrice: 4675.00, link: 'https://tw.stock.yahoo.com/quote/2383.TW' },
-      { id: 'tw-2308', market: 'TW', symbol: '2308', name: '台達電', category: 'STOCK', shares: 21, avgPrice: 1989.71, currentPrice: 1335.00, link: 'https://tw.stock.yahoo.com/quote/2308.TW' },
-      { id: 'tw-2330', market: 'TW', symbol: '2330', name: '台積電', category: 'STOCK', shares: 15, avgPrice: 2286.87, currentPrice: 2370.00, link: 'https://tw.stock.yahoo.com/quote/2330.TW' },
-      { id: 'tw-2454', market: 'TW', symbol: '2454', name: '聯發科', category: 'STOCK', shares: 49, avgPrice: 1755.98, currentPrice: 3915.00, link: 'https://tw.stock.yahoo.com/quote/2454.TW' },
-      { id: 'tw-2646', market: 'TW', symbol: '2646', name: '星宇航空', category: 'STOCK', shares: 1137, avgPrice: 28.04, currentPrice: 19.75, link: 'https://tw.stock.yahoo.com/quote/2646.TW' },
-      { id: 'tw-3017', market: 'TW', symbol: '3017', name: '奇鋐', category: 'STOCK', shares: 8, avgPrice: 2126.75, currentPrice: 3095.00, link: 'https://tw.stock.yahoo.com/quote/3017.TW' },
-      { id: 'tw-3081', market: 'TW', symbol: '3081', name: '聯亞', category: 'STOCK', shares: 1, avgPrice: 0.00, currentPrice: 2370.00, link: 'https://tw.stock.yahoo.com/quote/3081.TWO' },
-      { id: 'tw-00631l', market: 'TW', symbol: '00631L', name: '元大台灣50正2', category: 'ETF', shares: 1000, avgPrice: 33.93, currentPrice: 34.16, link: 'https://tw.stock.yahoo.com/quote/00631L.TW' },
+      { id: 'tw-0050', market: 'TW', symbol: '0050', name: '元大台灣50', category: 'ETF', shares: 2803, avgPrice: 78.78, currentPrice: 104.95, link: 'https://www.google.com/finance/quote/0050:TPE' },
+      { id: 'tw-00923', market: 'TW', symbol: '00923', name: '群益台ESG低碳50', category: 'ETF', shares: 3430, avgPrice: 20.77, currentPrice: 38.16, link: 'https://www.google.com/finance/quote/00923:TPE' },
+      { id: 'tw-2002', market: 'TW', symbol: '2002', name: '中鋼', category: 'STOCK', shares: 3000, avgPrice: 21.71, currentPrice: 19.25, link: 'https://www.google.com/finance/quote/2002:TPE' },
+      { id: 'tw-2383', market: 'TW', symbol: '2383', name: '台光電', category: 'STOCK', shares: 4, avgPrice: 4358.00, currentPrice: 4675.00, link: 'https://www.google.com/finance/quote/2383:TPE' },
+      { id: 'tw-2308', market: 'TW', symbol: '2308', name: '台達電', category: 'STOCK', shares: 21, avgPrice: 1989.71, currentPrice: 1335.00, link: 'https://www.google.com/finance/quote/2308:TPE' },
+      { id: 'tw-2330', market: 'TW', symbol: '2330', name: '台積電', category: 'STOCK', shares: 15, avgPrice: 2286.87, currentPrice: 2370.00, link: 'https://www.google.com/finance/quote/2330:TPE' },
+      { id: 'tw-2454', market: 'TW', symbol: '2454', name: '聯發科', category: 'STOCK', shares: 49, avgPrice: 1755.98, currentPrice: 3915.00, link: 'https://www.google.com/finance/quote/2454:TPE' },
+      { id: 'tw-2646', market: 'TW', symbol: '2646', name: '星宇航空', category: 'STOCK', shares: 1137, avgPrice: 28.04, currentPrice: 19.75, link: 'https://www.google.com/finance/quote/2646:TPE' },
+      { id: 'tw-3017', market: 'TW', symbol: '3017', name: '奇鋐', category: 'STOCK', shares: 8, avgPrice: 2126.75, currentPrice: 3095.00, link: 'https://www.google.com/finance/quote/3017:TPE' },
+      { id: 'tw-3081', market: 'TW', symbol: '3081', name: '聯亞', category: 'STOCK', shares: 1, avgPrice: 0.00, currentPrice: 2370.00, link: 'https://www.google.com/finance?q=3081' },
+      { id: 'tw-00631l', market: 'TW', symbol: '00631L', name: '元大台灣50正2', category: 'ETF', shares: 1000, avgPrice: 33.93, currentPrice: 34.16, link: 'https://www.google.com/finance/quote/00631L:TPE' },
 
       // 美股部位 (6 檔)
-      { id: 'us-voo', market: 'US', symbol: 'VOO', name: '先鋒標普500 ETF', category: 'ETF', shares: 13.71258, avgPrice: 598.63, currentPrice: 694.81, link: 'https://tw.stock.yahoo.com/quote/VOO' },
-      { id: 'us-qqq', market: 'US', symbol: 'QQQ', name: '那斯達克100 ETF', category: 'ETF', shares: 3.49593, avgPrice: 499.53, currentPrice: 690.49, link: 'https://tw.stock.yahoo.com/quote/QQQ' },
-      { id: 'us-nvda', market: 'US', symbol: 'NVDA', name: '輝達', category: 'STOCK', shares: 22, avgPrice: 140.23, currentPrice: 204.64, link: 'https://tw.stock.yahoo.com/quote/NVDA' },
-      { id: 'us-msft', market: 'US', symbol: 'MSFT', name: '微軟', category: 'STOCK', shares: 3, avgPrice: 468.84, currentPrice: 521.91, link: 'https://tw.stock.yahoo.com/quote/MSFT' },
-      { id: 'us-goog', market: 'US', symbol: 'GOOG', name: 'Alphabet (谷歌)', category: 'STOCK', shares: 14, avgPrice: 237.09, currentPrice: 278.22, link: 'https://tw.stock.yahoo.com/quote/GOOG' },
-      { id: 'us-qqqm', market: 'US', symbol: 'QQQM', name: '那斯達克微型 ETF', category: 'ETF', shares: 3.11494, avgPrice: 295.38, currentPrice: 284.34, link: 'https://tw.stock.yahoo.com/quote/QQQM' }
+      { id: 'us-voo', market: 'US', symbol: 'VOO', name: '先鋒標普500 ETF', category: 'ETF', shares: 13.71258, avgPrice: 598.63, currentPrice: 694.81, link: 'https://www.google.com/finance/quote/VOO:NYSEARCA' },
+      { id: 'us-qqq', market: 'US', symbol: 'QQQ', name: '那斯達克100 ETF', category: 'ETF', shares: 3.49593, avgPrice: 499.53, currentPrice: 690.49, link: 'https://www.google.com/finance/quote/QQQ:NASDAQ' },
+      { id: 'us-nvda', market: 'US', symbol: 'NVDA', name: '輝達', category: 'STOCK', shares: 22, avgPrice: 140.23, currentPrice: 204.64, link: 'https://www.google.com/finance/quote/NVDA:NASDAQ' },
+      { id: 'us-msft', market: 'US', symbol: 'MSFT', name: '微軟', category: 'STOCK', shares: 3, avgPrice: 468.84, currentPrice: 521.91, link: 'https://www.google.com/finance/quote/MSFT:NASDAQ' },
+      { id: 'us-goog', market: 'US', symbol: 'GOOG', name: 'Alphabet (谷歌)', category: 'STOCK', shares: 14, avgPrice: 237.09, currentPrice: 278.22, link: 'https://www.google.com/finance/quote/GOOG:NASDAQ' },
+      { id: 'us-qqqm', market: 'US', symbol: 'QQQM', name: '那斯達克微型 ETF', category: 'ETF', shares: 3.11494, avgPrice: 295.38, currentPrice: 284.34, link: 'https://www.google.com/finance/quote/QQQM:NASDAQ' }
     ];
 
     const STOCK_DATABASE = {
-      '0050': { name: '元大台灣50', market: 'TW', category: 'ETF', price: 104.95, link: 'https://tw.stock.yahoo.com/quote/0050.TW' },
-      '00923': { name: '群益台ESG低碳50', market: 'TW', category: 'ETF', price: 38.16, link: 'https://tw.stock.yahoo.com/quote/00923.TW' },
-      '00631L': { name: '元大台灣50正2', market: 'TW', category: 'ETF', price: 34.16, link: 'https://tw.stock.yahoo.com/quote/00631L.TW' },
-      '2330': { name: '台積電', market: 'TW', category: 'STOCK', price: 2370.00, link: 'https://tw.stock.yahoo.com/quote/2330.TW' },
-      '2454': { name: '聯發科', market: 'TW', category: 'STOCK', price: 3915.00, link: 'https://tw.stock.yahoo.com/quote/2454.TW' },
-      '2308': { name: '台達電', market: 'TW', category: 'STOCK', price: 1335.00, link: 'https://tw.stock.yahoo.com/quote/2308.TW' },
-      '2383': { name: '台光電', market: 'TW', category: 'STOCK', price: 4675.00, link: 'https://tw.stock.yahoo.com/quote/2383.TW' },
-      '3017': { name: '奇鋐', market: 'TW', category: 'STOCK', price: 3095.00, link: 'https://tw.stock.yahoo.com/quote/3017.TW' },
-      '2002': { name: '中鋼', market: 'TW', category: 'STOCK', price: 19.25, link: 'https://tw.stock.yahoo.com/quote/2002.TW' },
-      '2646': { name: '星宇航空', market: 'TW', category: 'STOCK', price: 19.75, link: 'https://tw.stock.yahoo.com/quote/2646.TW' },
-      '3081': { name: '聯亞', market: 'TW', category: 'STOCK', price: 2370.00, link: 'https://tw.stock.yahoo.com/quote/3081.TWO' },
+      // 台股 ETF
+      '0050': { name: '元大台灣50', market: 'TW', category: 'ETF', price: 104.95, link: 'https://www.google.com/finance/quote/0050:TPE' },
+      '006208': { name: '富邦台50', market: 'TW', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/006208:TPE' },
+      '00923': { name: '群益台ESG低碳50', market: 'TW', category: 'ETF', price: 38.16, link: 'https://www.google.com/finance/quote/00923:TPE' },
+      '00631L': { name: '元大台灣50正2', market: 'TW', category: 'ETF', price: 34.16, link: 'https://www.google.com/finance/quote/00631L:TPE' },
+      '00675L': { name: '富邦臺灣加權正2', market: 'TW', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/00675L:TPE' },
+      '00685L': { name: '群益臺灣加權正2', market: 'TW', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/00685L:TPE' },
+      '00670L': { name: '富邦NASDAQ正2', market: 'TW', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/00670L:TPE' },
+      '00662': { name: '富邦NASDAQ', market: 'TW', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/00662:TPE' },
+      '00757': { name: '統一FANG+', market: 'TW', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/00757:TPE' },
+      '0056': { name: '元大高股息', market: 'TW', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/0056:TPE' },
+      '00878': { name: '國泰永續高股息', market: 'TW', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/00878:TPE' },
+      '00919': { name: '群益台灣精選高息', market: 'TW', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/00919:TPE' },
+      '00929': { name: '復華台灣科技優息', market: 'TW', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/00929:TPE' },
+      '00713': { name: '元大台灣高息低波', market: 'TW', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/00713:TPE' },
+      '00679B': { name: '元大美債20年', market: 'TW', category: 'ETF', price: 0, link: 'https://www.google.com/finance?q=00679B' },
+      '00687B': { name: '國泰20年美債', market: 'TW', category: 'ETF', price: 0, link: 'https://www.google.com/finance?q=00687B' },
 
-      'VOO': { name: '先鋒標普500 ETF', market: 'US', category: 'ETF', price: 694.81, link: 'https://tw.stock.yahoo.com/quote/VOO' },
-      'QQQ': { name: '那斯達克100 ETF', market: 'US', category: 'ETF', price: 690.49, link: 'https://tw.stock.yahoo.com/quote/QQQ' },
-      'QQQM': { name: '那斯達克微型 ETF', market: 'US', category: 'ETF', price: 284.34, link: 'https://tw.stock.yahoo.com/quote/QQQM' },
-      'NVDA': { name: '輝達', market: 'US', category: 'STOCK', price: 204.64, link: 'https://tw.stock.yahoo.com/quote/NVDA' },
-      'MSFT': { name: '微軟', market: 'US', category: 'STOCK', price: 521.91, link: 'https://tw.stock.yahoo.com/quote/MSFT' },
-      'GOOG': { name: 'Alphabet (谷歌)', market: 'US', category: 'STOCK', price: 278.22, link: 'https://tw.stock.yahoo.com/quote/GOOG' }
+      // 台股個股
+      '2330': { name: '台積電', market: 'TW', category: 'STOCK', price: 2370.00, link: 'https://www.google.com/finance/quote/2330:TPE' },
+      '2454': { name: '聯發科', market: 'TW', category: 'STOCK', price: 3915.00, link: 'https://www.google.com/finance/quote/2454:TPE' },
+      '2308': { name: '台達電', market: 'TW', category: 'STOCK', price: 1335.00, link: 'https://www.google.com/finance/quote/2308:TPE' },
+      '2383': { name: '台光電', market: 'TW', category: 'STOCK', price: 4675.00, link: 'https://www.google.com/finance/quote/2383:TPE' },
+      '3017': { name: '奇鋐', market: 'TW', category: 'STOCK', price: 3095.00, link: 'https://www.google.com/finance/quote/3017:TPE' },
+      '2002': { name: '中鋼', market: 'TW', category: 'STOCK', price: 19.25, link: 'https://www.google.com/finance/quote/2002:TPE' },
+      '2646': { name: '星宇航空', market: 'TW', category: 'STOCK', price: 19.75, link: 'https://www.google.com/finance/quote/2646:TPE' },
+      '3081': { name: '聯亞', market: 'TW', category: 'STOCK', price: 2370.00, link: 'https://www.google.com/finance?q=3081' },
+      '2317': { name: '鴻海', market: 'TW', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/2317:TPE' },
+      '2382': { name: '廣達', market: 'TW', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/2382:TPE' },
+      '3231': { name: '緯創', market: 'TW', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/3231:TPE' },
+      '6669': { name: '緯穎', market: 'TW', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/6669:TPE' },
+      '2881': { name: '富邦金', market: 'TW', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/2881:TPE' },
+      '2882': { name: '國泰金', market: 'TW', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/2882:TPE' },
+      '2891': { name: '中信金', market: 'TW', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/2891:TPE' },
+
+      // 美股 & IB 海外 ETF（含槓桿型、指數型、英股 UCITS）
+      'VOO': { name: '先鋒標普500 ETF', market: 'US', category: 'ETF', price: 694.81, link: 'https://www.google.com/finance/quote/VOO:NYSEARCA' },
+      'QQQ': { name: '那斯達克100 ETF', market: 'US', category: 'ETF', price: 690.49, link: 'https://www.google.com/finance/quote/QQQ:NASDAQ' },
+      'QQQM': { name: '那斯達克微型 ETF', market: 'US', category: 'ETF', price: 284.34, link: 'https://www.google.com/finance/quote/QQQM:NASDAQ' },
+      'QLD': { name: 'ProShares 兩倍做多納指100 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/QLD:NYSEARCA' },
+      'TQQQ': { name: 'ProShares 三倍做多納指100 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/TQQQ:NASDAQ' },
+      'SSO': { name: 'ProShares 兩倍做多標普500 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/SSO:NYSEARCA' },
+      'UPRO': { name: 'ProShares 三倍做多標普500 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/UPRO:NYSEARCA' },
+      'SQQQ': { name: 'ProShares 三倍做空納指100 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/SQQQ:NASDAQ' },
+      'SOXL': { name: 'Direxion 三倍做多半導體 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/SOXL:NYSEARCA' },
+      'VT': { name: '先鋒全世界股票 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/VT:NYSEARCA' },
+      'VTI': { name: '先鋒美國整體股市 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/VTI:NYSEARCA' },
+      'VXUS': { name: '先鋒美國以外全世界 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/VXUS:NASDAQ' },
+      'SPY': { name: 'SPDR 標普500 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/SPY:NYSEARCA' },
+      'IVV': { name: 'iShares 核心標普500 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/IVV:NYSEARCA' },
+      'SPLG': { name: 'SPDR 投資組合標普500 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/SPLG:NYSEARCA' },
+      'SCHD': { name: '嘉信美國紅利股息 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/SCHD:NYSEARCA' },
+      'SCHG': { name: '嘉信美國大型成長 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/SCHG:NYSEARCA' },
+      'VUG': { name: '先鋒成長股 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/VUG:NYSEARCA' },
+      'VGT': { name: '先鋒資訊科技 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/VGT:NYSEARCA' },
+      'SMH': { name: 'VanEck 半導體 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/SMH:NASDAQ' },
+      'SOXX': { name: 'iShares 半導體 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/SOXX:NASDAQ' },
+      'TLT': { name: 'iShares 20年期以上美國公債 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/TLT:NASDAQ' },
+      'SGOV': { name: 'iShares 0-3月美國國庫券 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/SGOV:NYSEARCA' },
+      'BND': { name: '先鋒總體債券市場 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/BND:NASDAQ' },
+      'GLD': { name: 'SPDR 黃金 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/GLD:NYSEARCA' },
+      'IBIT': { name: 'iShares 比特幣信託 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/IBIT:NASDAQ' },
+      'VWRA': { name: 'Vanguard FTSE 全世界 UCITS ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/VWRA:LON' },
+      'VWRD': { name: 'Vanguard FTSE 全世界配息 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/VWRD:LON' },
+      'CSPX': { name: 'iShares 標普500 UCITS ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/CSPX:LON' },
+      'VUAA': { name: 'Vanguard 標普500 UCITS ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/VUAA:LON' },
+      'SWRD': { name: 'SPDR MSCI 世界 UCITS ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/SWRD:LON' },
+      'EIMI': { name: 'iShares 新興市場 UCITS ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/EIMI:LON' },
+      'EQQQ': { name: 'Invesco 納斯達克100 UCITS ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/EQQQ:LON' },
+      'IB01': { name: 'iShares 0-1年美國國庫券 ETF', market: 'US', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/IB01:LON' },
+
+      // 美股個股
+      'NVDA': { name: '輝達', market: 'US', category: 'STOCK', price: 204.64, link: 'https://www.google.com/finance/quote/NVDA:NASDAQ' },
+      'MSFT': { name: '微軟', market: 'US', category: 'STOCK', price: 521.91, link: 'https://www.google.com/finance/quote/MSFT:NASDAQ' },
+      'GOOG': { name: 'Alphabet (谷歌)', market: 'US', category: 'STOCK', price: 278.22, link: 'https://www.google.com/finance/quote/GOOG:NASDAQ' },
+      'GOOGL': { name: 'Alphabet Class A (谷歌)', market: 'US', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/GOOGL:NASDAQ' },
+      'AAPL': { name: '蘋果', market: 'US', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/AAPL:NASDAQ' },
+      'TSLA': { name: '特斯拉', market: 'US', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/TSLA:NASDAQ' },
+      'AMZN': { name: '亞馬遜', market: 'US', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/AMZN:NASDAQ' },
+      'META': { name: 'Meta Platforms', market: 'US', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/META:NASDAQ' },
+      'AVGO': { name: '博通', market: 'US', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/AVGO:NASDAQ' },
+      'AMD': { name: '超微半導體', market: 'US', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/AMD:NASDAQ' },
+      'TSM': { name: '台積電 ADR', market: 'US', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/TSM:NYSE' },
+      'ASML': { name: '艾司摩爾', market: 'US', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/ASML:NASDAQ' },
+      'ARM': { name: '安謀控股', market: 'US', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/ARM:NASDAQ' },
+      'PLTR': { name: 'Palantir Technologies', market: 'US', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/PLTR:NASDAQ' },
+      'NFLX': { name: '網飛 Netflix', market: 'US', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/NFLX:NASDAQ' },
+      'COST': { name: '好市多 Costco', market: 'US', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/COST:NASDAQ' },
+      'BRK.B': { name: '波克夏海瑟威 B', market: 'US', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/BRK.B:NYSE' },
+      'MU': { name: '美光科技', market: 'US', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/MU:NASDAQ' },
+      'QCOM': { name: '高通', market: 'US', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/QCOM:NASDAQ' },
+      'LLY': { name: '禮來製藥', market: 'US', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/LLY:NYSE' }
     };
 
+    function getGoogleFinanceUrl(symbol, market) {
+      const sym = String(symbol || '').trim().toUpperCase();
+      if (!sym) return 'https://www.google.com/finance';
+      if (STOCK_DATABASE[sym] && STOCK_DATABASE[sym].link && STOCK_DATABASE[sym].link.includes('google.com/finance')) {
+        return STOCK_DATABASE[sym].link;
+      }
+      if (market === 'TW' || /^\d/.test(sym)) {
+        return `https://www.google.com/finance/quote/${sym}:TPE`;
+      }
+      return `https://www.google.com/finance?q=${encodeURIComponent(sym)}`;
+    }
+
     let historyMonthlyData = [
-      { date: '2026/1/5', tw: 388010, us: 480585, ib: 144157, cash: 820446, total: 1833198, principal: 879489, pnl: 133263 },
-      { date: '2026/2/5', tw: 389094, us: 479257, ib: 133134, cash: 842789, total: 1844274, principal: 964601, pnl: 36884 },
-      { date: '2026/3/5', tw: 437780, us: 477370, ib: 218081, cash: 671858, total: 1805089, principal: 1040069, pnl: 93162 },
-      { date: '2026/4/5', tw: 457818, us: 491791, ib: 218032, cash: 708236, total: 1875877, principal: 1076070, pnl: 91571 },
-      { date: '2026/5/9', tw: 691086, us: 611044, ib: 296661, cash: 639668, total: 2238459, principal: 1142103, pnl: 456689 },
-      { date: '2026/6/6', tw: 830718, us: 605127, ib: 291308, cash: 587613, total: 2314766, principal: 1224146, pnl: 503008 },
-      { date: '2026/7/5', tw: 867206, us: 613720, ib: 293733, cash: 557899, total: 2332558, principal: 1271482, pnl: 503177 },
-      { date: '2026/8/2', tw: 751615, us: 640405, ib: 260767, cash: 569674, total: 2222461, principal: 1245783, pnl: 407004 },
-      { date: '2026/9/5', tw: 785966, us: 670054, ib: 273295, cash: 661788, total: 2391103, principal: 1249046, pnl: 480269 },
-      { date: '2026/10/5', tw: 885031, us: 701690, ib: 295974, cash: 658948, total: 2541643, principal: 1288671, pnl: 594024 },
-      { date: '2026/11/1', tw: 840678, us: 738172, ib: 268234, cash: 508160, total: 2355244, principal: 1457739, pnl: 389346 }
+      { date: '2026/1/5', tw: 388010, us: 480585, ib: 144157, cash: 820446, total: 1833198, principal: 879489, pnl: 133263, memo: '年初盤點基準，保留充裕現金等待佈局' },
+      { date: '2026/2/5', tw: 389094, us: 479257, ib: 133134, cash: 842789, total: 1844274, principal: 964601, pnl: 36884, memo: '定期定額穩健加碼，維持核心 ETF 部位' },
+      { date: '2026/3/5', tw: 437780, us: 477370, ib: 218081, cash: 671858, total: 1805089, principal: 1040069, pnl: 93162, memo: '逢低動用現金分批承接台股與 IB 部位' },
+      { date: '2026/4/5', tw: 457818, us: 491791, ib: 218032, cash: 708236, total: 1875877, principal: 1076070, pnl: 91571, memo: '盤勢震盪整理，持續累積庫存張數' },
+      { date: '2026/5/9', tw: 691086, us: 611044, ib: 296661, cash: 639668, total: 2238459, principal: 1142103, pnl: 456689, memo: '台美科技股主升段啟動，淨值突破 220 萬' },
+      { date: '2026/6/6', tw: 830718, us: 605127, ib: 291308, cash: 587613, total: 2314766, principal: 1224146, pnl: 503008, memo: '台股權值股走強，累積總損益突破 50 萬' },
+      { date: '2026/7/5', tw: 867206, us: 613720, ib: 293733, cash: 557899, total: 2332558, principal: 1271482, pnl: 503177, memo: '高檔震盪續抱核心大盤部位' },
+      { date: '2026/8/2', tw: 751615, us: 640405, ib: 260767, cash: 569674, total: 2222461, principal: 1245783, pnl: 407004, memo: '8月回檔修正，冷靜抱緊不殺低' },
+      { date: '2026/9/5', tw: 785966, us: 670054, ib: 273295, cash: 661788, total: 2391103, principal: 1249046, pnl: 480269, memo: '資產迅速收復失土並拉高現金防禦水位' },
+      { date: '2026/10/5', tw: 885031, us: 701690, ib: 295974, cash: 658948, total: 2541643, principal: 1288671, pnl: 594024, memo: '創年度 254.1 萬新高，首度突破 250 萬目標' },
+      { date: '2026/11/1', tw: 840678, us: 738172, ib: 268234, cash: 508160, total: 2355244, principal: 1457739, pnl: 389346, memo: '加碼投入本金至 145.7 萬，等待年底行情' }
     ];
+
+    let currentMonthMemo = '持續追蹤大盤 ETF 比例與 XIRR 年化報酬';
 
     let holdings = [];
     let deletedHoldingBackup = null;
     let activeFilter = 'ALL';
     let targetEtfRatio = 60;
     let isHistory2026Collapsed = true;
+    let isWeightRankingExpanded = false;
     let activeTimeframe = 'YTD';
     let isPrivacyMasked = false;
     let currentMainTab = 1;
@@ -1020,471 +1271,184 @@
       tcb: 878
     };
 
-    let monthlyDepositAmount = 45000;
-
-    const INDEX_STATE = {
-      taiex: { symbol: '^TWII', price: 42711.92, change: 1960.06, pct: 4.94 },
-      sp500: { symbol: '^GSPC', price: 7549.94, change: 22.80, pct: 0.31 },
-      nasdaq: { symbol: '^IXIC', price: 25253.14, change: 264.43, pct: 1.09 }
-    };
+    let monthlyDeposit = 45000;
 
     let liveSyncedMetrics = {
-      'YTD': { taiex: 45.53, sp500: 9.66, nasdaq: 7.88 },
-      '1Q':  { taiex: null, sp500: null, nasdaq: null },
-      '1M':  { taiex: null, sp500: null, nasdaq: null },
-      '1W':  { taiex: null, sp500: null, nasdaq: null }
+      '1W': { taiex: null, sp500: null, nasdaq: null },
+      '1M': { taiex: null, sp500: null, nasdaq: null },
+      '1Q': { taiex: null, sp500: null, nasdaq: null },
+      'YTD': { taiex: null, sp500: null, nasdaq: null }
     };
 
-    /* 2. 隱私遮罩控制與時間精簡格式化 */
-    function formatMasked(val) {
-      if (!isPrivacyMasked) return val;
-      if (typeof val === 'string' && val.startsWith('NT$')) {
-        return 'NT$ •••••••';
-      }
-      return '••••••';
+    let liveIndicesState = {
+      taiex: { price: 42711.92, pct: 4.94 },
+      sp500: { price: 7549.94, pct: 0.31 },
+      nasdaq: { price: 25253.14, pct: 1.09 }
+    };
+
+    /* 2. 本機狀態讀寫與核心工具函式 */
+    function getCashTotal() {
+      return Object.values(bankDeposits).reduce((sum, val) => sum + (parseFloat(val) || 0), 0);
     }
 
-    function formatSyncTime(rawStr, compact = false) {
-      if (!rawStr) return compact ? '11/08 21:57' : '2026/11/08 21:57:12';
-      const str = String(rawStr).trim();
-
-      const m = str.match(/(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})\s+(\d{1,2}):(\d{2})(?::(\d{2}))?/);
-      if (m) {
-        const yyyy = m[1];
-        const mm = m[2].padStart(2, '0');
-        const dd = m[3].padStart(2, '0');
-        const hh = m[4].padStart(2, '0');
-        const min = m[5].padStart(2, '0');
-        const ss = (m[6] || '00').padStart(2, '0');
-        return compact ? `${mm}/${dd} ${hh}:${min}` : `${yyyy}/${mm}/${dd} ${hh}:${min}:${ss}`;
-      }
-
-      const d = new Date(str);
-      if (!isNaN(d.getTime())) {
-        const yyyy = d.getFullYear();
-        const mm = String(d.getMonth() + 1).padStart(2, '0');
-        const dd = String(d.getDate()).padStart(2, '0');
-        const hh = String(d.getHours()).padStart(2, '0');
-        const min = String(d.getMinutes()).padStart(2, '0');
-        const ss = String(d.getSeconds()).padStart(2, '0');
-        return compact ? `${mm}/${dd} ${hh}:${min}` : `${yyyy}/${mm}/${dd} ${hh}:${min}:${ss}`;
-      }
-
-      return str.slice(0, 16);
+    function formatMasked(str) {
+      return isPrivacyMasked ? '••••••' : str;
     }
 
-    function togglePrivacyMask() {
-      isPrivacyMasked = !isPrivacyMasked;
-      const icon = document.getElementById('privacyEyeIcon');
-      if (icon) {
-        icon.className = isPrivacyMasked ? 'fa-solid fa-eye-slash text-xs sm:text-sm text-amber-400' : 'fa-solid fa-eye text-xs sm:text-sm text-slate-300';
-      }
-      document.querySelectorAll('.bank-input').forEach(inp => {
-        inp.type = isPrivacyMasked ? 'password' : 'number';
+    function saveHoldingsState() {
+      safeStorage.setItem('eddie_portfolio_holdings', JSON.stringify(holdings));
+    }
+
+    function saveBankDepositsState() {
+      safeStorage.setItem('eddie_portfolio_banks', JSON.stringify(bankDeposits));
+    }
+
+    function saveHistoryMemosState() {
+      const memoMap = {};
+      historyMonthlyData.forEach(row => {
+        memoMap[row.date] = row.memo || '';
       });
-      const mInp = document.getElementById('inlineMonthlyDepositInput');
-      if (mInp) mInp.type = isPrivacyMasked ? 'password' : 'number';
-
-      recalculateAll(true);
-      showToast(isPrivacyMasked ? '🙈 已隱藏總金額與持股庫存明細' : '👁️ 已恢復顯示實際金額');
+      memoMap['CURRENT'] = currentMonthMemo || '';
+      safeStorage.setItem('eddie_portfolio_memos', JSON.stringify(memoMap));
     }
 
-    function updateSyncTimeDisplay(newTime) {
-      if (newTime) {
-        lastSyncTimestamp = formatSyncTime(newTime, false);
-        safeStorage.setItem('alphatrack_last_sync_time', lastSyncTimestamp);
+    function updateHistoryMemo(idx, val) {
+      if (idx === 'CURRENT') {
+        currentMonthMemo = val;
+      } else if (historyMonthlyData[idx]) {
+        historyMonthlyData[idx].memo = val;
       }
-      const topEl = document.getElementById('topBarSyncTime');
-      const modalEl = document.getElementById('modalSyncTimeDisplay');
-      if (topEl) topEl.innerText = formatSyncTime(lastSyncTimestamp, true);
-      if (modalEl) modalEl.innerText = formatSyncTime(lastSyncTimestamp, false);
+      saveHistoryMemosState();
     }
 
-    /* 3. 本機狀態讀寫輔助函式 */
+    function syncInputFields() {
+      Object.keys(bankDeposits).forEach(key => {
+        const el = document.getElementById(`bankInput-${key}`);
+        if (el) el.value = bankDeposits[key];
+      });
+      const depEl = document.getElementById('inlineMonthlyDepositInput');
+      if (depEl) depEl.value = monthlyDeposit;
+      const savedUrl = safeStorage.getItem('eddie_gas_url') || '';
+      const urlEl = document.getElementById('googleScriptUrlInput');
+      if (urlEl) urlEl.value = savedUrl;
+      const statusEl = document.getElementById('urlSavedStatus');
+      if (statusEl) {
+        if (savedUrl) statusEl.classList.remove('hidden');
+        else statusEl.classList.add('hidden');
+      }
+    }
+
     function loadSavedState() {
       try {
-        const savedHoldings = safeStorage.getItem('alphatrack_holdings_nov_v2');
+        const savedHoldings = safeStorage.getItem('eddie_portfolio_holdings');
         if (savedHoldings) {
           const parsed = JSON.parse(savedHoldings);
           if (Array.isArray(parsed) && parsed.length > 0) {
-            holdings = parsed;
+            holdings = parsed.map(h => ({
+              ...h,
+              link: getGoogleFinanceUrl(h.symbol, h.market)
+            }));
           } else {
             holdings = JSON.parse(JSON.stringify(DEFAULT_HOLDINGS));
           }
         } else {
           holdings = JSON.parse(JSON.stringify(DEFAULT_HOLDINGS));
         }
-
-        const savedBanks = safeStorage.getItem('alphatrack_banks_nov_v2');
-        if (savedBanks) {
-          const parsedBanks = JSON.parse(savedBanks);
-          if (parsedBanks && typeof parsedBanks === 'object') {
-            bankDeposits = Object.assign(bankDeposits, parsedBanks);
-          }
-        }
-
-        const savedMonthly = safeStorage.getItem('alphatrack_monthly_deposit');
-        if (savedMonthly && !isNaN(parseFloat(savedMonthly))) {
-          monthlyDepositAmount = parseFloat(savedMonthly);
-        }
-
-        const savedMetrics = safeStorage.getItem('alphatrack_live_metrics_v1');
-        if (savedMetrics) {
-          const parsedMetrics = JSON.parse(savedMetrics);
-          if (parsedMetrics && typeof parsedMetrics === 'object') {
-            liveSyncedMetrics = Object.assign(liveSyncedMetrics, parsedMetrics);
-          }
-        }
-
-        const savedHistory = safeStorage.getItem('alphatrack_history_nov_v2');
-        if (savedHistory) {
-          const parsedHistory = JSON.parse(savedHistory);
-          if (Array.isArray(parsedHistory) && parsedHistory.length > 0) {
-            historyMonthlyData = parsedHistory;
-          }
-        }
-
-        syncInputFields();
       } catch (e) {
-        console.warn('loadSavedState fallback:', e);
         holdings = JSON.parse(JSON.stringify(DEFAULT_HOLDINGS));
-        syncInputFields();
       }
-    }
-
-    function saveHoldingsState() {
-      safeStorage.setItem('alphatrack_holdings_nov_v2', JSON.stringify(holdings));
-    }
-
-    function saveBankDepositsState() {
-      safeStorage.setItem('alphatrack_banks_nov_v2', JSON.stringify(bankDeposits));
-    }
-
-    function getCashTotal() {
-      return Object.values(bankDeposits).reduce((sum, val) => sum + (parseFloat(val) || 0), 0);
-    }
-
-    function syncInputFields() {
-      const bankKeys = ['post', 'huanan', 'yuanta', 'cathay', 'linebank', 'tcb'];
-      bankKeys.forEach(k => {
-        const el = document.getElementById(`bankInput-${k}`);
-        if (el) el.value = bankDeposits[k] !== undefined ? bankDeposits[k] : 0;
-      });
-
-      const mInp = document.getElementById('inlineMonthlyDepositInput');
-      if (mInp) mInp.value = monthlyDepositAmount;
-
-      const yrSum = document.getElementById('yearlyDepositSum');
-      if (yrSum) {
-        yrSum.innerText = isPrivacyMasked ? '••••••' : Math.round(monthlyDepositAmount * 12).toLocaleString();
-      }
-
-      const slider = document.getElementById('etfRatioSlider');
-      if (slider) slider.value = targetEtfRatio;
-      const dispSlider = document.getElementById('displaySliderVal');
-      if (dispSlider) dispSlider.innerText = `${targetEtfRatio}%`;
-    }
-
-    function handleBankDepositChange(bankKey, val) {
-      bankDeposits[bankKey] = parseFloat(val) || 0;
-      saveBankDepositsState();
-      recalculateAll(false);
-    }
-
-    function handleMonthlyDepositInput(val) {
-      monthlyDepositAmount = parseFloat(val) || 0;
-      safeStorage.setItem('alphatrack_monthly_deposit', monthlyDepositAmount);
-      const yrSum = document.getElementById('yearlyDepositSum');
-      if (yrSum) {
-        yrSum.innerText = isPrivacyMasked ? '••••••' : Math.round(monthlyDepositAmount * 12).toLocaleString();
-      }
-    }
-
-    function toggleHistory2026() {
-      isHistory2026Collapsed = !isHistory2026Collapsed;
-      const container = document.getElementById('history2026TableContainer');
-      const icon = document.getElementById('iconToggleHistory2026');
-      const text = document.getElementById('textToggleHistory2026');
-      if (container) {
-        container.classList.toggle('hidden', isHistory2026Collapsed);
-      }
-      if (icon) {
-        icon.className = isHistory2026Collapsed
-          ? 'fa-solid fa-chevron-down text-cyan-400'
-          : 'fa-solid fa-chevron-up text-cyan-400';
-      }
-      if (text) {
-        text.innerText = isHistory2026Collapsed ? '展開紀錄' : '收合紀錄';
-      }
-    }
-
-    /* 4. 跨裝置互通：上傳與下載核心功能 */
-    async function uploadToCloud() {
-      const url = getNormalizedGasUrl();
-      if (!url) {
-        showToast('❌ 請先至齒輪設定儲存 Google Apps Script 網址');
-        openSyncModal();
-        return;
-      }
-
-      showToast('☁️ 正在將本裝置資料上傳至雲端...');
 
       try {
-        const nowFormatted = formatSyncTime(new Date().toString(), false);
-        const compactPayload = {
-          v: 2,
-          h: holdings.map(h => ({
-            id: h.id,
-            s: h.symbol,
-            m: h.market,
-            c: h.category,
-            sh: h.shares,
-            avg: h.avgPrice,
-            cur: h.currentPrice,
-            n: h.name
-          })),
-          b: bankDeposits,
-          mDep: monthlyDepositAmount,
-          metrics: liveSyncedMetrics,
-          t: nowFormatted
-        };
+        const savedBanks = safeStorage.getItem('eddie_portfolio_banks');
+        if (savedBanks) bankDeposits = { ...bankDeposits, ...JSON.parse(savedBanks) };
+      } catch (e) {}
 
-        const encodedPayload = encodeURIComponent(JSON.stringify(compactPayload));
-        const res = await callGoogleAppsScript(`action=upload&payload=${encodedPayload}`);
+      const savedDep = safeStorage.getItem('eddie_portfolio_monthly_dep');
+      if (savedDep && !isNaN(parseFloat(savedDep))) monthlyDeposit = parseFloat(savedDep);
 
-        if (res && res.status === 'success') {
-          const syncTime = formatSyncTime(res.timestamp || nowFormatted, false);
-          updateSyncTimeDisplay(syncTime);
-          showToast(`🎉 成功上傳雲端！(${formatSyncTime(syncTime, true)})`);
-        } else {
-          const errMsg = (res && res.message) ? res.message : 'Google Apps Script 尚未更新代碼，請至試算表部署「新版本」！';
-          showToast(`⚠️ 上傳未完成: ${errMsg}`);
-        }
-      } catch (err) {
-        console.warn('Upload cloud error:', err);
-        showToast('❌ 上傳失敗：請確認 Google Apps Script 已部署為「新版本」且權限設為「所有人」');
-      }
-    }
-
-    async function downloadFromCloud(silentNoUrl = false) {
-      const url = getNormalizedGasUrl();
-      if (!url) {
-        if (!silentNoUrl) {
-          showToast('❌ 請先至齒輪設定儲存 Google Apps Script 網址');
-          openSyncModal();
-        }
-        return;
-      }
-
-      showToast('📥 正在自雲端下載最新互通資料...');
+      const savedRate = safeStorage.getItem('eddie_portfolio_ustwd');
+      if (savedRate && !isNaN(parseFloat(savedRate))) usTwdRate = parseFloat(savedRate);
 
       try {
-        const res = await callGoogleAppsScript('action=download');
+        const savedMetrics = safeStorage.getItem('eddie_portfolio_metrics');
+        if (savedMetrics) liveSyncedMetrics = { ...liveSyncedMetrics, ...JSON.parse(savedMetrics) };
+      } catch (e) {}
 
-        if (res && res.status === 'success' && res.data) {
-          const cloudData = res.data;
-
-          if (Array.isArray(cloudData.h) && cloudData.h.length > 0) {
-            holdings = cloudData.h.map(item => ({
-              id: item.id,
-              symbol: item.s,
-              market: item.m,
-              category: item.c,
-              shares: item.sh,
-              avgPrice: item.avg,
-              currentPrice: item.cur,
-              name: item.n || item.s,
-              link: STOCK_DATABASE[item.s] ? STOCK_DATABASE[item.s].link : '#'
-            }));
-            saveHoldingsState();
-          } else if (Array.isArray(cloudData.holdings) && cloudData.holdings.length > 0) {
-            holdings = cloudData.holdings;
-            saveHoldingsState();
-          }
-
-          const banks = cloudData.b || cloudData.bankDeposits;
-          if (banks && typeof banks === 'object') {
-            bankDeposits = Object.assign(bankDeposits, banks);
-            saveBankDepositsState();
-          }
-
-          const mDep = cloudData.mDep || cloudData.monthlyDepositAmount;
-          if (mDep) {
-            monthlyDepositAmount = mDep;
-            safeStorage.setItem('alphatrack_monthly_deposit', monthlyDepositAmount);
-          }
-
-          if (cloudData.metrics && typeof cloudData.metrics === 'object') {
-            liveSyncedMetrics = Object.assign(liveSyncedMetrics, cloudData.metrics);
-            safeStorage.setItem('alphatrack_live_metrics_v1', JSON.stringify(liveSyncedMetrics));
-          }
-
-          const rawSyncTime = res.timestamp || cloudData.t || new Date().toString();
-          const cleanSyncTime = formatSyncTime(rawSyncTime, false);
-          updateSyncTimeDisplay(cleanSyncTime);
-
-          syncInputFields();
-          recalculateAll(true);
-          renderSvgLineChart();
-
-          showToast(`🎉 同步完成！(${formatSyncTime(cleanSyncTime, true)})`);
-          closeSyncModal();
-        } else {
-          showToast(`⚠️ 雲端尚無備份資料，請先在有資料的設備按「上傳雲端」`);
-        }
-      } catch (err) {
-        console.warn('Download cloud error:', err);
-        showToast('❌ 下載失敗，請確認 Google Apps Script 權限設為「所有人」');
-      }
-    }
-
-    /* 5. 網址處理、手機一鍵綁定連結與跨網域請求 */
-    function checkMagicLinkGasUrl() {
       try {
-        const params = new URLSearchParams(window.location.search);
-        const gasParam = params.get('gas');
-        if (gasParam && gasParam.includes('script.google.com')) {
-          let cleanUrl = gasParam.trim();
-          if (cleanUrl.includes('/macros/s/') && !cleanUrl.endsWith('/exec')) {
-            cleanUrl = cleanUrl.split('?')[0].replace(/\/+$/, '') + '/exec';
-          }
-          safeStorage.setItem('alphatrack_fixed_gas_url', cleanUrl);
-          safeStorage.setItem('alphatrack_google_script_url', cleanUrl);
-
-          if (window.history && window.history.replaceState) {
-            const cleanLoc = window.location.origin + window.location.pathname;
-            window.history.replaceState({}, document.title, cleanLoc);
-          }
-          return true;
+        const savedIdx = safeStorage.getItem('eddie_portfolio_indices');
+        if (savedIdx) {
+          liveIndicesState = { ...liveIndicesState, ...JSON.parse(savedIdx) };
+          updateIndicesDisplay();
         }
       } catch (e) {}
-      return false;
-    }
-
-    function copyMobileMagicLink() {
-      const gasUrl = getNormalizedGasUrl();
-      if (!gasUrl) {
-        showToast('⚠️ 請先在上方貼上並儲存 Apps Script 網址');
-        return;
-      }
-      const baseUrl = window.location.origin + window.location.pathname;
-      const magicLink = `${baseUrl}?gas=${encodeURIComponent(gasUrl)}`;
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(magicLink).then(() => {
-          showToast('📋 已複製綁定連結！傳到手機 LINE 點開即自動連線');
-        }).catch(() => {
-          prompt('請複製下方網址傳送到手機開啟：', magicLink);
-        });
-      } else {
-        prompt('請複製下方網址傳送到手機開啟：', magicLink);
-      }
-    }
-
-    function getNormalizedGasUrl() {
-      let url = (safeStorage.getItem('alphatrack_fixed_gas_url') || safeStorage.getItem('alphatrack_google_script_url') || '').trim();
-      if (url && url.includes('/macros/s/') && !url.endsWith('/exec')) {
-        url = url.split('?')[0].replace(/\/+$/, '') + '/exec';
-      }
-      return url;
-    }
-
-    function handleUrlInputLive(val) {
-      let trimmed = (val || '').trim();
-      if (trimmed) {
-        safeStorage.setItem('alphatrack_google_script_url', trimmed);
-        safeStorage.setItem('alphatrack_fixed_gas_url', trimmed);
-      }
-    }
-
-    function saveGoogleUrlExplicitly() {
-      const input = document.getElementById('googleScriptUrlInput');
-      let val = input ? input.value.trim() : '';
-      if (!val) {
-        showToast('⚠️ 請先輸入 Google Apps Script 網址');
-        return;
-      }
-      if (val.includes('/macros/s/') && !val.endsWith('/exec')) {
-        val = val.split('?')[0].replace(/\/+$/, '') + '/exec';
-        if (input) input.value = val;
-      }
-      safeStorage.setItem('alphatrack_fixed_gas_url', val);
-      safeStorage.setItem('alphatrack_google_script_url', val);
-
-      const statusEl = document.getElementById('urlSavedStatus');
-      if (statusEl) statusEl.classList.remove('hidden');
-
-      showToast('💾 本機網址已儲存！若要給手機用可點下方複製綁定網址');
-    }
-
-    function requestGasViaJsonp(url, paramsStr, timeoutMs = 12000) {
-      return new Promise((resolve, reject) => {
-        const cbName = '__gasCb_' + Date.now() + '_' + Math.floor(Math.random() * 10000);
-        const script = document.createElement('script');
-        let timer = setTimeout(() => {
-          cleanup();
-          reject(new Error('JSONP Timeout'));
-        }, timeoutMs);
-
-        function cleanup() {
-          clearTimeout(timer);
-          try { delete window[cbName]; } catch (e) { window[cbName] = undefined; }
-          if (script.parentNode) script.parentNode.removeChild(script);
-        }
-
-        window[cbName] = function(data) {
-          cleanup();
-          resolve(data);
-        };
-
-        script.onerror = function() {
-          cleanup();
-          reject(new Error('JSONP Script Error'));
-        };
-
-        const sep = url.includes('?') ? '&' : '?';
-        script.src = `${url}${sep}${paramsStr}&callback=${cbName}&t=${Date.now()}`;
-        document.body.appendChild(script);
-      });
-    }
-
-    async function callGoogleAppsScript(paramsStr) {
-      const url = getNormalizedGasUrl();
-      if (!url) throw new Error('NO_URL');
 
       try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 7000);
-        const sep = url.includes('?') ? '&' : '?';
-        const res = await fetch(`${url}${sep}${paramsStr}&t=${Date.now()}`, {
-          method: 'GET',
-          redirect: 'follow',
-          signal: controller.signal
-        });
-        clearTimeout(timeoutId);
-        if (res.ok) {
-          const text = await res.text();
-          let parsed = JSON.parse(text);
-          if (typeof parsed === 'string') parsed = JSON.parse(parsed);
-          return parsed;
+        const savedMemos = safeStorage.getItem('eddie_portfolio_memos');
+        if (savedMemos) {
+          const memoMap = JSON.parse(savedMemos);
+          historyMonthlyData.forEach(row => {
+            if (memoMap[row.date] !== undefined) row.memo = memoMap[row.date];
+          });
+          if (memoMap['CURRENT'] !== undefined) currentMonthMemo = memoMap['CURRENT'];
         }
-      } catch (fetchErr) {
-        console.info('Fetch fallback to JSONP:', fetchErr.message);
-      }
+      } catch (e) {}
 
-      return await requestGasViaJsonp(url, paramsStr, 12000);
+      syncInputFields();
+    }
+
+    function updateIndicesDisplay() {
+      const setIdx = (priceId, chgId, obj) => {
+        const pEl = document.getElementById(priceId);
+        const cEl = document.getElementById(chgId);
+        if (pEl && obj.price) pEl.innerText = Number(obj.price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        if (cEl && obj.pct !== null && !isNaN(obj.pct)) {
+          const up = obj.pct >= 0;
+          cEl.innerText = `${up ? '▲' : '▼'} ${Math.abs(obj.pct).toFixed(2)}%`;
+          cEl.className = `text-[11px] font-bold font-mono block ${up ? 'text-rose-400' : 'text-emerald-400'}`;
+        }
+      };
+      setIdx('idxTaiexPrice', 'idxTaiexChange', liveIndicesState.taiex);
+      setIdx('idxSp500Price', 'idxSp500Change', liveIndicesState.sp500);
+      setIdx('idxNasdaqPrice', 'idxNasdaqChange', liveIndicesState.nasdaq);
+    }
+
+    /* 3. 頂部三功能按鈕：隱私遮罩、即時更新、雲端同步設定 */
+    function togglePrivacyMask() {
+      isPrivacyMasked = !isPrivacyMasked;
+      const icon = document.getElementById('privacyEyeIcon');
+      if (icon) {
+        icon.className = isPrivacyMasked
+          ? 'fa-solid fa-eye-slash text-xs sm:text-sm text-amber-400'
+          : 'fa-solid fa-eye text-xs sm:text-sm text-slate-300';
+      }
+      recalculateAll(true);
+      showToast(isPrivacyMasked ? '🙈 已開啟金額隱私遮罩' : '👁️ 已恢復顯示實際金額');
+    }
+
+    function updateSyncTimeDisplay() {
+      const modalEl = document.getElementById('modalSyncTimeDisplay');
+      if (modalEl) modalEl.innerText = lastSyncTimestamp;
+
+      const topEl = document.getElementById('topBarSyncTime');
+      if (topEl) {
+        const d = new Date(lastSyncTimestamp);
+        if (!isNaN(d.getTime())) {
+          const mm = String(d.getMonth() + 1).padStart(2, '0');
+          const dd = String(d.getDate()).padStart(2, '0');
+          const hh = String(d.getHours()).padStart(2, '0');
+          const min = String(d.getMinutes()).padStart(2, '0');
+          topEl.innerText = `${mm}/${dd} ${hh}:${min}`;
+        } else {
+          const m = String(lastSyncTimestamp).match(/(\d{1,2}\/\d{1,2})\s+(\d{1,2}:\d{2})/);
+          topEl.innerText = m ? `${m[1]} ${m[2]}` : String(lastSyncTimestamp).slice(0, 11);
+        }
+      }
     }
 
     function openSyncModal() {
-      const modal = document.getElementById('syncModal');
-      const input = document.getElementById('googleScriptUrlInput');
-      const savedUrl = getNormalizedGasUrl();
-      if (input) input.value = savedUrl;
-      const statusEl = document.getElementById('urlSavedStatus');
-      if (statusEl) {
-        if (savedUrl) statusEl.classList.remove('hidden');
-        else statusEl.classList.add('hidden');
-      }
+      syncInputFields();
       updateSyncTimeDisplay();
+      const modal = document.getElementById('syncModal');
       if (modal) modal.classList.remove('hidden');
     }
 
@@ -1493,467 +1457,777 @@
       if (modal) modal.classList.add('hidden');
     }
 
-    /* 【平時/盤中隨時】：同步 GoogleFinance 報價與三大指數自然曆回報 */
-    async function syncLiveQuotes() {
-      const url = getNormalizedGasUrl();
-      if (!url) {
-        showToast('❌ 請先至齒輪設定填寫 Google Apps Script 網址');
-        openSyncModal();
+    function handleUrlInputLive(val) {
+      const trimmed = val.trim();
+      if (trimmed) {
+        safeStorage.setItem('eddie_gas_url', trimmed);
+        const statusEl = document.getElementById('urlSavedStatus');
+        if (statusEl) statusEl.classList.remove('hidden');
+      }
+    }
+
+    function saveGoogleUrlExplicitly() {
+      const inp = document.getElementById('googleScriptUrlInput');
+      const val = inp ? inp.value.trim() : '';
+      if (!val) {
+        showToast('❌ 請先輸入 Apps Script 網址');
         return;
       }
+      safeStorage.setItem('eddie_gas_url', val);
+      const statusEl = document.getElementById('urlSavedStatus');
+      if (statusEl) statusEl.classList.remove('hidden');
+      showToast('✅ Apps Script 網址已永久儲存在本機！');
+    }
 
+    function copyMobileMagicLink() {
+      const gasUrl = safeStorage.getItem('eddie_gas_url') || '';
+      if (!gasUrl) {
+        showToast('❌ 請先儲存 Apps Script 網址再複製綁定連結');
+        return;
+      }
+      const baseUrl = window.location.href.split('?')[0].split('#')[0];
+      const magicUrl = `${baseUrl}?gas=${encodeURIComponent(gasUrl)}`;
+      const tempInput = document.createElement('input');
+      tempInput.value = magicUrl;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      try {
+        document.execCommand('copy');
+        showToast('📲 已複製一鍵綁定網址！貼到手機 LINE 點開即可');
+      } catch (e) {
+        showToast('⚠️ 複製失敗，請手動複製網址列');
+      }
+      document.body.removeChild(tempInput);
+    }
+
+    function checkMagicLinkGasUrl() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const gasParam = params.get('gas');
+        if (gasParam && gasParam.startsWith('http')) {
+          safeStorage.setItem('eddie_gas_url', gasParam.trim());
+          if (window.history && window.history.replaceState) {
+            window.history.replaceState({}, document.title, window.location.pathname);
+          }
+          return true;
+        }
+      } catch (e) {}
+      return false;
+    }
+
+    function jsonpRequest(url) {
+      return new Promise((resolve, reject) => {
+        const cbName = 'gas_cb_' + Date.now() + '_' + Math.floor(Math.random() * 10000);
+        const script = document.createElement('script');
+        const timeout = setTimeout(() => {
+          cleanup();
+          reject(new Error('連線逾時，請檢查網路或 Apps Script 部署權限'));
+        }, 12000);
+
+        function cleanup() {
+          clearTimeout(timeout);
+          delete window[cbName];
+          if (script.parentNode) script.parentNode.removeChild(script);
+        }
+
+        window[cbName] = (data) => {
+          cleanup();
+          resolve(data);
+        };
+
+        const sep = url.includes('?') ? '&' : '?';
+        script.src = `${url}${sep}callback=${cbName}`;
+        script.onerror = () => {
+          cleanup();
+          reject(new Error('無法連線至 Google Apps Script'));
+        };
+        document.body.appendChild(script);
+      });
+    }
+
+    async function syncLiveQuotes() {
+      const gasUrl = safeStorage.getItem('eddie_gas_url') || '';
+      if (!gasUrl) {
+        openSyncModal();
+        showToast('⚠️ 請先貼上並儲存 Apps Script 網址');
+        return;
+      }
       const icon = document.getElementById('syncQuotesIcon');
       if (icon) icon.classList.add('fa-spin');
-      showToast('🔄 正在同步自然曆指數與持股最新市價...');
+      showToast('🔄 正在同步 GOOGLEFINANCE 最新行情...');
 
       try {
-        const data = await callGoogleAppsScript('action=quotes');
+        const res = await jsonpRequest(`${gasUrl}?action=quotes`);
+        if (res && res.status === 'success') {
+          const quotes = res.quotes || {};
+          safeStorage.setItem('eddie_portfolio_quotes_cache', JSON.stringify(quotes));
+          if (res.usdTwd && !isNaN(parseFloat(res.usdTwd))) {
+            usTwdRate = parseFloat(res.usdTwd);
+            safeStorage.setItem('eddie_portfolio_ustwd', usTwdRate);
+          }
 
-        if (data && (data.quotes || data.indices)) {
           let updatedCount = 0;
-
-          if (data.quotes && typeof data.quotes === 'object') {
-            holdings.forEach(h => {
-              const sym = h.symbol.toUpperCase();
-              const name = (h.name || '').trim();
-              let quotePrice = undefined;
-
-              if (data.quotes[sym] !== undefined && !isNaN(parseFloat(data.quotes[sym]))) {
-                quotePrice = parseFloat(data.quotes[sym]);
-              } else if (name && data.quotes[name] !== undefined && !isNaN(parseFloat(data.quotes[name]))) {
-                quotePrice = parseFloat(data.quotes[name]);
-              } else if (data.quotes['TPE:' + sym] !== undefined && !isNaN(parseFloat(data.quotes['TPE:' + sym]))) {
-                quotePrice = parseFloat(data.quotes['TPE:' + sym]);
-              } else {
-                for (const [k, v] of Object.entries(data.quotes)) {
-                  const cleanK = k.toUpperCase().replace(/^TPE:/, '').replace(/\.TW$/, '').replace(/\.TWO$/, '').trim();
-                  if (cleanK === sym || (name && (k === name || k.includes(name) || name.includes(k)))) {
-                    const parsedV = parseFloat(v);
-                    if (!isNaN(parsedV) && parsedV > 0) {
-                      quotePrice = parsedV;
-                      break;
-                    }
-                  }
-                }
-              }
-
-              if (quotePrice !== undefined && quotePrice > 0) {
-                h.currentPrice = quotePrice;
-                updatedCount++;
-              }
-            });
-          }
-
-          if (data.indices && typeof data.indices === 'object') {
-            if (data.indices.taiex && data.indices.taiex.price > 0) {
-              INDEX_STATE.taiex.price = data.indices.taiex.price;
-              if (data.indices.taiex.pct !== null) INDEX_STATE.taiex.pct = data.indices.taiex.pct;
+          holdings.forEach(h => {
+            const sym = String(h.symbol || '').toUpperCase();
+            const qVal = parseFloat(quotes[sym]);
+            if (!isNaN(qVal) && qVal > 0) {
+              h.currentPrice = qVal;
+              updatedCount++;
             }
-            if (data.indices.sp500 && data.indices.sp500.price > 0) {
-              INDEX_STATE.sp500.price = data.indices.sp500.price;
-              if (data.indices.sp500.pct !== null) INDEX_STATE.sp500.pct = data.indices.sp500.pct;
-            }
-            if (data.indices.nasdaq && data.indices.nasdaq.price > 0) {
-              INDEX_STATE.nasdaq.price = data.indices.nasdaq.price;
-              if (data.indices.nasdaq.pct !== null) INDEX_STATE.nasdaq.pct = data.indices.nasdaq.pct;
-            }
-          }
+          });
 
-          let periodMetricsUpdated = 0;
-          if (data.quotes && typeof data.quotes === 'object') {
-            const q = data.quotes;
-            const timeframes = ['YTD', '1Q', '1M', '1W'];
-            
-            timeframes.forEach(tf => {
-              for (const [k, v] of Object.entries(q)) {
-                const upperK = k.toUpperCase();
-                const numVal = parseFloat(v);
-                if (isNaN(numVal)) continue;
-                const roundedVal = parseFloat(numVal.toFixed(2));
+          const periodMap = [
+            { tf: '1W', suffix: '1W' },
+            { tf: '1M', suffix: '1M' },
+            { tf: '1Q', suffix: '1Q' },
+            { tf: 'YTD', suffix: 'YTD' }
+          ];
+          periodMap.forEach(p => {
+            const twVal = parseFloat(quotes[`台灣大盤${p.suffix}`]);
+            const spVal = parseFloat(quotes[`標普${p.suffix}`]);
+            const nasVal = parseFloat(quotes[`那斯達克${p.suffix}`]);
+            if (!isNaN(twVal)) liveSyncedMetrics[p.tf].taiex = twVal;
+            if (!isNaN(spVal)) liveSyncedMetrics[p.tf].sp500 = spVal;
+            if (!isNaN(nasVal)) liveSyncedMetrics[p.tf].nasdaq = nasVal;
+          });
+          safeStorage.setItem('eddie_portfolio_metrics', JSON.stringify(liveSyncedMetrics));
 
-                if (upperK.includes(tf)) {
-                  if (upperK.includes('標普') || upperK.includes('SP500') || upperK.includes('S&P') || upperK.includes('GSPC') || upperK.includes('INX')) {
-                    liveSyncedMetrics[tf].sp500 = roundedVal;
-                    periodMetricsUpdated++;
-                  } else if (upperK.includes('那斯達克') || upperK.includes('那指') || upperK.includes('NASDAQ') || upperK.includes('IXIC')) {
-                    liveSyncedMetrics[tf].nasdaq = roundedVal;
-                    periodMetricsUpdated++;
-                  } else if (upperK.includes('台灣') || upperK.includes('大盤') || upperK.includes('加權') || upperK.includes('台股') || upperK.includes('TAIEX') || upperK.includes('TWII')) {
-                    liveSyncedMetrics[tf].taiex = roundedVal;
-                    periodMetricsUpdated++;
-                  }
-                }
-              }
-            });
-            safeStorage.setItem('alphatrack_live_metrics_v1', JSON.stringify(liveSyncedMetrics));
-          }
-
-          if (data.usdTwd && data.usdTwd > 25 && data.usdTwd < 45) {
-            usTwdRate = Number(data.usdTwd);
+          if (res.indices) {
+            if (res.indices.taiex && res.indices.taiex.price) liveIndicesState.taiex.price = res.indices.taiex.price;
+            if (res.indices.sp500 && res.indices.sp500.price) liveIndicesState.sp500.price = res.indices.sp500.price;
+            if (res.indices.nasdaq && res.indices.nasdaq.price) liveIndicesState.nasdaq.price = res.indices.nasdaq.price;
+            if (liveSyncedMetrics['1W'].taiex !== null) liveIndicesState.taiex.pct = liveSyncedMetrics['1W'].taiex;
+            if (liveSyncedMetrics['1W'].sp500 !== null) liveIndicesState.sp500.pct = liveSyncedMetrics['1W'].sp500;
+            if (liveSyncedMetrics['1W'].nasdaq !== null) liveIndicesState.nasdaq.pct = liveSyncedMetrics['1W'].nasdaq;
+            safeStorage.setItem('eddie_portfolio_indices', JSON.stringify(liveIndicesState));
+            updateIndicesDisplay();
           }
 
           saveHoldingsState();
           recalculateAll(true);
           renderSvgLineChart();
-          showToast(`🎉 成功同步 ${updatedCount} 檔現價與 ${periodMetricsUpdated} 項週期指數！`);
+          showToast(`✅ 行情同步完成！(更新 ${updatedCount} 檔股價與自然曆指數)`);
         } else {
-          showToast('⚠️ 未獲取到報價，請確認試算表【即時行情】分頁已填寫');
+          showToast(`⚠️ 同步未完成: ${(res && res.message) || '請確認試算表設定'}`);
         }
       } catch (err) {
-        console.warn('Sync quotes error:', err);
-        showToast('❌ 同步失敗，請確認 Apps Script 部署權限設為「所有人」');
+        showToast(`❌ 同步失敗: ${err.message}`);
       } finally {
         if (icon) icon.classList.remove('fa-spin');
       }
     }
 
-    /* 【月初核心功能】：自 Google 試算表抓取最新月報 */
-    async function importFromGoogleSheets() {
-      const url = getNormalizedGasUrl();
-      if (!url) {
-        showToast('❌ 請先至齒輪設定填寫 Google Apps Script 網址');
-        openSyncModal();
+    async function uploadToCloud() {
+      const gasUrl = safeStorage.getItem('eddie_gas_url') || '';
+      if (!gasUrl) {
+        showToast('❌ 請先輸入並儲存 Apps Script 網址');
         return;
       }
+      showToast('☁️ 正在上傳備份至雲端...');
+      const slimHoldings = holdings.map(h => ({
+        id: h.id,
+        market: h.market,
+        symbol: h.symbol,
+        name: h.name,
+        category: h.category,
+        shares: h.shares,
+        avgPrice: h.avgPrice,
+        currentPrice: h.currentPrice
+      }));
+      const memoMap = {};
+      historyMonthlyData.forEach(row => { memoMap[row.date] = row.memo || ''; });
+      memoMap['CURRENT'] = currentMonthMemo || '';
 
-      showToast('📥 正在自 Google 試算表抓取最新月份數據...');
-
+      const payloadObj = {
+        holdings: slimHoldings,
+        bankDeposits,
+        monthlyDeposit,
+        usTwdRate,
+        liveSyncedMetrics,
+        memoMap
+      };
       try {
-        const data = await callGoogleAppsScript('action=import');
-
-        if (data && data.status === 'success' && data.type === 'import') {
-          if (Array.isArray(data.holdings) && data.holdings.length > 0) {
-            data.holdings.forEach(nh => {
-              if (nh.costPrice !== undefined && nh.avgPrice === undefined) nh.avgPrice = nh.costPrice;
-              if (!nh.link && STOCK_DATABASE[nh.symbol]) nh.link = STOCK_DATABASE[nh.symbol].link;
-            });
-            holdings = data.holdings;
-          }
-
-          saveHoldingsState();
-
-          if (data.cash && typeof data.cash === 'object') {
-            for (const [k, v] of Object.entries(data.cash)) {
-              if (bankDeposits.hasOwnProperty(k) && !isNaN(Number(v))) {
-                bankDeposits[k] = Number(v);
-              }
-            }
-            saveBankDepositsState();
-          }
-
-          if (Array.isArray(data.history) && data.history.length > 0) {
-            historyMonthlyData = data.history;
-            safeStorage.setItem('alphatrack_history_nov_v2', JSON.stringify(historyMonthlyData));
-          }
-
-          syncInputFields();
-          recalculateAll(true);
-
-          const latestDate = (data.latestSummary && data.latestSummary.date) ? data.latestSummary.date : '最新月份';
-          showToast(`🎉 成功匯入【${latestDate}】月報！`);
-          closeSyncModal();
+        const res = await jsonpRequest(`${gasUrl}?action=upload&payload=${encodeURIComponent(JSON.stringify(payloadObj))}`);
+        if (res && res.status === 'success') {
+          lastSyncTimestamp = res.timestamp || new Date().toLocaleString('zh-TW', { hour12: false });
+          safeStorage.setItem('alphatrack_last_sync_time', lastSyncTimestamp);
+          updateSyncTimeDisplay();
+          showToast('🎉 成功上傳雲端！手機打開按「從雲端下載」即可同步');
         } else {
-          showToast('⚠️ 試算表回傳格式未符合預期，請確認 Apps Script 已發布「新版本」');
+          showToast(`⚠️ 上傳未完成: ${(res && res.message) || '請至試算表部署「新版本」Apps Script'}`);
         }
       } catch (err) {
-        console.warn('Import notice:', err);
-        showToast('❌ 匯入失敗，請確認 Google Apps Script 部署權限設為「所有人」');
+        showToast(`❌ 上傳失敗: ${err.message}`);
       }
     }
 
-    /* 6. 介面導航 (切換時自動回到頁面最頂部，支援方向滑動轉場) */
-    function switchMainTab(tabIndex) {
-      const prevTab = currentMainTab;
-      currentMainTab = tabIndex;
+    async function downloadFromCloud(silent = false) {
+      const gasUrl = safeStorage.getItem('eddie_gas_url') || '';
+      if (!gasUrl) {
+        if (!silent) showToast('❌ 請先輸入並儲存 Apps Script 網址');
+        return;
+      }
+      if (!silent) showToast('☁️ 正在從雲端下載最新資料...');
+      try {
+        const res = await jsonpRequest(`${gasUrl}?action=download`);
+        if (res && res.status === 'success' && res.data) {
+          const d = res.data;
+          if (Array.isArray(d.holdings) && d.holdings.length > 0) {
+            holdings = d.holdings.map(item => ({
+              ...item,
+              link: getGoogleFinanceUrl(item.symbol, item.market)
+            }));
+            saveHoldingsState();
+          }
+          if (d.bankDeposits) {
+            bankDeposits = { ...bankDeposits, ...d.bankDeposits };
+            saveBankDepositsState();
+          }
+          if (d.monthlyDeposit) {
+            monthlyDeposit = parseFloat(d.monthlyDeposit) || 45000;
+            safeStorage.setItem('eddie_portfolio_monthly_dep', monthlyDeposit);
+          }
+          if (d.usTwdRate) {
+            usTwdRate = parseFloat(d.usTwdRate) || 32.3899;
+            safeStorage.setItem('eddie_portfolio_ustwd', usTwdRate);
+          }
+          if (d.liveSyncedMetrics) {
+            liveSyncedMetrics = { ...liveSyncedMetrics, ...d.liveSyncedMetrics };
+            safeStorage.setItem('eddie_portfolio_metrics', JSON.stringify(liveSyncedMetrics));
+          }
+          if (d.memoMap) {
+            historyMonthlyData.forEach(row => {
+              if (d.memoMap[row.date] !== undefined) row.memo = d.memoMap[row.date];
+            });
+            if (d.memoMap['CURRENT'] !== undefined) currentMonthMemo = d.memoMap['CURRENT'];
+            saveHistoryMemosState();
+          }
+          if (res.timestamp) {
+            lastSyncTimestamp = res.timestamp;
+            safeStorage.setItem('alphatrack_last_sync_time', lastSyncTimestamp);
+            updateSyncTimeDisplay();
+          }
+          syncInputFields();
+          recalculateAll(true);
+          renderSvgLineChart();
+          showToast('✅ 已從雲端成功同步最新資料！');
+        } else {
+          showToast(`⚠️ 下載未完成: ${(res && res.message) || '雲端尚無備份資料'}`);
+        }
+      } catch (err) {
+        showToast(`❌ 下載失敗: ${err.message}`);
+      }
+    }
 
-      document.querySelectorAll('.tab-content').forEach(el => {
-        el.classList.add('hidden');
+    async function importFromGoogleSheets() {
+      await syncLiveQuotes();
+    }
+
+    /* 4. 分頁切換與手機左右滑動手勢 */
+    function switchMainTab(tabIdx, slideDir = null) {
+      if (tabIdx < 1 || tabIdx > 4) return;
+      currentMainTab = tabIdx;
+
+      document.querySelectorAll('.tab-content').forEach((el, idx) => {
         el.classList.remove('animate-slide-right', 'animate-slide-left');
+        if (idx + 1 === tabIdx) {
+          el.classList.remove('hidden');
+          if (slideDir === 'left') el.classList.add('animate-slide-right');
+          if (slideDir === 'right') el.classList.add('animate-slide-left');
+        } else {
+          el.classList.add('hidden');
+        }
       });
-      document.querySelectorAll('.main-tab-btn').forEach(btn => {
-        btn.classList.remove('text-emerald-400', 'bg-slate-900', 'border', 'border-emerald-500/40', 'shadow-sm');
+
+      document.querySelectorAll('.main-tab-btn').forEach((btn, idx) => {
+        if (idx + 1 === tabIdx) {
+          btn.className = 'main-tab-btn py-1 px-1.5 rounded-xl sm:rounded-2xl text-emerald-400 bg-slate-900 border border-emerald-500/40 flex items-center justify-center gap-1.5 transition shadow-sm';
+        } else {
+          btn.className = 'main-tab-btn py-1 px-1.5 rounded-xl sm:rounded-2xl text-slate-400 hover:text-white flex items-center justify-center gap-1.5 transition';
+        }
+      });
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      if (tabIdx === 1) renderSvgLineChart();
+      if (tabIdx === 2) recalculateAll(false);
+      if (tabIdx === 4) renderPlanSvgCharts();
+    }
+
+    function initSwipeNavigation() {
+      let startX = 0, startY = 0, ignoreSwipe = false;
+      document.addEventListener('touchstart', (e) => {
+        if (!e.touches || e.touches.length !== 1) return;
+        const target = e.target;
+        if (
+          target.closest('input, select, textarea, #mainChartContainer, #planChartContainer, #history2026TableContainer, .no-scrollbar, #syncModal, #addHoldingModal') ||
+          e.touches[0].clientX < 24 ||
+          e.touches[0].clientX > window.innerWidth - 24
+        ) {
+          ignoreSwipe = true;
+          return;
+        }
+        ignoreSwipe = false;
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+      }, { passive: true });
+
+      document.addEventListener('touchend', (e) => {
+        if (ignoreSwipe || !e.changedTouches || e.changedTouches.length !== 1) return;
+        const dx = e.changedTouches[0].clientX - startX;
+        const dy = e.changedTouches[0].clientY - startY;
+        if (Math.abs(dx) > 65 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+          if (dx < 0 && currentMainTab < 4) {
+            switchMainTab(currentMainTab + 1, 'left');
+          } else if (dx > 0 && currentMainTab > 1) {
+            switchMainTab(currentMainTab - 1, 'right');
+          }
+        }
+      }, { passive: true });
+    }
+
+    /* 5. 第二頁甜甜圈圖與互動高亮 */
+    function renderSvgDonutChart(twMv, usMv, ibMv, cashMv) {
+      const svg = document.getElementById('svgDonutChart');
+      if (!svg) return;
+
+      const total = Math.max(twMv + usMv + ibMv + cashMv, 1);
+      const segments = [
+        { key: 'tw', label: '🇹🇼 台股', val: twMv, color: '#22d3ee' },
+        { key: 'us', label: '🇺🇸 美股', val: usMv, color: '#38bdf8' },
+        { key: 'ib', label: '🌐 IB', val: ibMv, color: '#c084fc' },
+        { key: 'cash', label: '💵 現金', val: cashMv, color: '#34d399' }
+      ];
+
+      const radius = 38;
+      const circumference = 2 * Math.PI * radius;
+      let offset = 0;
+
+      const circlesHtml = segments.map(seg => {
+        const pct = seg.val / total;
+        const dashLen = pct * circumference;
+        const dashOffset = -offset;
+        offset += dashLen;
+        return `
+          <circle id="donutSeg-${seg.key}" cx="50" cy="50" r="${radius}"
+                  fill="transparent"
+                  stroke="${seg.color}"
+                  stroke-width="11"
+                  stroke-dasharray="${dashLen.toFixed(2)} ${circumference.toFixed(2)}"
+                  stroke-dashoffset="${dashOffset.toFixed(2)}"
+                  class="transition-all duration-300 cursor-pointer"
+                  onmouseenter="highlightSegment('${seg.key}')"
+                  onmouseleave="resetHighlight()" />
+        `;
+      }).join('');
+
+      svg.setAttribute('viewBox', '0 0 100 100');
+      svg.innerHTML = `
+        <circle cx="50" cy="50" r="${radius}" fill="transparent" stroke="#0f172a" stroke-width="11" />
+        ${circlesHtml}
+      `;
+
+      const centerTotal = document.getElementById('donutCenterTotal');
+      if (centerTotal) {
+        centerTotal.innerText = isPrivacyMasked ? '••••' : `${(total / 10000).toFixed(1)}萬`;
+      }
+    }
+
+    function highlightSegment(key) {
+      const keys = ['tw', 'us', 'ib', 'cash'];
+      keys.forEach(k => {
+        const seg = document.getElementById(`donutSeg-${k}`);
+        if (seg) {
+          seg.setAttribute('stroke-width', k === key ? '13.5' : '9.5');
+          seg.setAttribute('opacity', k === key ? '1' : '0.45');
+        }
+      });
+    }
+
+    function resetHighlight() {
+      const keys = ['tw', 'us', 'ib', 'cash'];
+      keys.forEach(k => {
+        const seg = document.getElementById(`donutSeg-${k}`);
+        if (seg) {
+          seg.setAttribute('stroke-width', '11');
+          seg.setAttribute('opacity', '1');
+        }
+      });
+    }
+
+    /* 6. 第三頁篩選、修改與刪除復原 */
+    function filterHoldings(filterKey) {
+      activeFilter = filterKey;
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('bg-emerald-600', 'text-white');
         btn.classList.add('text-slate-400');
       });
-
-      const targetView = document.getElementById(`tabView-${tabIndex}`);
-      const targetBtn = document.getElementById(`mainTab-${tabIndex}`);
-      if (targetView) {
-        targetView.classList.remove('hidden');
-        if (prevTab !== tabIndex) {
-          targetView.classList.add(tabIndex > prevTab ? 'animate-slide-right' : 'animate-slide-left');
-        }
+      const activeBtn = document.getElementById(`filterBtn-${filterKey}`);
+      if (activeBtn) {
+        activeBtn.classList.remove('text-slate-400');
+        activeBtn.classList.add('bg-emerald-600', 'text-white');
       }
-      if (targetBtn) {
-        targetBtn.classList.remove('text-slate-400');
-        targetBtn.classList.add('text-emerald-400', 'bg-slate-900', 'border', 'border-emerald-500/40', 'shadow-sm');
-      }
-
-      window.scrollTo({ top: 0, behavior: 'instant' });
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-
-      if (tabIndex === 1) setTimeout(renderSvgLineChart, 50);
-      else if (tabIndex === 2) recalculateAll(false);
-      else if (tabIndex === 4) setTimeout(renderPlanSvgCharts, 50);
+      renderHoldingsTable();
     }
 
-    /* 左右滑動手勢切換分頁 */
-    function initSwipeNavigation() {
-      const mainEl = document.querySelector('main');
-      if (!mainEl) return;
+    function updateHoldingField(id, field, rawVal) {
+      const item = holdings.find(h => h.id === id);
+      if (!item) return;
+      item[field] = parseFloat(rawVal) || 0;
+      saveHoldingsState();
+      recalculateAll(false);
 
-      let touchStartX = 0;
-      let touchStartY = 0;
-      let touchStartTime = 0;
-      let ignoreSwipe = false;
+      const shares = parseFloat(item.shares) || 0;
+      const avg = parseFloat(item.avgPrice) || 0;
+      const cur = parseFloat(item.currentPrice) || 0;
+      const costNtd = item.market === 'TW' ? shares * avg : shares * avg * usTwdRate;
+      const mvNtd = item.market === 'TW' ? shares * cur : shares * cur * usTwdRate;
+      const pnlNtd = mvNtd - costNtd;
+      const pnlPct = costNtd > 0 ? (pnlNtd / costNtd) * 100 : 0;
 
-      mainEl.addEventListener('touchstart', (e) => {
-        if (e.touches.length !== 1) {
-          ignoreSwipe = true;
-          return;
-        }
+      const mvEl = document.getElementById(`rowMv-${id}`);
+      if (mvEl) mvEl.innerText = isPrivacyMasked ? '••••••' : Math.round(mvNtd).toLocaleString();
 
-        const startX = e.touches[0].clientX;
-        const startY = e.touches[0].clientY;
-
-        if (startX < 24 || startX > window.innerWidth - 24) {
-          ignoreSwipe = true;
-          return;
-        }
-
-        const target = e.target;
-        if (target && target.closest('input, select, textarea, #planChartContainer, #mainChartContainer')) {
-          ignoreSwipe = true;
-          return;
-        }
-
-        let el = target;
-        while (el && el !== mainEl) {
-          if (el.scrollWidth > el.clientWidth + 4) {
-            const overflowX = window.getComputedStyle(el).overflowX;
-            if (overflowX === 'auto' || overflowX === 'scroll') {
-              ignoreSwipe = true;
-              return;
-            }
-          }
-          el = el.parentElement;
-        }
-
-        ignoreSwipe = false;
-        touchStartX = startX;
-        touchStartY = startY;
-        touchStartTime = Date.now();
-      }, { passive: true });
-
-      mainEl.addEventListener('touchend', (e) => {
-        if (ignoreSwipe || !e.changedTouches || e.changedTouches.length === 0) return;
-
-        const addModal = document.getElementById('addHoldingModal');
-        const syncModal = document.getElementById('syncModal');
-        if ((addModal && !addModal.classList.contains('hidden')) ||
-            (syncModal && !syncModal.classList.contains('hidden'))) {
-          return;
-        }
-
-        const endX = e.changedTouches[0].clientX;
-        const endY = e.changedTouches[0].clientY;
-        const deltaX = endX - touchStartX;
-        const deltaY = endY - touchStartY;
-        const elapsed = Date.now() - touchStartTime;
-
-        if (Math.abs(deltaX) > 60 && Math.abs(deltaX) > Math.abs(deltaY) * 1.5 && elapsed < 650) {
-          if (deltaX < 0 && currentMainTab < 4) {
-            switchMainTab(currentMainTab + 1);
-          } else if (deltaX > 0 && currentMainTab > 1) {
-            switchMainTab(currentMainTab - 1);
-          }
-        }
-      }, { passive: true });
+      const pnlEl = document.getElementById(`rowPnl-${id}`);
+      if (pnlEl) {
+        const maskedRowPnl = isPrivacyMasked
+          ? (pnlNtd >= 0 ? '+••••' : '-••••')
+          : `${pnlNtd >= 0 ? '+' : ''}${Math.round(pnlNtd).toLocaleString()}`;
+        pnlEl.innerHTML = `
+          <span class="${pnlNtd >= 0 ? 'text-rose-400' : 'text-emerald-400'} block leading-tight">${maskedRowPnl}</span>
+          <span class="block text-[9px] sm:text-[10px] leading-tight ${pnlNtd >= 0 ? 'text-rose-300' : 'text-emerald-300'}">${pnlPct >= 0 ? '+' : ''}${pnlPct.toFixed(1)}%</span>
+        `;
+      }
     }
 
-    /* 7. 核心計算引擎 */
-    function recalculateAll(renderTable = true) {
-      let twCost = 0, twMv = 0;
-      let usCost = 0, usMv = 0;
-      let ibCost = 0, ibMv = 0;
-      let hasIbHoldings = false;
-      let etfMv = 0, stockMv = 0;
+    function deleteHolding(id) {
+      const idx = holdings.findIndex(h => h.id === id);
+      if (idx === -1) return;
+      deletedHoldingBackup = { index: idx, item: holdings[idx] };
+      holdings.splice(idx, 1);
+      saveHoldingsState();
+      recalculateAll(true);
+      showToast(`🗑️ 已刪除 ${deletedHoldingBackup.item.symbol}`, true);
+    }
+
+    function undoDeleteHolding() {
+      if (!deletedHoldingBackup) return;
+      holdings.splice(deletedHoldingBackup.index, 0, deletedHoldingBackup.item);
+      deletedHoldingBackup = null;
+      saveHoldingsState();
+      recalculateAll(true);
+      showToast('↩️ 已復原刪除的標的');
+    }
+
+    function handleBankDepositChange(bankKey, rawVal) {
+      bankDeposits[bankKey] = parseFloat(rawVal) || 0;
+      saveBankDepositsState();
+      recalculateAll(false);
+    }
+
+    function handleMonthlyDepositInput(rawVal) {
+      monthlyDeposit = parseFloat(rawVal) || 0;
+      safeStorage.setItem('eddie_portfolio_monthly_dep', monthlyDeposit);
+      recalculateAll(false);
+    }
+
+    function toggleHistory2026() {
+      isHistory2026Collapsed = !isHistory2026Collapsed;
+      const box = document.getElementById('history2026TableContainer');
+      const icon = document.getElementById('iconToggleHistory2026');
+      const txt = document.getElementById('textToggleHistory2026');
+      if (box) box.classList.toggle('hidden', isHistory2026Collapsed);
+      if (icon) icon.className = isHistory2026Collapsed ? 'fa-solid fa-chevron-down text-cyan-400' : 'fa-solid fa-chevron-up text-cyan-400';
+      if (txt) txt.innerText = isHistory2026Collapsed ? '展開紀錄' : '收合紀錄';
+    }
+
+    /* 7. 全局資產試算引擎 */
+    function recalculateAll(renderTable = false) {
+      let twMv = 0, twCost = 0;
+      let usMv = 0, usCost = 0;
+      let ibMv = 0, ibCost = 0;
+      let hasIbHolding = false;
+
+      let twEtfMv = 0, usEtfMv = 0;
+      let twStockMv = 0, usStockMv = 0;
 
       holdings.forEach(h => {
-        const shares = parseFloat(h.shares) || 0;
+        const sh = parseFloat(h.shares) || 0;
         const avg = parseFloat(h.avgPrice) || 0;
         const cur = parseFloat(h.currentPrice) || 0;
 
-        let costNtd = 0, mvNtd = 0;
-
         if (h.market === 'TW') {
-          costNtd = shares * avg;
-          mvNtd = shares * cur;
-          twCost += costNtd;
-          twMv += mvNtd;
+          const mv = sh * cur;
+          const cost = sh * avg;
+          twMv += mv;
+          twCost += cost;
+          if (h.category === 'ETF') twEtfMv += mv;
+          else twStockMv += mv;
         } else if (h.market === 'IB') {
-          hasIbHoldings = true;
-          costNtd = shares * avg * usTwdRate;
-          mvNtd = shares * cur * usTwdRate;
-          ibCost += costNtd;
-          ibMv += mvNtd;
+          hasIbHolding = true;
+          ibMv += sh * cur * usTwdRate;
+          ibCost += sh * avg * usTwdRate;
         } else {
-          costNtd = shares * avg * usTwdRate;
-          mvNtd = shares * cur * usTwdRate;
-          usCost += costNtd;
-          usMv += mvNtd;
+          const mv = sh * cur * usTwdRate;
+          const cost = sh * avg * usTwdRate;
+          usMv += mv;
+          usCost += cost;
+          if (h.category === 'ETF') usEtfMv += mv;
+          else usStockMv += mv;
         }
-
-        if (h.category === 'ETF') etfMv += mvNtd;
-        else stockMv += mvNtd;
       });
 
-      const effectiveIbCost = hasIbHoldings ? ibCost : IB_COST_NTD;
-      const effectiveIbMv = hasIbHoldings ? ibMv : IB_MARKET_NTD;
-
-      const totalCost = OFFICIAL_TOTAL_COST;
+      const effectiveIbMv = hasIbHolding ? ibMv : IB_MARKET_NTD;
+      const effectiveIbCost = hasIbHolding ? ibCost : IB_COST_NTD;
       const cashTotal = getCashTotal();
-      const totalMv = twMv + usMv + effectiveIbMv + cashTotal;
-      const investmentPnl = OFFICIAL_TOTAL_PNL;
-      const netWorthGain = totalMv - totalCost;
+      const totalEquityMv = twMv + usMv + effectiveIbMv;
+      const totalMv = totalEquityMv + cashTotal;
+      const totalCost = twCost + usCost + effectiveIbCost;
+      const investmentPnl = totalEquityMv - totalCost;
+      const startYearMv = historyMonthlyData[0].total;
+      const netAssetGain = totalMv - startYearMv;
+      const netYtdPct = (netAssetGain / startYearMv) * 100;
+      const cashRatioPct = (cashTotal / Math.max(totalMv, 1)) * 100;
 
-      const startYearTotal = (historyMonthlyData && historyMonthlyData.length > 0) ? historyMonthlyData[0].total : totalMv;
-      const netWorthYtdPct = startYearTotal > 0 ? ((totalMv - startYearTotal) / startYearTotal) * 100 : 0;
+      // 更新篩選按鈕數量
+      const setCount = (id, n) => { const el = document.getElementById(id); if (el) el.innerText = n; };
+      setCount('count-ALL', holdings.length);
+      setCount('count-TW', holdings.filter(h => h.market === 'TW').length);
+      setCount('count-US', holdings.filter(h => h.market === 'US').length);
+      setCount('count-IB', holdings.filter(h => h.market === 'IB').length);
+      setCount('count-ETF', holdings.filter(h => h.category === 'ETF').length);
+      setCount('count-STOCK', holdings.filter(h => h.category === 'STOCK').length);
 
-      const allHistoricTotals = (historyMonthlyData || []).map(h => h.total).concat([totalMv]);
-      let rollingPeak = allHistoricTotals[0] || totalMv;
-      let dynamicMdd = 0;
-      allHistoricTotals.forEach(val => {
-        if (val > rollingPeak) {
-          rollingPeak = val;
-        } else if (rollingPeak > 0) {
-          const dd = ((val - rollingPeak) / rollingPeak) * 100;
-          if (dd < dynamicMdd) dynamicMdd = dd;
-        }
-      });
+      // 第一頁總資產 KPI
+      const mvEl = document.getElementById('kpiTotalMarketValue');
+      if (mvEl) mvEl.innerText = isPrivacyMasked ? 'NT$ •••••••' : `NT$${Math.round(totalMv).toLocaleString()}`;
 
-      let dynamicCagr = 0;
-      if (historyMonthlyData && historyMonthlyData.length > 0 && startYearTotal > 0) {
-        const startDateParts = historyMonthlyData[0].date.split('/');
-        const startDate = new Date(parseInt(startDateParts[0]), parseInt(startDateParts[1]) - 1, parseInt(startDateParts[2]));
-        const now = new Date();
-        const daysElapsed = Math.max((now - startDate) / (1000 * 60 * 60 * 24), 30);
-        const yearsElapsed = daysElapsed / 365.25;
-        dynamicCagr = (Math.pow(totalMv / startYearTotal, 1 / yearsElapsed) - 1) * 100;
-      }
-
-      const setEl = (id, val) => { const el = document.getElementById(id); if (el) el.innerText = val; };
-      setEl('kpiTotalMarketValue', formatMasked(`NT$${Math.round(totalMv).toLocaleString()}`));
-      setEl('kpiTotalCost', formatMasked(`NT$${Math.round(totalCost).toLocaleString()}`));
-      setEl('kpiCashTotal', formatMasked(`NT$${Math.round(cashTotal).toLocaleString()}`));
-      setEl('kpiCAGR', `${dynamicCagr >= 0 ? '+' : ''}${dynamicCagr.toFixed(2)}%`);
-      setEl('kpiMDD', `${dynamicMdd.toFixed(2)}%`);
-
-      const kpiCum = document.getElementById('kpiCumulativeReturn');
-      if (kpiCum) {
-        kpiCum.innerText = `${netWorthYtdPct >= 0 ? '+' : ''}${netWorthYtdPct.toFixed(2)}%`;
-        kpiCum.className = `text-base sm:text-xl font-black font-mono ${netWorthYtdPct >= 0 ? 'text-rose-400' : 'text-emerald-400'} block mt-0.5`;
-      }
-
-      const kpiPnl = document.getElementById('kpiTotalPnlText');
-      if (kpiPnl) {
-        kpiPnl.innerText = isPrivacyMasked ? '+NT$ •••••••' : `+NT$${Math.round(investmentPnl).toLocaleString()}`;
-        kpiPnl.className = 'text-[13px] sm:text-lg font-black font-mono text-rose-400 block mt-0.5';
-      }
-
-      const vsNov1 = document.getElementById('kpiVsNov1Badge');
-      if (vsNov1) {
-        const diffFromNov1 = totalMv - NOV_01_MV;
-        const diffPctFromNov1 = NOV_01_MV > 0 ? (diffFromNov1 / NOV_01_MV) * 100 : 0;
-        if (Math.abs(diffFromNov1) >= 100) {
-          const sign = diffFromNov1 >= 0 ? '+' : '';
-          const isUp = diffFromNov1 >= 0;
-          vsNov1.innerText = isPrivacyMasked
-            ? `vs 11/01: ${sign}${diffPctFromNov1.toFixed(2)}%`
-            : `vs 11/01: ${sign}${diffPctFromNov1.toFixed(2)}% (${sign}${(diffFromNov1 / 10000).toFixed(1)}萬)`;
-          vsNov1.className = `text-[11px] sm:text-xs px-2.5 py-0.5 rounded-full font-mono font-bold border whitespace-nowrap shrink-0 ${
-            isUp
-              ? 'bg-rose-500/15 text-rose-300 border-rose-500/30'
-              : 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30'
-          }`;
+      const badgeEl = document.getElementById('kpiVsNov1Badge');
+      if (badgeEl) {
+        const diff = totalMv - NOV_01_MV;
+        if (Math.abs(diff) < 10) {
+          badgeEl.innerText = '11/01 結算基準';
+          badgeEl.className = 'text-[11px] sm:text-xs px-2.5 py-0.5 rounded-full font-mono font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 whitespace-nowrap shrink-0';
         } else {
-          vsNov1.innerText = '11/01 結算基準';
-          vsNov1.className = 'text-[11px] sm:text-xs px-2.5 py-0.5 rounded-full font-mono font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 whitespace-nowrap shrink-0';
+          const diffPct = (diff / NOV_01_MV) * 100;
+          const sign = diff >= 0 ? '+' : '';
+          badgeEl.innerText = isPrivacyMasked
+            ? `vs 11/01: ${sign}${diffPct.toFixed(2)}%`
+            : `vs 11/01: ${sign}${diffPct.toFixed(2)}% (${sign}${(diff / 10000).toFixed(1)}萬)`;
+          badgeEl.className = `text-[11px] sm:text-xs px-2.5 py-0.5 rounded-full font-mono font-bold border whitespace-nowrap shrink-0 ${diff >= 0 ? 'bg-rose-500/15 text-rose-300 border-rose-500/30' : 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30'}`;
         }
       }
 
-      const baseSubText = document.getElementById('kpiBaselineSubText');
-      if (baseSubText) {
-        if (isPrivacyMasked) {
-          baseSubText.innerHTML = `投資獲利: <span class="font-mono text-rose-400 font-bold">+NT$ •••••••</span> ｜ 淨資產增值: <span class="font-mono text-emerald-300 font-bold">+NT$ •••••••</span>`;
-        } else {
-          baseSubText.innerHTML = `投資獲利: <span class="font-mono text-rose-400 font-bold">+NT$${Math.round(investmentPnl).toLocaleString()}</span> ｜ 淨資產增值: <span class="font-mono text-emerald-300 font-bold">+NT$${Math.round(netWorthGain).toLocaleString()}</span>`;
-        }
+      const subEl = document.getElementById('kpiBaselineSubText');
+      if (subEl) {
+        const pnlStr = isPrivacyMasked ? '••••••' : `${investmentPnl >= 0 ? '+' : ''}NT$${Math.round(investmentPnl).toLocaleString()}`;
+        const gainStr = isPrivacyMasked ? '••••••' : `${netAssetGain >= 0 ? '+' : ''}NT$${Math.round(netAssetGain).toLocaleString()}`;
+        const ytdSignStr = `${netYtdPct >= 0 ? '+' : ''}${netYtdPct.toFixed(2)}%`;
+        subEl.innerHTML = `<span class="inline-block">投資獲利: <span class="font-mono ${investmentPnl >= 0 ? 'text-rose-400' : 'text-emerald-400'} font-bold">${pnlStr}</span></span> <span class="text-slate-600 mx-0.5">｜</span> <span class="inline-block">淨資產增值: <span class="font-mono text-emerald-300 font-bold">${gainStr} (${ytdSignStr})</span></span>`;
       }
 
-      setEl('idxTaiexPrice', INDEX_STATE.taiex.price.toLocaleString('en-US', { minimumFractionDigits: 2 }));
-      setEl('idxSp500Price', INDEX_STATE.sp500.price.toLocaleString('en-US', { minimumFractionDigits: 2 }));
-      setEl('idxNasdaqPrice', INDEX_STATE.nasdaq.price.toLocaleString('en-US', { minimumFractionDigits: 2 }));
+      const costEl = document.getElementById('kpiTotalCost');
+      if (costEl) costEl.innerText = formatMasked(`NT$${Math.round(totalCost).toLocaleString()}`);
 
-      const pctTw = totalMv > 0 ? (twMv / totalMv) * 100 : 0;
-      const pctUs = totalMv > 0 ? (usMv / totalMv) * 100 : 0;
-      const pctIb = totalMv > 0 ? (effectiveIbMv / totalMv) * 100 : 0;
-      const pctCash = totalMv > 0 ? (cashTotal / totalMv) * 100 : 0;
+      const pnlTextEl = document.getElementById('kpiTotalPnlText');
+      if (pnlTextEl) {
+        pnlTextEl.innerText = isPrivacyMasked ? '••••••' : `${investmentPnl >= 0 ? '+' : ''}NT$${Math.round(investmentPnl).toLocaleString()}`;
+        pnlTextEl.className = `text-[13px] sm:text-lg font-black font-mono block mt-0.5 ${investmentPnl >= 0 ? 'text-rose-400' : 'text-emerald-400'}`;
+      }
 
-      setEl('cardPctTw', `${(pctTw || 0).toFixed(1)}%`);
-      setEl('cardMvTw', formatMasked(`NT$${Math.round(twMv).toLocaleString()}`));
-      setEl('cardPnlTw', isPrivacyMasked ? '+NT$ ••••' : `+NT$217,393`);
+      const cashRatioEl = document.getElementById('kpiCashRatioBadge');
+      if (cashRatioEl) cashRatioEl.innerText = `(${cashRatioPct.toFixed(1)}%)`;
 
-      setEl('cardPctUs', `${(pctUs || 0).toFixed(1)}%`);
-      setEl('cardMvUs', formatMasked(`NT$${Math.round(usMv).toLocaleString()}`));
-      setEl('cardPnlUs', isPrivacyMasked ? '+NT$ ••••' : `+NT$145,546`);
+      const cashEl = document.getElementById('kpiCashTotal');
+      if (cashEl) cashEl.innerText = formatMasked(`NT$${Math.round(cashTotal).toLocaleString()}`);
 
-      setEl('cardPctIb', `${(pctIb || 0).toFixed(1)}%`);
-      setEl('cardMvIb', formatMasked(`NT$${Math.round(effectiveIbMv).toLocaleString()}`));
-      setEl('cardPnlIb', isPrivacyMasked ? '+NT$ ••••' : `+NT$23,092`);
+      // 三大精簡績效指標 (淨資產 YTD / 年化報酬 XIRR / 回撤 DD)
+      const ytdEl = document.getElementById('kpiNetYtdReturn');
+      if (ytdEl) {
+        ytdEl.innerText = `${netYtdPct >= 0 ? '+' : ''}${netYtdPct.toFixed(2)}%`;
+        ytdEl.className = `text-sm sm:text-xl font-black font-mono block mt-0.5 ${netYtdPct >= 0 ? 'text-rose-400' : 'text-emerald-400'}`;
+      }
 
-      setEl('cardPctCash', `${(pctCash || 0).toFixed(1)}%`);
-      setEl('cardMvCash', formatMasked(`NT$${Math.round(cashTotal).toLocaleString()}`));
+      const xirrPct = calculatePortfolioXIRR(totalEquityMv);
+      const xirrEl = document.getElementById('kpiXirrReturn');
+      if (xirrEl) {
+        xirrEl.innerText = `${xirrPct >= 0 ? '+' : ''}${xirrPct.toFixed(2)}%`;
+        xirrEl.className = `text-sm sm:text-xl font-black font-mono block mt-0.5 ${xirrPct >= 0 ? 'text-cyan-300' : 'text-emerald-400'}`;
+      }
 
-      setEl('donutCenterTotal', isPrivacyMasked ? '••••' : `${(totalMv / 10000).toFixed(1)}萬`);
+      const peakMv = Math.max(...historyMonthlyData.map(d => d.total), totalMv);
+      const mddPct = ((totalMv - peakMv) / peakMv) * 100;
+      const mddEl = document.getElementById('kpiMDD');
+      if (mddEl) mddEl.innerText = `${mddPct.toFixed(2)}%`;
+
+      // 第二頁四大部位卡片
+      const safeTotal = Math.max(totalMv, 1);
+      const setCard = (pctId, mvId, pnlId, mv, pnl) => {
+        const pEl = document.getElementById(pctId);
+        const mEl = document.getElementById(mvId);
+        const lEl = document.getElementById(pnlId);
+        if (pEl) pEl.innerText = `${((mv / safeTotal) * 100).toFixed(1)}%`;
+        if (mEl) mEl.innerText = formatMasked(`NT$${Math.round(mv).toLocaleString()}`);
+        if (lEl && pnl !== null) {
+          lEl.innerText = isPrivacyMasked ? '••••' : `${pnl >= 0 ? '+' : ''}NT$${Math.round(pnl).toLocaleString()}`;
+          lEl.className = `font-mono font-bold truncate ${pnl >= 0 ? 'text-rose-400' : 'text-emerald-400'}`;
+        }
+      };
+      setCard('cardPctTw', 'cardMvTw', 'cardPnlTw', twMv, twMv - twCost);
+      setCard('cardPctUs', 'cardMvUs', 'cardPnlUs', usMv, usMv - usCost);
+      setCard('cardPctIb', 'cardMvIb', 'cardPnlIb', effectiveIbMv, effectiveIbMv - effectiveIbCost);
+      setCard('cardPctCash', 'cardMvCash', null, cashTotal, null);
+
+      const bankTotEl = document.getElementById('displayBankTotal');
+      if (bankTotEl) bankTotEl.innerText = isPrivacyMasked ? '••••••' : Math.round(cashTotal).toLocaleString();
+
+      // 第二頁：總股票資產、大盤 ETF（台美股）與個股（台美股）結構比例
+      const totalEtfMv = twEtfMv + usEtfMv;
+      const totalStockMv = twStockMv + usStockMv;
+      const safeEquity = Math.max(totalEquityMv, 1);
+
+      const eqMvEl = document.getElementById('equityTotalMvVal');
+      const eqPctEl = document.getElementById('equityTotalAssetPct');
+      if (eqMvEl) eqMvEl.innerText = formatMasked(`NT$${Math.round(totalEquityMv).toLocaleString()}`);
+      if (eqPctEl) eqPctEl.innerText = `(${((totalEquityMv / safeTotal) * 100).toFixed(1)}%)`;
+
+      const etfEqPct = (totalEtfMv / safeEquity) * 100;
+      const stkEqPct = (totalStockMv / safeEquity) * 100;
+      const ibEqPct = (effectiveIbMv / safeEquity) * 100;
+
+      const barEtf = document.getElementById('barEquityEtf');
+      const barStk = document.getElementById('barEquityStock');
+      const barIb = document.getElementById('barEquityIb');
+      if (barEtf) barEtf.style.width = `${etfEqPct.toFixed(1)}%`;
+      if (barStk) barStk.style.width = `${stkEqPct.toFixed(1)}%`;
+      if (barIb) barIb.style.width = `${ibEqPct.toFixed(1)}%`;
+
+      const subEtf = document.getElementById('subBarEtfPct');
+      const subStk = document.getElementById('subBarStockPct');
+      const subIb = document.getElementById('subBarIbPct');
+      if (subEtf) subEtf.innerText = `${etfEqPct.toFixed(1)}%`;
+      if (subStk) subStk.innerText = `${stkEqPct.toFixed(1)}%`;
+      if (subIb) subIb.innerText = `${ibEqPct.toFixed(1)}%`;
+
+      // 大盤 ETF 總數與台美股明細
+      const setText = (id, val) => { const el = document.getElementById(id); if (el) el.innerText = val; };
+      setText('etfTotalAssetPct', `${((totalEtfMv / safeTotal) * 100).toFixed(1)}%`);
+      setText('etfTotalEquityPct', `${etfEqPct.toFixed(1)}%`);
+      setText('etfBreakdownTotalMv', formatMasked(`NT$${Math.round(totalEtfMv).toLocaleString()}`));
+
+      const safeEtf = Math.max(totalEtfMv, 1);
+      const twEtfShare = (twEtfMv / safeEtf) * 100;
+      const usEtfShare = (usEtfMv / safeEtf) * 100;
+      setText('etfTwUsSplitText', `${twEtfShare.toFixed(1)}% : ${usEtfShare.toFixed(1)}%`);
+      const barTwEtf = document.getElementById('barTwEtf');
+      const barUsEtf = document.getElementById('barUsEtf');
+      if (barTwEtf) barTwEtf.style.width = `${twEtfShare.toFixed(1)}%`;
+      if (barUsEtf) barUsEtf.style.width = `${usEtfShare.toFixed(1)}%`;
+
+      setText('twEtfAssetPct', `${((twEtfMv / safeTotal) * 100).toFixed(1)}%`);
+      setText('twEtfMvVal', formatMasked(`NT$${Math.round(twEtfMv).toLocaleString()}`));
+      setText('twEtfSharePct', `${twEtfShare.toFixed(1)}%`);
+      setText('twEtfEquityPct', `${((twEtfMv / safeEquity) * 100).toFixed(1)}%`);
+
+      setText('usEtfAssetPct', `${((usEtfMv / safeTotal) * 100).toFixed(1)}%`);
+      setText('usEtfMvVal', formatMasked(`NT$${Math.round(usEtfMv).toLocaleString()}`));
+      setText('usEtfSharePct', `${usEtfShare.toFixed(1)}%`);
+      setText('usEtfEquityPct', `${((usEtfMv / safeEquity) * 100).toFixed(1)}%`);
+
+      // 個股部位總數與台美股明細
+      setText('stockTotalAssetPct', `${((totalStockMv / safeTotal) * 100).toFixed(1)}%`);
+      setText('stockTotalEquityPct', `${stkEqPct.toFixed(1)}%`);
+      setText('stockBreakdownTotalMv', formatMasked(`NT$${Math.round(totalStockMv).toLocaleString()}`));
+
+      const safeStk = Math.max(totalStockMv, 1);
+      const twStkShare = (twStockMv / safeStk) * 100;
+      const usStkShare = (usStockMv / safeStk) * 100;
+      setText('stockTwUsSplitText', `${twStkShare.toFixed(1)}% : ${usStkShare.toFixed(1)}%`);
+      const barTwStk = document.getElementById('barTwStock');
+      const barUsStk = document.getElementById('barUsStock');
+      if (barTwStk) barTwStk.style.width = `${twStkShare.toFixed(1)}%`;
+      if (barUsStk) barUsStk.style.width = `${usStkShare.toFixed(1)}%`;
+
+      setText('twStockAssetPct', `${((twStockMv / safeTotal) * 100).toFixed(1)}%`);
+      setText('twStockMvVal', formatMasked(`NT$${Math.round(twStockMv).toLocaleString()}`));
+      setText('twStockSharePct', `${twStkShare.toFixed(1)}%`);
+      setText('twStockEquityPct', `${((twStockMv / safeEquity) * 100).toFixed(1)}%`);
+
+      setText('usStockAssetPct', `${((usStockMv / safeTotal) * 100).toFixed(1)}%`);
+      setText('usStockMvVal', formatMasked(`NT$${Math.round(usStockMv).toLocaleString()}`));
+      setText('usStockSharePct', `${usStkShare.toFixed(1)}%`);
+      setText('usStockEquityPct', `${((usStockMv / safeEquity) * 100).toFixed(1)}%`);
+
+      // 核心策略目標比例試算
+      setText('valEtfCurrent', formatMasked(`NT$${Math.round(totalEtfMv).toLocaleString()}`));
+      setText('valSingleCurrent', formatMasked(`NT$${Math.round(totalStockMv).toLocaleString()}`));
 
       const targetEtfMv = totalMv * (targetEtfRatio / 100);
-      const etfGap = targetEtfMv - etfMv;
-      setEl('valEtfCurrent', formatMasked(`NT$${Math.round(etfMv).toLocaleString()}`));
-      setEl('gapEtfText', etfGap > 0 ? `需再加碼 +${formatMasked(`NT$${Math.round(etfGap).toLocaleString()}`)}` : `已達陣`);
-
-      const targetSingleMv = totalMv * 0.15;
-      const singleGap = stockMv - targetSingleMv;
-      setEl('valSingleCurrent', formatMasked(`NT$${Math.round(stockMv).toLocaleString()}`));
-      setEl('gapSingleText', singleGap > 0 ? `超重 +${formatMasked(`NT$${Math.round(singleGap).toLocaleString()}`)}` : `低於 15% 上限`);
-
-      const targetPct = (totalMv / TARGET_2026_GOAL) * 100;
-      const goalGap = TARGET_2026_GOAL - totalMv;
-      setEl('planTargetPct', `${(targetPct || 0).toFixed(2)}%`);
-      const pBar = document.getElementById('planProgressBar');
-      if (pBar) pBar.style.width = `${Math.min(targetPct, 100)}%`;
-      setEl('planCurrentMv', formatMasked(`NT$${Math.round(totalMv).toLocaleString()}`));
-      setEl('planGapValue', goalGap > 0 ? formatMasked(`NT$${Math.round(goalGap).toLocaleString()}`) : `已達標`);
-
-      const yrSum = document.getElementById('yearlyDepositSum');
-      if (yrSum) {
-        yrSum.innerText = isPrivacyMasked ? '••••••' : Math.round(monthlyDepositAmount * 12).toLocaleString();
+      const etfGap = targetEtfMv - totalEtfMv;
+      const gapEtfEl = document.getElementById('gapEtfText');
+      if (gapEtfEl) {
+        if (isPrivacyMasked) {
+          gapEtfEl.innerText = '••••••';
+        } else if (etfGap > 0) {
+          gapEtfEl.innerText = `需再加碼 +NT$${Math.round(etfGap).toLocaleString()}`;
+          gapEtfEl.className = 'text-xs sm:text-sm font-black font-mono text-amber-400 block mt-0.5';
+        } else {
+          gapEtfEl.innerText = `已達標超出 +NT$${Math.round(Math.abs(etfGap)).toLocaleString()}`;
+          gapEtfEl.className = 'text-xs sm:text-sm font-black font-mono text-emerald-400 block mt-0.5';
+        }
       }
 
-      const overallLadderPct = Math.min((totalMv / 10000000) * 100, 100);
-      setEl('ladderOverallPct', `${(overallLadderPct || 0).toFixed(2)}% (距千萬)`);
-      const ladderBar = document.getElementById('ladderProgressBar');
-      if (ladderBar) ladderBar.style.width = `${overallLadderPct}%`;
+      const maxSingleMv = totalMv * 0.15;
+      const singleGap = totalStockMv - maxSingleMv;
+      const gapSingleEl = document.getElementById('gapSingleText');
+      if (gapSingleEl) {
+        if (isPrivacyMasked) {
+          gapSingleEl.innerText = '••••••';
+        } else if (singleGap > 0) {
+          gapSingleEl.innerText = `超重 +NT$${Math.round(singleGap).toLocaleString()} (宜止盈)`;
+          gapSingleEl.className = 'text-xs sm:text-sm font-black font-mono text-rose-400 block mt-0.5';
+        } else {
+          gapSingleEl.innerText = `安全空間 +NT$${Math.round(Math.abs(singleGap)).toLocaleString()}`;
+          gapSingleEl.className = 'text-xs sm:text-sm font-black font-mono text-emerald-400 block mt-0.5';
+        }
+      }
 
-      const dispBankTotal = document.getElementById('displayBankTotal');
-      if (dispBankTotal) dispBankTotal.innerText = isPrivacyMasked ? '••••••' : Math.round(cashTotal).toLocaleString();
+      // 第四頁：2026 里程碑與千萬階梯進度
+      const goalPct = Math.min((totalMv / TARGET_2026_GOAL) * 100, 100);
+      setText('planTargetPct', `${((totalMv / TARGET_2026_GOAL) * 100).toFixed(2)}%`);
+      const planBar = document.getElementById('planProgressBar');
+      if (planBar) planBar.style.width = `${goalPct.toFixed(2)}%`;
+
+      setText('planCurrentMv', formatMasked(`NT$${Math.round(totalMv).toLocaleString()}`));
+      const planGap = Math.max(TARGET_2026_GOAL - totalMv, 0);
+      setText('planGapValue', formatMasked(`NT$${Math.round(planGap).toLocaleString()}`));
+      setText('yearlyDepositSum', (monthlyDeposit * 12).toLocaleString());
+
+      const ladderPct = (totalMv / 10000000) * 100;
+      setText('ladderOverallPct', `${ladderPct.toFixed(2)}% (距千萬)`);
+      const ladderBar = document.getElementById('ladderProgressBar');
+      if (ladderBar) ladderBar.style.width = `${Math.min(ladderPct, 100).toFixed(2)}%`;
 
       const legTotal = document.getElementById('legPlanTotalOnly');
       if (legTotal) legTotal.innerText = isPrivacyMasked ? '••••' : `${(totalMv / 10000).toFixed(1)}萬`;
 
+      // 即時更新第三頁每列市值下方的佔總資產百分比，並渲染第二頁個別標的佔比排行
+      holdings.forEach(h => {
+        const sh = parseFloat(h.shares) || 0;
+        const cur = parseFloat(h.currentPrice) || 0;
+        const mvNtd = h.market === 'TW' ? sh * cur : sh * cur * usTwdRate;
+        const wPct = totalMv > 0 ? (mvNtd / totalMv) * 100 : 0;
+        const rowPctEl = document.getElementById(`rowPct-${h.id}`);
+        if (rowPctEl) {
+          rowPctEl.innerText = isPrivacyMasked ? '••%' : `${wPct.toFixed(1)}%`;
+        }
+      });
+
+      renderHoldingsWeightRanking(totalMv, totalEquityMv);
+
       renderSvgDonutChart(twMv, usMv, effectiveIbMv, cashTotal);
 
-      if (renderTable) renderHoldingsTable();
+      if (renderTable) renderHoldingsTable(totalMv);
 
       renderHistoryTable2026(twMv, usMv, effectiveIbMv, cashTotal, totalMv, totalCost, investmentPnl);
 
@@ -1963,277 +2237,193 @@
       }
     }
 
-    /* 7.5 甜甜圈圖表渲染與互動高亮 (Tab 2) */
-    let donutChartState = {
-      total: 0,
-      segments: {}
-    };
+    /* 精準現金流內部報酬率 (XIRR) 演算法：扣除每月本金增減時間權重，計算真實年化投資報酬率 */
+    function calculatePortfolioXIRR(currentEquityMv) {
+      if (!historyMonthlyData || historyMonthlyData.length === 0) return 0;
 
-    function renderSvgDonutChart(twMv, usMv, ibMv, cashTotal) {
-      const svg = document.getElementById('svgDonutChart');
-      if (!svg) return;
-
-      const total = Math.max((twMv || 0) + (usMv || 0) + (ibMv || 0) + (cashTotal || 0), 1);
-      donutChartState.total = total;
-      donutChartState.segments = {
-        tw:   { key: 'tw',   label: '🇹🇼 台股', value: twMv || 0,      color: '#22d3ee', pct: ((twMv || 0) / total) * 100 },
-        us:   { key: 'us',   label: '🇺🇸 美股', value: usMv || 0,      color: '#38bdf8', pct: ((usMv || 0) / total) * 100 },
-        ib:   { key: 'ib',   label: '🌐 IB',   value: ibMv || 0,      color: '#c084fc', pct: ((ibMv || 0) / total) * 100 },
-        cash: { key: 'cash', label: '💵 現金', value: cashTotal || 0, color: '#34d399', pct: ((cashTotal || 0) / total) * 100 }
+      const parseDateStr = (dStr) => {
+        const parts = dStr.split('/').map(Number);
+        return new Date(parts[0], (parts[1] || 1) - 1, parts[2] || 1);
       };
 
-      const cx = 110;
-      const cy = 110;
-      const r = 82;
-      const circumference = 2 * Math.PI * r;
-      const activeSegs = Object.values(donutChartState.segments).filter(s => s.value > 0);
-      const gap = activeSegs.length > 1 ? 2.5 : 0;
+      const startDate = parseDateStr(historyMonthlyData[0].date);
+      const nowDate = new Date();
+      const endDate = nowDate > parseDateStr(historyMonthlyData[historyMonthlyData.length - 1].date)
+        ? nowDate
+        : new Date(2026, 10, 16);
 
-      let accumulated = 0;
-      const circlesHtml = activeSegs.map(seg => {
-        const rawLen = (seg.value / total) * circumference;
-        const dashLen = Math.max(rawLen - gap, 0.5);
-        const offset = -accumulated;
-        accumulated += rawLen;
+      const flows = [];
+      const firstRow = historyMonthlyData[0];
+      const initialEquity = (firstRow.tw || 0) + (firstRow.us || 0) + (firstRow.ib || 0);
+      flows.push({ amount: -initialEquity, years: 0 });
 
-        return `
-          <circle id="donutSeg-${seg.key}"
-                  cx="${cx}" cy="${cy}" r="${r}"
-                  fill="none"
-                  stroke="${seg.color}"
-                  stroke-width="26"
-                  stroke-dasharray="${dashLen.toFixed(2)} ${circumference.toFixed(2)}"
-                  stroke-dashoffset="${offset.toFixed(2)}"
-                  stroke-linecap="butt"
-                  class="transition-all duration-200 cursor-pointer"
-                  onmouseenter="highlightSegment('${seg.key}')"
-                  onmouseleave="resetHighlight()"
-                  ontouchstart="highlightSegment('${seg.key}')" />
-        `;
-      }).join('');
-
-      svg.setAttribute('viewBox', '0 0 220 220');
-      svg.innerHTML = `
-        <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#1e293b" stroke-width="26" />
-        ${circlesHtml}
-      `;
-    }
-
-    function highlightSegment(key) {
-      const seg = donutChartState.segments[key];
-      if (!seg) return;
-
-      const keys = ['tw', 'us', 'ib', 'cash'];
-      const capMap = { tw: 'Tw', us: 'Us', ib: 'Ib', cash: 'Cash' };
-
-      keys.forEach(k => {
-        const circle = document.getElementById(`donutSeg-${k}`);
-        const card = document.getElementById(`cardBox${capMap[k]}`);
-        const isActive = (k === key);
-
-        if (circle) {
-          circle.setAttribute('stroke-width', isActive ? '31' : '24');
-          circle.setAttribute('opacity', isActive ? '1' : '0.35');
+      for (let i = 1; i < historyMonthlyData.length; i++) {
+        const netContribution = (historyMonthlyData[i].principal || 0) - (historyMonthlyData[i - 1].principal || 0);
+        if (Math.abs(netContribution) > 1) {
+          const dt = parseDateStr(historyMonthlyData[i].date);
+          const yrs = Math.max((dt - startDate) / (365 * 24 * 60 * 60 * 1000), 0.001);
+          flows.push({ amount: -netContribution, years: yrs });
         }
-        if (card) {
-          card.style.opacity = isActive ? '1' : '0.55';
-        }
-      });
-
-      const lblEl = document.getElementById('donutCenterLabel');
-      const totEl = document.getElementById('donutCenterTotal');
-      const subEl = document.getElementById('donutCenterSub');
-
-      if (lblEl) lblEl.innerText = seg.label;
-      if (totEl) totEl.innerText = isPrivacyMasked ? '••••' : `${(seg.value / 10000).toFixed(1)}萬`;
-      if (subEl) subEl.innerText = `${seg.pct.toFixed(1)}% 佔比`;
-    }
-
-    function resetHighlight() {
-      const keys = ['tw', 'us', 'ib', 'cash'];
-      const capMap = { tw: 'Tw', us: 'Us', ib: 'Ib', cash: 'Cash' };
-
-      keys.forEach(k => {
-        const circle = document.getElementById(`donutSeg-${k}`);
-        const card = document.getElementById(`cardBox${capMap[k]}`);
-        if (circle) {
-          circle.setAttribute('stroke-width', '26');
-          circle.setAttribute('opacity', '1');
-        }
-        if (card) {
-          card.style.opacity = '1';
-        }
-      });
-
-      const lblEl = document.getElementById('donutCenterLabel');
-      const totEl = document.getElementById('donutCenterTotal');
-      const subEl = document.getElementById('donutCenterSub');
-
-      if (lblEl) lblEl.innerText = '總資產淨值';
-      if (totEl) totEl.innerText = isPrivacyMasked ? '••••' : `${(donutChartState.total / 10000).toFixed(1)}萬`;
-      if (subEl) subEl.innerText = '100% 配置';
-    }
-
-    /* 8. 原位即時編輯持股欄位 */
-    function updateHoldingField(id, field, value) {
-      const h = holdings.find(item => item.id === id);
-      if (!h) return;
-
-      const num = parseFloat(value) || 0;
-      h[field] = num;
-      saveHoldingsState();
-
-      const shares = parseFloat(h.shares) || 0;
-      const avg = parseFloat(h.avgPrice) || 0;
-      const cur = parseFloat(h.currentPrice) || 0;
-
-      let costNtd = 0, mvNtd = 0;
-      if (h.market === 'TW') {
-        costNtd = shares * avg;
-        mvNtd = shares * cur;
-      } else {
-        costNtd = shares * avg * usTwdRate;
-        mvNtd = shares * cur * usTwdRate;
       }
 
-      const pnlNtd = mvNtd - costNtd;
-      const pnlPct = costNtd > 0 ? (pnlNtd / costNtd) * 100 : 0;
+      const totalYears = Math.max((endDate - startDate) / (365 * 24 * 60 * 60 * 1000), 0.1);
+      flows.push({ amount: currentEquityMv, years: totalYears });
 
-      const mvEl = document.getElementById(`rowMv-${id}`);
-      const pnlEl = document.getElementById(`rowPnl-${id}`);
+      const npv = (rate) => {
+        let sum = 0;
+        for (let i = 0; i < flows.length; i++) {
+          sum += flows[i].amount / Math.pow(1 + rate, flows[i].years);
+        }
+        return sum;
+      };
 
-      if (mvEl) mvEl.innerText = isPrivacyMasked ? '••••••' : Math.round(mvNtd).toLocaleString();
-      if (pnlEl) {
-        const maskedPnlStr = isPrivacyMasked
-          ? (pnlNtd >= 0 ? '+••••' : '-••••')
-          : `${pnlNtd >= 0 ? '+' : ''}${Math.round(pnlNtd).toLocaleString()}`;
-        pnlEl.innerHTML = `
-          <span class="${pnlNtd >= 0 ? 'text-rose-400' : 'text-emerald-400'} font-bold leading-tight block">
-            ${maskedPnlStr}
-          </span>
-          <span class="block text-[9px] sm:text-[10px] leading-tight ${pnlNtd >= 0 ? 'text-rose-300' : 'text-emerald-300'}">
-            ${pnlPct >= 0 ? '+' : ''}${pnlPct.toFixed(1)}%
-          </span>
-        `;
+      let low = -0.95;
+      let high = 5.0;
+      for (let iter = 0; iter < 60; iter++) {
+        const mid = (low + high) / 2;
+        const val = npv(mid);
+        if (Math.abs(val) < 0.01) return mid * 100;
+        if (val > 0) low = mid;
+        else high = mid;
       }
+      return ((low + high) / 2) * 100;
+    }
 
+    function toggleWeightRankingExpand() {
+      isWeightRankingExpanded = !isWeightRankingExpanded;
       recalculateAll(false);
     }
 
-    function deleteHolding(id) {
-      const idx = holdings.findIndex(item => item.id === id);
-      if (idx === -1) return;
+    function renderHoldingsWeightRanking(totalMv, totalEquityMv) {
+      const container = document.getElementById('individualWeightRankingList');
+      const btnText = document.getElementById('textToggleWeightRanking');
+      const btnIcon = document.getElementById('iconToggleWeightRanking');
+      if (!container) return;
 
-      deletedHoldingBackup = { item: holdings[idx], index: idx };
-      holdings.splice(idx, 1);
-      saveHoldingsState();
-      recalculateAll(true);
-      showToast(`已刪除股票 ${deletedHoldingBackup.item.symbol}`, true);
-    }
+      const ranked = holdings.map(h => {
+        const sh = parseFloat(h.shares) || 0;
+        const cur = parseFloat(h.currentPrice) || 0;
+        const mvNtd = h.market === 'TW' ? sh * cur : sh * cur * usTwdRate;
+        const assetPct = totalMv > 0 ? (mvNtd / totalMv) * 100 : 0;
+        const equityPct = totalEquityMv > 0 ? (mvNtd / totalEquityMv) * 100 : 0;
+        return { ...h, mvNtd, assetPct, equityPct };
+      }).sort((a, b) => b.mvNtd - a.mvNtd);
 
-    function undoDeleteHolding() {
-      if (!deletedHoldingBackup) return;
-      holdings.splice(deletedHoldingBackup.index, 0, deletedHoldingBackup.item);
-      deletedHoldingBackup = null;
-      saveHoldingsState();
-      recalculateAll(true);
-      showToast('✅ 已復原刪除的股票');
-    }
-
-    /* 9. 表格渲染（含第三頁完整隱私遮罩） */
-    function filterHoldings(filter) {
-      activeFilter = filter;
-      document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.classList.remove('bg-emerald-600', 'text-white');
-        btn.classList.add('text-slate-400');
-      });
-      const activeBtn = document.getElementById(`filterBtn-${filter}`);
-      if (activeBtn) {
-        activeBtn.classList.remove('text-slate-400');
-        activeBtn.classList.add('bg-emerald-600', 'text-white');
+      if (btnText) {
+        btnText.innerText = isWeightRankingExpanded ? '收合排行' : `展開排行 (${ranked.length})`;
       }
-      renderHoldingsTable();
+      if (btnIcon) {
+        btnIcon.className = isWeightRankingExpanded ? 'fa-solid fa-chevron-up text-[10px]' : 'fa-solid fa-chevron-down text-[10px]';
+      }
+
+      if (!isWeightRankingExpanded) {
+        container.classList.add('hidden');
+        container.innerHTML = '';
+        return;
+      }
+
+      container.classList.remove('hidden');
+      const maxPct = ranked.length > 0 ? Math.max(ranked[0].assetPct, 0.1) : 1;
+
+      container.innerHTML = ranked.map((item, idx) => {
+        const isEtf = item.category === 'ETF';
+        const barWidth = Math.min((item.assetPct / maxPct) * 100, 100);
+        const barColor = isEtf
+          ? 'bg-gradient-to-r from-cyan-400 to-teal-400'
+          : 'bg-gradient-to-r from-amber-400 to-orange-400';
+        const pctColor = isEtf ? 'text-cyan-300' : 'text-amber-300';
+        const rankBadgeClass = idx === 0
+          ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
+          : idx === 1
+            ? 'bg-slate-300/15 text-slate-200 border-slate-400/30'
+            : idx === 2
+              ? 'bg-orange-500/15 text-orange-300 border-orange-500/30'
+              : 'bg-slate-900 text-slate-400 border-slate-800';
+
+        const flag = item.market === 'TW' ? '🇹🇼' : (item.market === 'IB' ? '🌐' : '🇺🇸');
+        const dispAssetPct = isPrivacyMasked ? '••%' : `${item.assetPct.toFixed(1)}%`;
+        const dispEquityPct = isPrivacyMasked ? '••%' : `佔股${item.equityPct.toFixed(1)}%`;
+
+        return `
+          <div class="p-2 sm:p-2.5 rounded-xl bg-slate-900/90 border border-slate-800/90 flex items-center gap-2 sm:gap-3">
+            <span class="w-5 h-5 sm:w-6 sm:h-6 rounded-lg border ${rankBadgeClass} font-mono text-[10px] sm:text-xs font-black flex items-center justify-center shrink-0">
+              ${idx + 1}
+            </span>
+
+            <div class="min-w-0 flex-1 space-y-1">
+              <div class="flex items-center justify-between gap-1.5">
+                <div class="flex items-center gap-1.5 min-w-0">
+                  <span class="font-mono font-black text-xs sm:text-sm text-white shrink-0">${flag} ${item.symbol}</span>
+                  <span class="text-[11px] sm:text-xs text-slate-400 truncate">${item.name}</span>
+                </div>
+                <div class="flex items-baseline gap-1.5 font-mono shrink-0">
+                  <span class="text-xs sm:text-sm font-black ${pctColor}">${dispAssetPct}</span>
+                  <span class="text-[10px] text-slate-500">${dispEquityPct}</span>
+                </div>
+              </div>
+              <div class="w-full h-1.5 rounded-full bg-slate-950 overflow-hidden">
+                <div class="h-full rounded-full ${barColor} transition-all duration-300" style="width: ${isPrivacyMasked ? 0 : barWidth.toFixed(1)}%"></div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
     }
 
-    function renderHoldingsTable() {
+    function renderHoldingsTable(totalPortfolioMv) {
       const tbody = document.getElementById('holdingsTableBody');
       if (!tbody) return;
 
-      const cAll = holdings.length;
-      const cTw = holdings.filter(h => h.market === 'TW').length;
-      const cUs = holdings.filter(h => h.market === 'US').length;
-      const cIb = holdings.filter(h => h.market === 'IB').length;
-      const cEtf = holdings.filter(h => h.category === 'ETF').length;
-      const cStock = holdings.filter(h => h.category === 'STOCK').length;
-
-      const setBadge = (id, count) => { const el = document.getElementById(id); if (el) el.innerText = count; };
-      setBadge('count-ALL', cAll);
-      setBadge('count-TW', cTw);
-      setBadge('count-US', cUs);
-      setBadge('count-IB', cIb);
-      setBadge('count-ETF', cEtf);
-      setBadge('count-STOCK', cStock);
-
-      const GROUPS = [
-        {
-          id: 'TW_ETF',
-          title: '🇹🇼 台股 (ETF)',
-          badgeColor: 'border-cyan-500/40 bg-cyan-950/60 text-cyan-300',
-          match: h => h.market === 'TW' && h.category === 'ETF'
-        },
-        {
-          id: 'TW_STOCK',
-          title: '🇹🇼 台股 (個股)',
-          badgeColor: 'border-amber-500/40 bg-amber-950/60 text-amber-300',
-          match: h => h.market === 'TW' && h.category === 'STOCK'
-        },
-        {
-          id: 'US_ETF',
-          title: '🇺🇸 美股 (ETF)',
-          badgeColor: 'border-sky-500/40 bg-sky-950/60 text-sky-300',
-          match: h => (h.market === 'US' || h.market === 'IB') && h.category === 'ETF'
-        },
-        {
-          id: 'US_STOCK',
-          title: '🇺🇸 美股 (個股)',
-          badgeColor: 'border-orange-500/40 bg-orange-950/60 text-orange-300',
-          match: h => (h.market === 'US' || h.market === 'IB') && h.category === 'STOCK'
-        }
-      ];
-
-      function isHoldingVisible(h) {
-        if (activeFilter === 'ALL') return true;
-        if (activeFilter === 'TW') return h.market === 'TW';
-        if (activeFilter === 'US') return h.market === 'US';
-        if (activeFilter === 'IB') return h.market === 'IB';
-        if (activeFilter === 'ETF') return h.category === 'ETF';
-        if (activeFilter === 'STOCK') return h.category === 'STOCK';
-        return true;
+      let computedTotalMv = totalPortfolioMv;
+      if (!computedTotalMv) {
+        let sumStockMv = 0;
+        let hasIb = false;
+        holdings.forEach(h => {
+          const sh = parseFloat(h.shares) || 0;
+          const cur = parseFloat(h.currentPrice) || 0;
+          if (h.market === 'IB') hasIb = true;
+          sumStockMv += h.market === 'TW' ? sh * cur : sh * cur * usTwdRate;
+        });
+        computedTotalMv = sumStockMv + (hasIb ? 0 : IB_MARKET_NTD) + getCashTotal();
       }
 
-      let html = '';
+      const filtered = holdings.filter(h => {
+        if (activeFilter === 'ALL') return true;
+        if (activeFilter === 'TW' || activeFilter === 'US' || activeFilter === 'IB') return h.market === activeFilter;
+        if (activeFilter === 'ETF' || activeFilter === 'STOCK') return h.category === activeFilter;
+        return true;
+      });
 
-      GROUPS.forEach(grp => {
-        const groupHoldings = holdings.filter(h => grp.match(h) && isHoldingVisible(h));
+      const groups = [
+        { key: 'TW-ETF', title: '🇹🇼 台股 ETF', badgeColor: 'bg-teal-500/15 text-teal-300 border-teal-500/30', match: h => h.market === 'TW' && h.category === 'ETF' },
+        { key: 'TW-STOCK', title: '🇹🇼 台股個股', badgeColor: 'bg-amber-500/15 text-amber-300 border-amber-500/30', match: h => h.market === 'TW' && h.category === 'STOCK' },
+        { key: 'US-ETF', title: '🇺🇸 美股 ETF', badgeColor: 'bg-sky-500/15 text-sky-300 border-sky-500/30', match: h => h.market === 'US' && h.category === 'ETF' },
+        { key: 'US-STOCK', title: '🇺🇸 美股個股', badgeColor: 'bg-orange-500/15 text-orange-300 border-orange-500/30', match: h => h.market === 'US' && h.category === 'STOCK' },
+        { key: 'IB-ALL', title: '🌐 IB 海外部位', badgeColor: 'bg-purple-500/15 text-purple-300 border-purple-500/30', match: h => h.market === 'IB' }
+      ];
+
+      let html = '';
+      groups.forEach(grp => {
+        const groupHoldings = filtered.filter(grp.match);
         if (groupHoldings.length === 0) return;
 
-        let subCost = 0;
-        let subMv = 0;
+        let subMv = 0, subCost = 0;
         groupHoldings.forEach(h => {
           const sh = parseFloat(h.shares) || 0;
           const avg = parseFloat(h.avgPrice) || 0;
           const cur = parseFloat(h.currentPrice) || 0;
           if (h.market === 'TW') {
-            subCost += sh * avg;
             subMv += sh * cur;
+            subCost += sh * avg;
           } else {
-            subCost += sh * avg * usTwdRate;
             subMv += sh * cur * usTwdRate;
+            subCost += sh * avg * usTwdRate;
           }
         });
 
         const subPnl = subMv - subCost;
         const subPnlPct = subCost > 0 ? (subPnl / subCost) * 100 : 0;
+        const subAssetPct = computedTotalMv > 0 ? (subMv / computedTotalMv) * 100 : 0;
         const maskedSubPnl = isPrivacyMasked
           ? (subPnl >= 0 ? '+••••' : '-••••')
           : `${subPnl >= 0 ? '+' : ''}${Math.round(subPnl).toLocaleString()}`;
@@ -2246,7 +2436,7 @@
                   <span class="px-1.5 py-0.5 rounded-md font-bold border ${grp.badgeColor}">
                     ${grp.title}
                   </span>
-                  <span class="text-slate-400 font-mono text-[10px]">(${groupHoldings.length}檔)</span>
+                  <span class="text-slate-400 font-mono text-[10px]">(${groupHoldings.length}檔 · ${subAssetPct.toFixed(1)}%)</span>
                 </div>
                 <div class="flex items-center gap-2 font-mono text-[11px] sm:text-xs truncate">
                   <span class="text-slate-400">小計:<b class="text-white font-bold ml-0.5">${formatMasked('NT$' + Math.round(subMv).toLocaleString())}</b></span>
@@ -2275,46 +2465,40 @@
 
           const pnlNtd = mvNtd - costNtd;
           const pnlPct = costNtd > 0 ? (pnlNtd / costNtd) * 100 : 0;
+          const assetWeightPct = computedTotalMv > 0 ? (mvNtd / computedTotalMv) * 100 : 0;
 
           const maskedRowMv = isPrivacyMasked ? '••••••' : Math.round(mvNtd).toLocaleString();
+          const maskedRowWeight = isPrivacyMasked ? '••%' : `${assetWeightPct.toFixed(1)}%`;
           const maskedRowPnl = isPrivacyMasked
             ? (pnlNtd >= 0 ? '+••••' : '-••••')
             : `${pnlNtd >= 0 ? '+' : ''}${Math.round(pnlNtd).toLocaleString()}`;
-
-          const sharesCellHtml = isPrivacyMasked
-            ? `<span class="block w-full py-1 px-1 sm:px-2 rounded-md sm:rounded-lg bg-slate-950 border border-slate-800 text-right font-mono text-xs sm:text-sm text-slate-500 select-none">••••</span>`
-            : `<input type="number" step="any" inputmode="decimal" value="${h.shares}" 
-                   oninput="updateHoldingField('${h.id}', 'shares', this.value)" 
-                   class="input-table w-full py-1 px-1 sm:px-2 rounded-md sm:rounded-lg bg-slate-950 border border-slate-700/90 text-right font-mono text-xs sm:text-sm tracking-tighter sm:tracking-normal text-white font-bold">`;
-
-          const avgCellHtml = isPrivacyMasked
-            ? `<span class="block w-full py-1 px-1 sm:px-2 rounded-md sm:rounded-lg bg-slate-950 border border-slate-800 text-right font-mono text-xs sm:text-sm text-slate-500 select-none">••••</span>`
-            : `<input type="number" step="any" inputmode="decimal" value="${h.avgPrice}" 
-                   oninput="updateHoldingField('${h.id}', 'avgPrice', this.value)" 
-                   class="input-table w-full py-1 px-1 sm:px-2 rounded-md sm:rounded-lg bg-slate-950 border border-slate-700/90 text-right font-mono text-xs sm:text-sm tracking-tighter sm:tracking-normal text-slate-200 font-bold">`;
+          const googleFinanceUrl = getGoogleFinanceUrl(h.symbol, h.market);
 
           html += `
-            <tr class="hover:bg-slate-800/40 transition border-b border-slate-800/40 text-slate-200">
-              <td class="py-2 pl-2 pr-0.5 sm:px-3.5 align-middle">
+            <tr class="hover:bg-slate-800/35 transition">
+              <td class="py-2 pl-2 pr-1 sm:px-3.5 align-middle">
                 <div class="flex items-center gap-1">
-                  <a href="${h.link || '#'}" target="_blank" class="font-black text-xs sm:text-sm text-white hover:text-emerald-400 transition flex items-center gap-0.5 tracking-tight" title="查看 Yahoo 股市行情">
-                    ${h.symbol}
-                    <i class="fa-solid fa-arrow-up-right-from-square text-[8px] sm:text-[10px] text-cyan-400"></i>
+                  <a href="${googleFinanceUrl}" target="_blank" rel="noopener noreferrer" title="在 Google 財經查看 ${h.symbol}" class="inline-flex items-center gap-1 font-black text-white hover:text-cyan-300 text-xs sm:text-sm max-w-full group">
+                    <span class="truncate">${h.symbol}</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-[9px] sm:text-[10px] text-cyan-400 group-hover:text-cyan-300 shrink-0"></i>
                   </a>
-                  ${h.category === 'ETF'
-                    ? '<span class="px-1 py-0 rounded bg-cyan-950 text-cyan-300 border border-cyan-500/30 text-[8px] sm:text-[10px] font-bold leading-tight shrink-0">ETF</span>'
-                    : '<span class="px-1 py-0 rounded bg-amber-950 text-amber-300 border border-amber-500/30 text-[8px] sm:text-[10px] font-bold leading-tight shrink-0">個股</span>'
-                  }
+                  <span class="hidden sm:inline-block text-[10px] px-1.5 py-0.2 rounded shrink-0 ${h.category === 'ETF' ? 'bg-cyan-500/15 text-cyan-300' : 'bg-amber-500/15 text-amber-300'}">${h.category}</span>
                 </div>
-                <span class="text-[11px] sm:text-xs text-slate-400 font-sans block truncate leading-tight mt-0.5">${h.name}</span>
+                <span class="text-[10px] sm:text-xs text-slate-400 font-sans block truncate">${h.name}</span>
               </td>
 
               <td class="py-2 px-0.5 sm:px-2 text-right align-middle">
-                ${sharesCellHtml}
+                ${isPrivacyMasked
+                  ? '<span class="text-xs font-mono text-slate-400">••••</span>'
+                  : `<input type="number" step="any" inputmode="decimal" value="${h.shares}" oninput="updateHoldingField('${h.id}', 'shares', this.value)" class="input-table w-full py-1 px-1 sm:px-2 rounded-md sm:rounded-lg bg-slate-950 border border-slate-700/90 text-right font-mono text-xs sm:text-sm tracking-tighter sm:tracking-normal text-white">`
+                }
               </td>
 
               <td class="py-2 px-0.5 sm:px-2 text-right align-middle">
-                ${avgCellHtml}
+                ${isPrivacyMasked
+                  ? '<span class="text-xs font-mono text-slate-400">••••</span>'
+                  : `<input type="number" step="any" inputmode="decimal" value="${h.avgPrice}" oninput="updateHoldingField('${h.id}', 'avgPrice', this.value)" class="input-table w-full py-1 px-1 sm:px-2 rounded-md sm:rounded-lg bg-slate-950 border border-slate-700/90 text-right font-mono text-xs sm:text-sm tracking-tighter sm:tracking-normal text-slate-300">`
+                }
               </td>
 
               <td class="py-2 px-0.5 sm:px-2 text-right align-middle">
@@ -2324,7 +2508,8 @@
               </td>
 
               <td class="py-2 px-1 sm:px-3 text-right font-black text-white text-xs sm:text-sm tracking-tighter sm:tracking-normal align-middle">
-                <span id="rowMv-${h.id}">${maskedRowMv}</span>
+                <span id="rowMv-${h.id}" class="block leading-tight">${maskedRowMv}</span>
+                <span id="rowPct-${h.id}" class="block text-[9px] sm:text-[10px] leading-tight text-cyan-400 font-semibold">${maskedRowWeight}</span>
               </td>
 
               <td id="rowPnl-${h.id}" class="py-2 px-1 sm:px-3 text-right text-[11px] sm:text-xs font-bold tracking-tighter sm:tracking-normal align-middle">
@@ -2375,7 +2560,6 @@
       return `${num >= 0 ? '+' : ''}${num.toFixed(2)}%`;
     }
 
-    /* 智慧上下翻轉定位：預設顯示於點的正上方；若接近圖表頂部（如10月高點）則自動下翻於點下方，避免被裁切或遮擋標題 */
     function positionTooltipSmart(container, svg, tooltip, ptX, topDotY, bottomDotY) {
       if (!container || !svg || !tooltip) return;
       const svgRect = svg.getBoundingClientRect();
@@ -2772,6 +2956,7 @@
 
       const fmtCell = (val) => isPrivacyMasked ? '••••••' : Math.round(val).toLocaleString();
       const fmtPnlCell = (val) => isPrivacyMasked ? (val >= 0 ? '+••••••' : '-••••••') : `${val >= 0 ? '+' : ''}${Math.round(val).toLocaleString()}`;
+      const escapeAttr = (str) => String(str || '').replace(/"/g, '&quot;');
 
       const rowsHtml = historyMonthlyData.map((row, idx) => {
         const isLatestMonth = (idx === historyMonthlyData.length - 1);
@@ -2789,6 +2974,9 @@
             <td class="py-2 px-3 ${totalClass}">${fmtCell(row.total)}</td>
             <td class="py-2 px-3">${fmtCell(row.principal)}</td>
             <td class="py-2 px-3 text-rose-400">${fmtPnlCell(row.pnl)}</td>
+            <td class="py-1.5 px-2 font-sans">
+              <input type="text" value="${escapeAttr(row.memo)}" placeholder="點擊記錄當月心得..." onchange="updateHistoryMemo(${idx}, this.value)" class="w-full py-1 px-2 rounded-lg bg-slate-950/80 border border-slate-800 hover:border-slate-700 focus:border-amber-400 text-[11px] sm:text-xs text-slate-200 placeholder-slate-600 transition">
+            </td>
           </tr>
         `;
       }).join('');
@@ -2803,6 +2991,9 @@
           <td class="py-2 px-3 font-black text-cyan-300">${fmtCell(curTotal || 0)}</td>
           <td class="py-2 px-3 font-bold text-white">${fmtCell(curCost || 0)}</td>
           <td class="py-2 px-3 font-black text-rose-400">${fmtPnlCell(curPnl || 0)}</td>
+          <td class="py-1.5 px-2 font-sans">
+            <input type="text" value="${escapeAttr(currentMonthMemo)}" placeholder="點擊記錄本月覆盤筆記..." onchange="updateHistoryMemo('CURRENT', this.value)" class="w-full py-1 px-2 rounded-lg bg-slate-950/90 border border-cyan-500/30 focus:border-cyan-400 text-[11px] sm:text-xs text-cyan-100 placeholder-slate-500 transition">
+          </td>
         </tr>
       `;
 
@@ -3043,10 +3234,29 @@
       }
     }
 
-    /* 13. 彈窗與代號自動查找 */
+    /* 13. 彈窗與代號全自動智慧辨識 */
+    let userSelectedMarketManually = false;
+
     function openAddHoldingModal() {
+      userSelectedMarketManually = false;
+      const symInp = document.getElementById('newHoldSymbol');
+      const nameInp = document.getElementById('newHoldName');
+      const shInp = document.getElementById('newHoldShares');
+      const avgInp = document.getElementById('newHoldAvgPrice');
+      const curInp = document.getElementById('newHoldCurrentPrice');
+
+      if (symInp) symInp.value = '';
+      if (nameInp) { nameInp.value = ''; nameInp.dataset.autoFilled = '1'; }
+      if (shInp) shInp.value = '';
+      if (avgInp) avgInp.value = '';
+      if (curInp) { curInp.value = ''; curInp.dataset.autoFilled = '1'; }
+
+      updateDetectedCategoryBadge(null);
+      calculateAddHoldingPreview();
+
       const modal = document.getElementById('addHoldingModal');
       if (modal) modal.classList.remove('hidden');
+      if (symInp) setTimeout(() => symInp.focus(), 60);
     }
 
     function closeAddHoldingModal() {
@@ -3054,23 +3264,89 @@
       if (modal) modal.classList.add('hidden');
     }
 
+    function updateDetectedCategoryBadge(category) {
+      const catInput = document.getElementById('newHoldCategory');
+      const badge = document.getElementById('autoCategoryBadge');
+      if (!badge) return;
+
+      if (!category) {
+        if (catInput) catInput.value = 'ETF';
+        badge.innerText = '🤖 自動判定：待輸入';
+        badge.className = 'cursor-pointer text-[11px] px-2 py-0.5 rounded-full font-mono font-bold bg-slate-800 text-slate-400 border border-slate-700 transition select-none';
+        return;
+      }
+
+      if (catInput) catInput.value = category;
+      if (category === 'ETF') {
+        badge.innerText = '🤖 自動判定：大盤 ETF';
+        badge.className = 'cursor-pointer text-[11px] px-2 py-0.5 rounded-full font-mono font-bold bg-cyan-500/15 text-cyan-300 border border-cyan-500/40 transition select-none';
+      } else {
+        badge.innerText = '🤖 自動判定：個股標的';
+        badge.className = 'cursor-pointer text-[11px] px-2 py-0.5 rounded-full font-mono font-bold bg-amber-500/15 text-amber-300 border border-amber-500/40 transition select-none';
+      }
+    }
+
+    function toggleDetectedCategory() {
+      const catInput = document.getElementById('newHoldCategory');
+      if (!catInput) return;
+      const nextCat = catInput.value === 'ETF' ? 'STOCK' : 'ETF';
+      updateDetectedCategoryBadge(nextCat);
+    }
+
+    function autoDetectStockMetadata(sym) {
+      const known = STOCK_DATABASE[sym];
+      const isTwTicker = /^\d/.test(sym);
+      const market = known ? known.market : (isTwTicker ? 'TW' : 'US');
+
+      const etfPattern = /^(00\d+[A-Z]?|QLD|TQQQ|SSO|UPRO|SQQQ|SPXU|SOXL|SOXS|VT|VTI|VXUS|VOO|VOOG|VOOV|VUG|VTV|VGT|VIG|VYMI|VYM|VNQ|BND|BNDW|BNDX|VWRA|VWRD|VUAA|CSPX|SWRD|EIMI|EQQQ|WSML|IB01|DTLA|SPY|SPYG|SPYV|SPLG|IVV|IJH|IJR|IWM|IWF|IWD|IEMG|IEFA|AGG|TLT|IEF|SHY|SGOV|BIL|LQD|HYG|QQQ|QQQM|SCHD|SCHG|SCHB|SCHX|SCHF|SMH|SOXX|ARKK|ARKW|ARKG|XLK|XLF|XLE|XLV|XLI|XLY|XLP|XLU|XLB|XLRE|XLC|DIA|GLD|IAU|SLV|IBIT|FBTC|BITO)$/;
+      const category = known ? known.category : (etfPattern.test(sym) ? 'ETF' : 'STOCK');
+
+      let price = known ? (parseFloat(known.price) || 0) : 0;
+      try {
+        const cachedQuotes = JSON.parse(safeStorage.getItem('eddie_portfolio_quotes_cache') || '{}');
+        const liveQ = parseFloat(cachedQuotes[sym]);
+        if (!isNaN(liveQ) && liveQ > 0) price = liveQ;
+      } catch (e) {}
+
+      return {
+        name: known ? known.name : '',
+        market,
+        category,
+        price
+      };
+    }
+
     function handleSymbolAutoLookup(val) {
       const sym = val.trim().toUpperCase();
-      if (!sym) return;
+      const nameInp = document.getElementById('newHoldName');
+      const mktSel = document.getElementById('newHoldMarket');
+      const curInp = document.getElementById('newHoldCurrentPrice');
 
-      if (STOCK_DATABASE[sym]) {
-        const data = STOCK_DATABASE[sym];
-        const nameInp = document.getElementById('newHoldName');
-        const mktSel = document.getElementById('newHoldMarket');
-        const catSel = document.getElementById('newHoldCategory');
-        const curInp = document.getElementById('newHoldCurrentPrice');
-
-        if (nameInp) nameInp.value = data.name;
-        if (mktSel) mktSel.value = data.market;
-        if (catSel) catSel.value = data.category;
-        if (curInp) curInp.value = data.price;
+      if (!sym) {
+        updateDetectedCategoryBadge(null);
+        if (nameInp && nameInp.dataset.autoFilled !== '0') nameInp.value = '';
+        if (curInp && curInp.dataset.autoFilled !== '0') curInp.value = '';
         calculateAddHoldingPreview();
+        return;
       }
+
+      const meta = autoDetectStockMetadata(sym);
+
+      if (nameInp && nameInp.dataset.autoFilled !== '0') {
+        nameInp.value = meta.name;
+      }
+
+      updateDetectedCategoryBadge(meta.category);
+
+      if (mktSel && !userSelectedMarketManually) {
+        mktSel.value = meta.market;
+      }
+
+      if (curInp && curInp.dataset.autoFilled !== '0') {
+        curInp.value = meta.price > 0 ? meta.price : '';
+      }
+
+      calculateAddHoldingPreview();
     }
 
     function calculateAddHoldingPreview() {
@@ -3113,7 +3389,7 @@
       }
 
       const newId = `${mkt.toLowerCase()}-${sym.toLowerCase()}-${Date.now().toString().slice(-4)}`;
-      const link = STOCK_DATABASE[sym] ? STOCK_DATABASE[sym].link : (mkt === 'TW' ? `https://tw.stock.yahoo.com/quote/${sym}.TW` : `https://tw.stock.yahoo.com/quote/${sym}`);
+      const link = getGoogleFinanceUrl(sym, mkt);
 
       holdings.push({
         id: newId,
@@ -3130,7 +3406,7 @@
       saveHoldingsState();
       closeAddHoldingModal();
       recalculateAll(true);
-      showToast(`✅ 已新增 ${sym} 至持股清單！`);
+      showToast(`✅ 已新增 ${sym} (${cat === 'ETF' ? '大盤ETF' : '個股'}) 至持股清單！`);
     }
 
     /* 14. Toast 提示 */
