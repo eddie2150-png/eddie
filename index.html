@@ -331,7 +331,7 @@
     <!-- ==================== 【第二介面】資產配置比例 (Tab 2) ==================== -->
     <div id="tabView-2" class="tab-content hidden space-y-3 sm:space-y-4">
       
-      <section class="p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl bg-slate-900/95 border border-slate-800 shadow-xl space-y-3.5 sm:space-y-4">
+      <section class="p-3 sm:p-6 rounded-2xl sm:rounded-3xl bg-slate-900/95 border border-slate-800 shadow-xl space-y-3.5 sm:space-y-4">
         
         <div class="flex items-center justify-between border-b border-slate-800 pb-2">
           <div class="flex items-center gap-2">
@@ -343,7 +343,7 @@
         </div>
 
         <!-- 總資產階層：1. 現金 vs 2. 股票（SVG 甜甜圈圖 + 四大部位卡片） -->
-        <div class="p-3.5 sm:p-6 rounded-2xl bg-slate-950/80 border border-slate-800">
+        <div class="p-3 sm:p-6 rounded-2xl bg-slate-950/80 border border-slate-800">
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-center">
             
             <div class="lg:col-span-5 flex flex-col items-center justify-center">
@@ -442,7 +442,7 @@
         </div>
 
         <!-- 整合區塊：總資產與股票部位結構 ＋ 核心策略比例試算（統一以股票總市值為基準） -->
-        <div class="p-3.5 sm:p-5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-4">
+        <div class="p-3 sm:p-5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3.5 sm:space-y-4">
           <div class="flex items-center justify-between flex-wrap gap-2">
             <h3 class="text-sm sm:text-base font-black text-white flex items-center gap-2">
               <i class="fa-solid fa-layer-group text-slate-300"></i>
@@ -494,7 +494,7 @@
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
             
             <!-- 1. 大盤 ETF 總數＋目標試算卡片（台股 ETF = 翠綠 emerald-400 / 美股 ETF = 天藍 sky-400） -->
-            <div class="p-3.5 sm:p-4 rounded-2xl bg-slate-900/95 border border-slate-800 space-y-3 flex flex-col justify-between">
+            <div class="p-3 sm:p-4 rounded-2xl bg-slate-900/95 border border-slate-800 space-y-3 flex flex-col justify-between">
               <div class="space-y-3">
                 <div class="flex items-center justify-between gap-2">
                   <span class="text-sm sm:text-base font-black text-white flex items-center gap-1.5">
@@ -517,28 +517,48 @@
                   <div id="barUsEtf" class="h-full bg-sky-400 transition-all duration-300" style="width: 47.5%"></div>
                 </div>
 
-                <!-- 台股 ETF vs 美股 ETF 個別明細 -->
+                <!-- 台股 ETF vs 美股 ETF 個別明細（手機版獨立分行、零溢出） -->
                 <div class="grid grid-cols-2 gap-2 pt-1">
                   <!-- 🇹🇼 台股 ETF：專屬翠綠色 emerald-400 -->
-                  <div class="p-2.5 rounded-xl bg-slate-950/90 border border-slate-800 space-y-1">
-                    <div class="flex items-center justify-between gap-1 text-[11px] sm:text-xs font-bold">
-                      <span class="text-emerald-400 flex items-center gap-1 shrink-0"><span class="w-2 h-2 rounded-full bg-emerald-400 shrink-0"></span>🇹🇼 台股 ETF</span>
-                      <span class="font-mono text-slate-300 shrink-0">佔ETF <b id="twEtfSharePct" class="text-emerald-400">52.5%</b></span>
+                  <div class="p-2.5 rounded-xl bg-slate-950/90 border border-slate-800 space-y-1.5 min-w-0">
+                    <div class="flex items-center justify-between gap-1 text-xs font-bold">
+                      <span class="text-emerald-400 flex items-center gap-1 truncate"><span class="w-2 h-2 rounded-full bg-emerald-400 shrink-0"></span>🇹🇼 台股 ETF</span>
+                      <span class="hidden sm:inline font-mono text-slate-300 shrink-0">佔ETF <b id="twEtfSharePct" class="text-emerald-400">52.5%</b></span>
                     </div>
-                    <span id="twEtfMvVal" class="text-sm sm:text-base font-black font-mono text-white block truncate">NT$459,224</span>
-                    <div class="text-[11px] sm:text-xs font-mono text-slate-300">
+                    <span id="twEtfMvVal" class="text-[13px] sm:text-base font-black font-mono text-white block truncate">NT$459,224</span>
+                    <div class="sm:hidden text-[11px] font-mono space-y-0.5 pt-1 border-t border-slate-800/80">
+                      <div class="flex items-center justify-between text-slate-300">
+                        <span>佔ETF</span>
+                        <b id="twEtfSharePctMobile" class="text-emerald-400">52.5%</b>
+                      </div>
+                      <div class="flex items-center justify-between text-slate-300">
+                        <span>佔股票</span>
+                        <b id="twEtfEquityPctMobile" class="text-white">24.9%</b>
+                      </div>
+                    </div>
+                    <div class="hidden sm:block text-xs font-mono text-slate-300">
                       佔股票 <b id="twEtfEquityPct" class="text-white">24.9%</b>
                     </div>
                   </div>
 
                   <!-- 🇺🇸 美股 ETF：專屬天藍色 sky-400 -->
-                  <div class="p-2.5 rounded-xl bg-slate-950/90 border border-slate-800 space-y-1">
-                    <div class="flex items-center justify-between gap-1 text-[11px] sm:text-xs font-bold">
-                      <span class="text-sky-400 flex items-center gap-1 shrink-0"><span class="w-2 h-2 rounded-full bg-sky-400 shrink-0"></span>🇺🇸 美股 ETF</span>
-                      <span class="font-mono text-slate-300 shrink-0">佔ETF <b id="usEtfSharePct" class="text-sky-400">47.5%</b></span>
+                  <div class="p-2.5 rounded-xl bg-slate-950/90 border border-slate-800 space-y-1.5 min-w-0">
+                    <div class="flex items-center justify-between gap-1 text-xs font-bold">
+                      <span class="text-sky-400 flex items-center gap-1 truncate"><span class="w-2 h-2 rounded-full bg-sky-400 shrink-0"></span>🇺🇸 美股 ETF</span>
+                      <span class="hidden sm:inline font-mono text-slate-300 shrink-0">佔ETF <b id="usEtfSharePct" class="text-sky-400">47.5%</b></span>
                     </div>
-                    <span id="usEtfMvVal" class="text-sm sm:text-base font-black font-mono text-white block truncate">NT$415,475</span>
-                    <div class="text-[11px] sm:text-xs font-mono text-slate-300">
+                    <span id="usEtfMvVal" class="text-[13px] sm:text-base font-black font-mono text-white block truncate">NT$415,475</span>
+                    <div class="sm:hidden text-[11px] font-mono space-y-0.5 pt-1 border-t border-slate-800/80">
+                      <div class="flex items-center justify-between text-slate-300">
+                        <span>佔ETF</span>
+                        <b id="usEtfSharePctMobile" class="text-sky-400">47.5%</b>
+                      </div>
+                      <div class="flex items-center justify-between text-slate-300">
+                        <span>佔股票</span>
+                        <b id="usEtfEquityPctMobile" class="text-white">22.5%</b>
+                      </div>
+                    </div>
+                    <div class="hidden sm:block text-xs font-mono text-slate-300">
                       佔股票 <b id="usEtfEquityPct" class="text-white">22.5%</b>
                     </div>
                   </div>
@@ -568,7 +588,7 @@
             </div>
 
             <!-- 2. 個股部位總數＋上限監控卡片（台股個股 = 琥珀金 amber-400 / 美股個股 = 珊瑚粉 rose-400） -->
-            <div class="p-3.5 sm:p-4 rounded-2xl bg-slate-900/95 border border-slate-800 space-y-3 flex flex-col justify-between">
+            <div class="p-3 sm:p-4 rounded-2xl bg-slate-900/95 border border-slate-800 space-y-3 flex flex-col justify-between">
               <div class="space-y-3">
                 <div class="flex items-center justify-between gap-2">
                   <span class="text-sm sm:text-base font-black text-white flex items-center gap-1.5">
@@ -591,28 +611,48 @@
                   <div id="barUsStock" class="h-full bg-rose-400 transition-all duration-300" style="width: 45.8%"></div>
                 </div>
 
-                <!-- 台股個股 vs 美股個股 個別明細 -->
+                <!-- 台股個股 vs 美股個股 個別明細（手機版獨立分行、零溢出） -->
                 <div class="grid grid-cols-2 gap-2 pt-1">
                   <!-- 🇹🇼 台股個股：專屬琥珀金 amber-400 -->
-                  <div class="p-2.5 rounded-xl bg-slate-950/90 border border-slate-800 space-y-1">
-                    <div class="flex items-center justify-between gap-1 text-[11px] sm:text-xs font-bold">
-                      <span class="text-amber-400 flex items-center gap-1 shrink-0"><span class="w-2 h-2 rounded-full bg-amber-400 shrink-0"></span>🇹🇼 台股個股</span>
-                      <span class="font-mono text-slate-300 shrink-0">佔個股 <b id="twStockSharePct" class="text-amber-400">54.2%</b></span>
+                  <div class="p-2.5 rounded-xl bg-slate-950/90 border border-slate-800 space-y-1.5 min-w-0">
+                    <div class="flex items-center justify-between gap-1 text-xs font-bold">
+                      <span class="text-amber-400 flex items-center gap-1 truncate"><span class="w-2 h-2 rounded-full bg-amber-400 shrink-0"></span>🇹🇼 台股個股</span>
+                      <span class="hidden sm:inline font-mono text-slate-300 shrink-0">佔個股 <b id="twStockSharePct" class="text-amber-400">54.2%</b></span>
                     </div>
-                    <span id="twStockMvVal" class="text-sm sm:text-base font-black font-mono text-white block truncate">NT$381,454</span>
-                    <div class="text-[11px] sm:text-xs font-mono text-slate-300">
+                    <span id="twStockMvVal" class="text-[13px] sm:text-base font-black font-mono text-white block truncate">NT$381,454</span>
+                    <div class="sm:hidden text-[11px] font-mono space-y-0.5 pt-1 border-t border-slate-800/80">
+                      <div class="flex items-center justify-between text-slate-300">
+                        <span>佔個股</span>
+                        <b id="twStockSharePctMobile" class="text-amber-400">54.2%</b>
+                      </div>
+                      <div class="flex items-center justify-between text-slate-300">
+                        <span>佔股票</span>
+                        <b id="twStockEquityPctMobile" class="text-white">20.7%</b>
+                      </div>
+                    </div>
+                    <div class="hidden sm:block text-xs font-mono text-slate-300">
                       佔股票 <b id="twStockEquityPct" class="text-white">20.7%</b>
                     </div>
                   </div>
 
                   <!-- 🇺🇸 美股個股：專屬珊瑚粉 rose-400 -->
-                  <div class="p-2.5 rounded-xl bg-slate-950/90 border border-slate-800 space-y-1">
-                    <div class="flex items-center justify-between gap-1 text-[11px] sm:text-xs font-bold">
-                      <span class="text-rose-400 flex items-center gap-1 shrink-0"><span class="w-2 h-2 rounded-full bg-rose-400 shrink-0"></span>🇺🇸 美股個股</span>
-                      <span class="font-mono text-slate-300 shrink-0">佔個股 <b id="usStockSharePct" class="text-rose-400">45.8%</b></span>
+                  <div class="p-2.5 rounded-xl bg-slate-950/90 border border-slate-800 space-y-1.5 min-w-0">
+                    <div class="flex items-center justify-between gap-1 text-xs font-bold">
+                      <span class="text-rose-400 flex items-center gap-1 truncate"><span class="w-2 h-2 rounded-full bg-rose-400 shrink-0"></span>🇺🇸 美股個股</span>
+                      <span class="hidden sm:inline font-mono text-slate-300 shrink-0">佔個股 <b id="usStockSharePct" class="text-rose-400">45.8%</b></span>
                     </div>
-                    <span id="usStockMvVal" class="text-sm sm:text-base font-black font-mono text-white block truncate">NT$322,697</span>
-                    <div class="text-[11px] sm:text-xs font-mono text-slate-300">
+                    <span id="usStockMvVal" class="text-[13px] sm:text-base font-black font-mono text-white block truncate">NT$322,697</span>
+                    <div class="sm:hidden text-[11px] font-mono space-y-0.5 pt-1 border-t border-slate-800/80">
+                      <div class="flex items-center justify-between text-slate-300">
+                        <span>佔個股</span>
+                        <b id="usStockSharePctMobile" class="text-rose-400">45.8%</b>
+                      </div>
+                      <div class="flex items-center justify-between text-slate-300">
+                        <span>佔股票</span>
+                        <b id="usStockEquityPctMobile" class="text-white">17.5%</b>
+                      </div>
+                    </div>
+                    <div class="hidden sm:block text-xs font-mono text-slate-300">
                       佔股票 <b id="usStockEquityPct" class="text-white">17.5%</b>
                     </div>
                   </div>
@@ -645,7 +685,7 @@
         </div>
 
         <!-- 個別標的資產佔比排行（同步套用五大類別色） -->
-        <div class="p-3.5 sm:p-5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3">
+        <div class="p-3 sm:p-5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3">
           <div onclick="toggleWeightRankingExpand()" class="flex items-center justify-between gap-2 cursor-pointer select-none">
             <h3 class="text-sm sm:text-base font-black text-white flex items-center gap-2">
               <i class="fa-solid fa-ranking-star text-slate-300"></i>
@@ -662,7 +702,7 @@
         </div>
 
         <!-- 各大銀行活存明細 -->
-        <div class="p-3.5 sm:p-5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3">
+        <div class="p-3 sm:p-5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3">
           <div class="flex items-center justify-between flex-wrap gap-2">
             <h3 class="text-sm sm:text-base font-black text-white flex items-center gap-2">
               <i class="fa-solid fa-building-columns text-emerald-400"></i>
@@ -2316,11 +2356,15 @@
 
       setText('twEtfMvVal', formatMasked(`NT$${Math.round(twEtfMv).toLocaleString()}`));
       setText('twEtfSharePct', `${twEtfShare.toFixed(1)}%`);
+      setText('twEtfSharePctMobile', `${twEtfShare.toFixed(1)}%`);
       setText('twEtfEquityPct', `${twEtfEqPct.toFixed(1)}%`);
+      setText('twEtfEquityPctMobile', `${twEtfEqPct.toFixed(1)}%`);
 
       setText('usEtfMvVal', formatMasked(`NT$${Math.round(usEtfMv).toLocaleString()}`));
       setText('usEtfSharePct', `${usEtfShare.toFixed(1)}%`);
+      setText('usEtfSharePctMobile', `${usEtfShare.toFixed(1)}%`);
       setText('usEtfEquityPct', `${usEtfEqPct.toFixed(1)}%`);
+      setText('usEtfEquityPctMobile', `${usEtfEqPct.toFixed(1)}%`);
 
       // 個股部位總數與台美股明細（台股個股=琥珀金 amber-400 / 美股個股=珊瑚粉 rose-400）
       setText('stockTotalEquityPct', `${stkEqPct.toFixed(1)}%`);
@@ -2340,11 +2384,15 @@
 
       setText('twStockMvVal', formatMasked(`NT$${Math.round(twStockMv).toLocaleString()}`));
       setText('twStockSharePct', `${twStkShare.toFixed(1)}%`);
+      setText('twStockSharePctMobile', `${twStkShare.toFixed(1)}%`);
       setText('twStockEquityPct', `${twStkEqPct.toFixed(1)}%`);
+      setText('twStockEquityPctMobile', `${twStkEqPct.toFixed(1)}%`);
 
       setText('usStockMvVal', formatMasked(`NT$${Math.round(usStockMv).toLocaleString()}`));
       setText('usStockSharePct', `${usStkShare.toFixed(1)}%`);
+      setText('usStockSharePctMobile', `${usStkShare.toFixed(1)}%`);
       setText('usStockEquityPct', `${usStkEqPct.toFixed(1)}%`);
+      setText('usStockEquityPctMobile', `${usStkEqPct.toFixed(1)}%`);
 
       // 二合一核心策略試算（統一採用「股票總市值 totalEquityMv」為分母，對齊佔股票 %）
       setText('etfTargetLabelPct', `距離 ${targetEtfRatio}% 目標差額:`);
