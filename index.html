@@ -357,14 +357,15 @@
               </div>
             </div>
 
-            <!-- 右側：四大核心部位卡片 (2x2 排列) -->
+            <!-- 右側：四大核心部位卡片 (2x2 排列；點擊可聚焦，點擊旁邊空白處或再點一次恢復整體) -->
             <div class="lg:col-span-7 grid grid-cols-2 gap-2.5 sm:gap-3.5 items-stretch">
               
               <!-- 🇹🇼 台股 -->
-              <div id="cardBoxTw" class="p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800/90 shadow cursor-pointer transition-all duration-300 flex flex-col justify-between h-full hover:border-cyan-400"
-                   onmouseenter="highlightSegment('tw')"
-                   onmouseleave="resetHighlight()"
-                   ontouchstart="highlightSegment('tw')">
+              <div id="cardBoxTw" data-donut-interactive="true"
+                   class="p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800/90 shadow cursor-pointer transition-all duration-300 flex flex-col justify-between h-full hover:border-cyan-400 select-none"
+                   onclick="toggleSegmentHighlight('tw', event)"
+                   onmouseenter="handleDonutHover('tw')"
+                   onmouseleave="handleDonutLeave()">
                 <div class="flex items-center justify-between gap-1">
                   <span class="text-xs sm:text-base font-black text-white flex items-center gap-1.5 truncate">
                     <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-gradient-to-r from-cyan-400 to-teal-300 shrink-0 shadow-sm shadow-cyan-400/60"></span>
@@ -380,10 +381,11 @@
               </div>
 
               <!-- 🇺🇸 美股 -->
-              <div id="cardBoxUs" class="p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800/90 shadow cursor-pointer transition-all duration-300 flex flex-col justify-between h-full hover:border-sky-400"
-                   onmouseenter="highlightSegment('us')"
-                   onmouseleave="resetHighlight()"
-                   ontouchstart="highlightSegment('us')">
+              <div id="cardBoxUs" data-donut-interactive="true"
+                   class="p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800/90 shadow cursor-pointer transition-all duration-300 flex flex-col justify-between h-full hover:border-sky-400 select-none"
+                   onclick="toggleSegmentHighlight('us', event)"
+                   onmouseenter="handleDonutHover('us')"
+                   onmouseleave="handleDonutLeave()">
                 <div class="flex items-center justify-between gap-1">
                   <span class="text-xs sm:text-base font-black text-white flex items-center gap-1.5 truncate">
                     <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-gradient-to-r from-sky-400 to-blue-400 shrink-0 shadow-sm shadow-sky-400/60"></span>
@@ -399,10 +401,11 @@
               </div>
 
               <!-- 🌐 IB 部位 -->
-              <div id="cardBoxIb" class="p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800/90 shadow cursor-pointer transition-all duration-300 flex flex-col justify-between h-full hover:border-purple-400"
-                   onmouseenter="highlightSegment('ib')"
-                   onmouseleave="resetHighlight()"
-                   ontouchstart="highlightSegment('ib')">
+              <div id="cardBoxIb" data-donut-interactive="true"
+                   class="p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800/90 shadow cursor-pointer transition-all duration-300 flex flex-col justify-between h-full hover:border-purple-400 select-none"
+                   onclick="toggleSegmentHighlight('ib', event)"
+                   onmouseenter="handleDonutHover('ib')"
+                   onmouseleave="handleDonutLeave()">
                 <div class="flex items-center justify-between gap-1">
                   <span class="text-xs sm:text-base font-black text-white flex items-center gap-1.5 truncate">
                     <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-gradient-to-r from-fuchsia-400 to-purple-400 shrink-0 shadow-sm shadow-purple-400/60"></span>
@@ -418,10 +421,11 @@
               </div>
 
               <!-- 💵 現金活存 -->
-              <div id="cardBoxCash" class="p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800/90 shadow cursor-pointer transition-all duration-300 flex flex-col justify-between h-full hover:border-emerald-400"
-                   onmouseenter="highlightSegment('cash')"
-                   onmouseleave="resetHighlight()"
-                   ontouchstart="highlightSegment('cash')">
+              <div id="cardBoxCash" data-donut-interactive="true"
+                   class="p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800/90 shadow cursor-pointer transition-all duration-300 flex flex-col justify-between h-full hover:border-emerald-400 select-none"
+                   onclick="toggleSegmentHighlight('cash', event)"
+                   onmouseenter="handleDonutHover('cash')"
+                   onmouseleave="handleDonutLeave()">
                 <div class="flex items-center justify-between gap-1">
                   <span class="text-xs sm:text-base font-black text-white flex items-center gap-1.5 truncate">
                     <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-gradient-to-r from-emerald-400 to-teal-300 shrink-0 shadow-sm shadow-emerald-400/60"></span>
@@ -1942,6 +1946,7 @@
     function switchMainTab(tabIdx, slideDir = null) {
       if (tabIdx < 1 || tabIdx > 4) return;
       currentMainTab = tabIdx;
+      resetHighlight();
 
       document.querySelectorAll('.tab-content').forEach((el, idx) => {
         el.classList.remove('animate-slide-right', 'animate-slide-left');
@@ -2001,12 +2006,59 @@
       }, { passive: true });
     }
 
-    /* 5. 第二頁甜甜圈圖與互動高亮 */
+    /* 5. 第二頁甜甜圈圖與互動高亮（支援點擊聚焦、點擊旁邊空白處恢復整體） */
+    let activeDonutKey = null;
+    let latestDonutState = {
+      total: 2355244,
+      segments: {
+        tw: { label: '🇹🇼 台股', val: 840678, pct: 35.7, cardId: 'cardBoxTw', activeBorder: 'border-cyan-400', subColor: 'text-cyan-300' },
+        us: { label: '🇺🇸 美股', val: 738172, pct: 31.3, cardId: 'cardBoxUs', activeBorder: 'border-sky-400', subColor: 'text-sky-300' },
+        ib: { label: '🌐 IB', val: 268234, pct: 11.4, cardId: 'cardBoxIb', activeBorder: 'border-purple-400', subColor: 'text-purple-300' },
+        cash: { label: '💵 現金', val: 508160, pct: 21.6, cardId: 'cardBoxCash', activeBorder: 'border-emerald-400', subColor: 'text-emerald-300' }
+      }
+    };
+
+    function isDesktopPointer() {
+      return window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    }
+
+    function handleDonutHover(key) {
+      if (isDesktopPointer()) {
+        highlightSegment(key);
+      }
+    }
+
+    function handleDonutLeave() {
+      if (isDesktopPointer()) {
+        resetHighlight();
+      }
+    }
+
+    function toggleSegmentHighlight(key, e) {
+      if (e) e.stopPropagation();
+      if (activeDonutKey === key) {
+        resetHighlight();
+      } else {
+        highlightSegment(key);
+      }
+    }
+
     function renderSvgDonutChart(twMv, usMv, ibMv, cashMv) {
       const svg = document.getElementById('svgDonutChart');
       if (!svg) return;
 
-      const total = Math.max(twMv + usMv + ibMv + cashMv, 1);
+      const rawTotal = twMv + usMv + ibMv + cashMv;
+      const total = Math.max(rawTotal, 1);
+      latestDonutState.total = rawTotal;
+      latestDonutState.segments.tw.val = twMv;
+      latestDonutState.segments.tw.pct = (twMv / total) * 100;
+      latestDonutState.segments.us.val = usMv;
+      latestDonutState.segments.us.pct = (usMv / total) * 100;
+      latestDonutState.segments.ib.val = ibMv;
+      latestDonutState.segments.ib.pct = (ibMv / total) * 100;
+      latestDonutState.segments.cash.val = cashMv;
+      latestDonutState.segments.cash.pct = (cashMv / total) * 100;
+
       const segments = [
         { key: 'tw', label: '🇹🇼 台股', val: twMv, color: '#22d3ee' },
         { key: 'us', label: '🇺🇸 美股', val: usMv, color: '#38bdf8' },
@@ -2024,15 +2076,16 @@
         const dashOffset = -offset;
         offset += dashLen;
         return `
-          <circle id="donutSeg-${seg.key}" cx="50" cy="50" r="${radius}"
+          <circle id="donutSeg-${seg.key}" data-donut-interactive="true" cx="50" cy="50" r="${radius}"
                   fill="transparent"
                   stroke="${seg.color}"
                   stroke-width="11"
                   stroke-dasharray="${dashLen.toFixed(2)} ${circumference.toFixed(2)}"
                   stroke-dashoffset="${dashOffset.toFixed(2)}"
                   class="transition-all duration-300 cursor-pointer"
-                  onmouseenter="highlightSegment('${seg.key}')"
-                  onmouseleave="resetHighlight()" />
+                  onclick="toggleSegmentHighlight('${seg.key}', event)"
+                  onmouseenter="handleDonutHover('${seg.key}')"
+                  onmouseleave="handleDonutLeave()" />
         `;
       }).join('');
 
@@ -2042,24 +2095,72 @@
         ${circlesHtml}
       `;
 
+      if (activeDonutKey) {
+        highlightSegment(activeDonutKey);
+      } else {
+        updateDonutCenterDefault();
+      }
+    }
+
+    function updateDonutCenterDefault() {
+      const centerLabel = document.getElementById('donutCenterLabel');
       const centerTotal = document.getElementById('donutCenterTotal');
+      const centerSub = document.getElementById('donutCenterSub');
+      if (centerLabel) {
+        centerLabel.innerText = '總資產淨值';
+        centerLabel.className = 'text-xs sm:text-sm text-slate-400 font-bold tracking-wider';
+      }
       if (centerTotal) {
-        centerTotal.innerText = isPrivacyMasked ? '••••' : `${(total / 10000).toFixed(1)}萬`;
+        centerTotal.innerText = isPrivacyMasked ? '••••' : `${(latestDonutState.total / 10000).toFixed(1)}萬`;
+      }
+      if (centerSub) {
+        centerSub.innerText = '100% 配置';
+        centerSub.className = 'text-xs sm:text-sm text-emerald-400 font-mono font-bold';
       }
     }
 
     function highlightSegment(key) {
+      const meta = latestDonutState.segments[key];
+      if (!meta) return;
+      activeDonutKey = key;
+
       const keys = ['tw', 'us', 'ib', 'cash'];
       keys.forEach(k => {
         const seg = document.getElementById(`donutSeg-${k}`);
         if (seg) {
           seg.setAttribute('stroke-width', k === key ? '13.5' : '9.5');
-          seg.setAttribute('opacity', k === key ? '1' : '0.45');
+          seg.setAttribute('opacity', k === key ? '1' : '0.35');
+        }
+        const item = latestDonutState.segments[k];
+        const card = item ? document.getElementById(item.cardId) : null;
+        if (card) {
+          card.classList.remove('border-cyan-400', 'border-sky-400', 'border-purple-400', 'border-emerald-400', 'border-slate-800/90', 'opacity-65');
+          if (k === key) {
+            card.classList.add(item.activeBorder);
+          } else {
+            card.classList.add('border-slate-800/90', 'opacity-65');
+          }
         }
       });
+
+      const centerLabel = document.getElementById('donutCenterLabel');
+      const centerTotal = document.getElementById('donutCenterTotal');
+      const centerSub = document.getElementById('donutCenterSub');
+      if (centerLabel) {
+        centerLabel.innerText = meta.label;
+        centerLabel.className = 'text-xs sm:text-sm text-white font-black tracking-wider';
+      }
+      if (centerTotal) {
+        centerTotal.innerText = isPrivacyMasked ? '••••' : `${(meta.val / 10000).toFixed(1)}萬`;
+      }
+      if (centerSub) {
+        centerSub.innerText = `佔總資產 ${meta.pct.toFixed(1)}%`;
+        centerSub.className = `text-xs sm:text-sm ${meta.subColor} font-mono font-bold`;
+      }
     }
 
     function resetHighlight() {
+      activeDonutKey = null;
       const keys = ['tw', 'us', 'ib', 'cash'];
       keys.forEach(k => {
         const seg = document.getElementById(`donutSeg-${k}`);
@@ -2067,7 +2168,14 @@
           seg.setAttribute('stroke-width', '11');
           seg.setAttribute('opacity', '1');
         }
+        const item = latestDonutState.segments[k];
+        const card = item ? document.getElementById(item.cardId) : null;
+        if (card) {
+          card.classList.remove('border-cyan-400', 'border-sky-400', 'border-purple-400', 'border-emerald-400', 'opacity-65');
+          card.classList.add('border-slate-800/90');
+        }
       });
+      updateDonutCenterDefault();
     }
 
     /* 6. 第三頁篩選、修改與刪除復原 */
@@ -3756,6 +3864,12 @@
         switchMainTab(1);
         initSwipeNavigation();
         updateSyncTimeDisplay();
+
+        document.addEventListener('click', (e) => {
+          if (activeDonutKey && !e.target.closest('[data-donut-interactive="true"]')) {
+            resetHighlight();
+          }
+        });
 
         if (isMagicBound) {
           showToast('🎉 已自動綁定雲端網址！正在同步最新資料...');
