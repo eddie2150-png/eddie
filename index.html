@@ -2006,8 +2006,10 @@
       }, { passive: true });
     }
 
-    /* 5. 第二頁甜甜圈圖與互動高亮（支援點擊聚焦、點擊旁邊空白處恢復整體） */
+    /* 5. 第二頁甜甜圈圖與互動高亮（隔離 iOS 觸控模擬 mouseenter，點擊旁邊空白處即時恢復整體） */
     let activeDonutKey = null;
+    let activeDonutSource = null;
+    let lastTouchTimestamp = 0;
     let latestDonutState = {
       total: 2355244,
       segments: {
@@ -2018,28 +2020,29 @@
       }
     };
 
-    function isDesktopPointer() {
+    function isDesktopMouseOnly() {
+      if (Date.now() - lastTouchTimestamp < 900) return false;
       return window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
     }
 
     function handleDonutHover(key) {
-      if (isDesktopPointer()) {
-        highlightSegment(key);
+      if (isDesktopMouseOnly()) {
+        highlightSegment(key, 'hover');
       }
     }
 
     function handleDonutLeave() {
-      if (isDesktopPointer()) {
+      if (isDesktopMouseOnly() && activeDonutSource === 'hover') {
         resetHighlight();
       }
     }
 
     function toggleSegmentHighlight(key, e) {
       if (e) e.stopPropagation();
-      if (activeDonutKey === key) {
+      if (activeDonutKey === key && activeDonutSource === 'click') {
         resetHighlight();
       } else {
-        highlightSegment(key);
+        highlightSegment(key, 'click');
       }
     }
 
@@ -2096,7 +2099,7 @@
       `;
 
       if (activeDonutKey) {
-        highlightSegment(activeDonutKey);
+        highlightSegment(activeDonutKey, activeDonutSource || 'click');
       } else {
         updateDonutCenterDefault();
       }
@@ -2119,10 +2122,11 @@
       }
     }
 
-    function highlightSegment(key) {
+    function highlightSegment(key, source = 'click') {
       const meta = latestDonutState.segments[key];
       if (!meta) return;
       activeDonutKey = key;
+      activeDonutSource = source;
 
       const keys = ['tw', 'us', 'ib', 'cash'];
       keys.forEach(k => {
@@ -2161,6 +2165,7 @@
 
     function resetHighlight() {
       activeDonutKey = null;
+      activeDonutSource = null;
       const keys = ['tw', 'us', 'ib', 'cash'];
       keys.forEach(k => {
         const seg = document.getElementById(`donutSeg-${k}`);
@@ -3865,11 +3870,20 @@
         initSwipeNavigation();
         updateSyncTimeDisplay();
 
-        document.addEventListener('click', (e) => {
-          if (activeDonutKey && !e.target.closest('[data-donut-interactive="true"]')) {
-            resetHighlight();
+        const handleOutsideDonutReset = (e) => {
+          if (!activeDonutKey) return;
+          if (e.target && e.target.closest && e.target.closest('[data-donut-interactive="true"]')) {
+            return;
           }
-        });
+          resetHighlight();
+        };
+
+        document.addEventListener('touchstart', (e) => {
+          lastTouchTimestamp = Date.now();
+          handleOutsideDonutReset(e);
+        }, { passive: true });
+
+        document.addEventListener('mousedown', handleOutsideDonutReset);
 
         if (isMagicBound) {
           showToast('🎉 已自動綁定雲端網址！正在同步最新資料...');
