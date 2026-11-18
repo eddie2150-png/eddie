@@ -148,10 +148,10 @@
     <!-- ==================== 【第一介面】總覽績效與大盤對比 (Tab 1) ==================== -->
     <div id="tabView-1" class="tab-content space-y-2.5 sm:space-y-4">
       
-      <!-- 主資產 KPI 看板（融合淨資產增值金額＋成長率、備用現金金額＋現金比例） -->
+      <!-- 主資產 KPI 看板 -->
       <section class="p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border border-slate-800 shadow-xl space-y-2">
         <div class="flex items-center justify-between gap-2">
-          <span class="text-[13px] sm:text-sm font-extrabold tracking-wider text-emerald-400 flex items-center gap-1.5 whitespace-nowrap">
+          <span class="text-[13px] sm:text-sm font-extrabold tracking-wider text-white flex items-center gap-1.5 whitespace-nowrap">
             <span class="w-2 h-2 rounded-full bg-emerald-400 shrink-0 animate-pulse"></span>
             個人總資產淨值
           </span>
@@ -166,23 +166,23 @@
           </span>
         </div>
 
-        <div id="kpiBaselineSubText" class="text-[11px] sm:text-sm text-slate-300 font-medium leading-relaxed">
+        <div id="kpiBaselineSubText" class="text-[11px] sm:text-sm text-white font-medium leading-relaxed">
           <span class="inline-block">投資獲利: <span class="font-mono text-rose-400 font-bold">+NT$389,346</span></span>
           <span class="text-slate-600 mx-0.5">｜</span>
-          <span class="inline-block">淨資產增值: <span class="font-mono text-emerald-300 font-bold">+NT$522,046 (+28.48%)</span></span>
+          <span class="inline-block">淨資產增值: <span class="font-mono text-rose-400 font-bold">+NT$522,046 (+28.48%)</span></span>
         </div>
 
         <div class="grid grid-cols-3 gap-2 pt-2 border-t border-slate-800/80 text-xs sm:text-sm">
           <div>
-            <span class="text-slate-400 text-[11px] sm:text-xs font-bold block">投入總本金</span>
-            <span id="kpiTotalCost" class="text-[13px] sm:text-lg font-black font-mono text-white block mt-0.5">NT$1,457,739</span>
+            <span class="text-white text-[11px] sm:text-xs font-bold block">投入總本金</span>
+            <span id="kpiTotalCost" class="text-[13px] sm:text-lg font-black font-mono text-slate-200 block mt-0.5">NT$1,457,739</span>
           </div>
           <div>
-            <span class="text-slate-400 text-[11px] sm:text-xs font-bold block">投資總獲利</span>
+            <span class="text-white text-[11px] sm:text-xs font-bold block">投資總獲利</span>
             <span id="kpiTotalPnlText" class="text-[13px] sm:text-lg font-black font-mono text-rose-400 block mt-0.5">+NT$389,346</span>
           </div>
           <div>
-            <span class="text-slate-400 text-[11px] sm:text-xs font-bold flex items-center gap-1 whitespace-nowrap">
+            <span class="text-white text-[11px] sm:text-xs font-bold flex items-center gap-1 whitespace-nowrap">
               現金活存
               <span id="kpiCashRatioBadge" class="text-[10px] sm:text-xs font-mono font-extrabold text-emerald-300">(21.6%)</span>
             </span>
@@ -191,10 +191,10 @@
         </div>
       </section>
 
-      <!-- 關鍵三大績效指標：淨資產 YTD / 年化報酬 (XIRR) / 回撤 DD -->
+      <!-- 關鍵三大績效指標：描述統一白色、數字使用代表色 -->
       <section class="grid grid-cols-3 gap-2">
         <div class="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-slate-900/95 border border-slate-800 shadow text-center">
-          <span class="text-[10px] sm:text-xs font-bold text-slate-400 flex items-center justify-center gap-1 whitespace-nowrap" title="今年初至今之整體淨資產成長率 (含主動儲蓄與投資獲利)">
+          <span class="text-[10px] sm:text-xs font-bold text-white flex items-center justify-center gap-1 whitespace-nowrap" title="今年初至今之整體淨資產成長率 (含主動儲蓄與投資獲利)">
             <i class="fa-solid fa-arrow-trend-up text-rose-400"></i> 淨資產 YTD
           </span>
           <span id="kpiNetYtdReturn" class="text-sm sm:text-xl font-black font-mono text-rose-400 block mt-0.5">
@@ -202,8 +202,8 @@
           </span>
         </div>
 
-        <div class="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-slate-900/95 border border-cyan-500/25 shadow text-center">
-          <span class="text-[10px] sm:text-xs font-bold text-cyan-300 flex items-center justify-center gap-1 whitespace-nowrap" title="排除每月新投入本金干擾，依每筆資金實際投入天數精算之真實年化報酬率 (XIRR)">
+        <div class="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-slate-900/95 border border-slate-800 shadow text-center">
+          <span class="text-[10px] sm:text-xs font-bold text-white flex items-center justify-center gap-1 whitespace-nowrap" title="排除每月新投入本金干擾，依每筆資金實際投入天數精算之真實年化報酬率 (XIRR)">
             <i class="fa-solid fa-bullseye text-cyan-400"></i> 年化 (XIRR)
           </span>
           <span id="kpiXirrReturn" class="text-sm sm:text-xl font-black font-mono text-cyan-300 block mt-0.5">
@@ -212,7 +212,7 @@
         </div>
 
         <div class="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-slate-900/95 border border-slate-800 shadow text-center">
-          <span class="text-[10px] sm:text-xs font-bold text-slate-400 flex items-center justify-center gap-1 whitespace-nowrap" title="自歷程最高點 (10/5 峰值 254.1萬) 之回撤幅度 (DD / MDD)">
+          <span class="text-[10px] sm:text-xs font-bold text-white flex items-center justify-center gap-1 whitespace-nowrap" title="自歷程最高點 (10/5 峰值 254.1萬) 之回撤幅度 (DD / MDD)">
             <i class="fa-solid fa-shield-halved text-amber-400"></i> 回撤 DD
           </span>
           <span id="kpiMDD" class="text-sm sm:text-xl font-black font-mono text-amber-400 block mt-0.5">
@@ -223,54 +223,57 @@
 
       <!-- 走勢圖與跨市場對比 -->
       <section class="p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl bg-slate-900/95 border border-slate-800 shadow-xl space-y-2.5">
-        <div class="flex items-center justify-between gap-2 border-b border-slate-800 pb-2">
-          <div>
-            <h2 class="text-sm sm:text-base font-black text-white flex items-center gap-1.5">
-              <i class="fa-solid fa-chart-spline text-cyan-400"></i>
-              投組 vs 跨市場走勢
+        <div class="flex items-center justify-between gap-1.5 border-b border-slate-800 pb-2">
+          <div class="min-w-0">
+            <h2 class="text-xs sm:text-base font-black text-white flex items-center gap-1.5 truncate">
+              <i class="fa-solid fa-chart-spline text-cyan-400 shrink-0"></i>
+              <span class="truncate">投組 vs 跨市場走勢</span>
             </h2>
-            <span id="currentPeriodLabel" class="text-[11px] font-mono font-bold text-slate-400 block mt-0.5">
+            <span id="currentPeriodLabel" class="text-[10px] sm:text-[11px] font-mono font-bold text-slate-400 block mt-0.5 truncate">
               自然年度：2026 年初至今日
             </span>
           </div>
 
-          <div class="flex items-center gap-1 p-0.5 bg-slate-950 rounded-xl border border-slate-800">
-            <button onclick="switchTimeframe('1W')" id="tfBtn-1W" class="tf-btn px-2.5 py-1 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition" title="本週：週一至今日">
+          <div class="flex items-center gap-0.5 sm:gap-1 p-0.5 bg-slate-950 rounded-xl border border-slate-800 shrink-0">
+            <button onclick="switchTimeframe('1W')" id="tfBtn-1W" class="tf-btn px-2 sm:px-2.5 py-1 rounded-lg text-[11px] sm:text-xs font-bold text-slate-400 hover:text-white transition" title="本週：週一至今日">
               週
             </button>
-            <button onclick="switchTimeframe('1M')" id="tfBtn-1M" class="tf-btn px-2.5 py-1 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition" title="當月：當月1日至今日">
+            <button onclick="switchTimeframe('1M')" id="tfBtn-1M" class="tf-btn px-2 sm:px-2.5 py-1 rounded-lg text-[11px] sm:text-xs font-bold text-slate-400 hover:text-white transition" title="當月：當月1日至今日">
               月
             </button>
-            <button onclick="switchTimeframe('1Q')" id="tfBtn-1Q" class="tf-btn px-2.5 py-1 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition" title="當季：自然季初至今日">
+            <button onclick="switchTimeframe('1Q')" id="tfBtn-1Q" class="tf-btn px-2 sm:px-2.5 py-1 rounded-lg text-[11px] sm:text-xs font-bold text-slate-400 hover:text-white transition" title="當季：自然季初至今日">
               季
             </button>
-            <button onclick="switchTimeframe('YTD')" id="tfBtn-YTD" class="tf-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-cyan-600 text-white shadow transition" title="年度：年初至今日">
+            <button onclick="switchTimeframe('6M')" id="tfBtn-6M" class="tf-btn px-2 sm:px-2.5 py-1 rounded-lg text-[11px] sm:text-xs font-bold text-slate-400 hover:text-white transition" title="近半年：近6個月走勢">
+              6M
+            </button>
+            <button onclick="switchTimeframe('YTD')" id="tfBtn-YTD" class="tf-btn px-2 sm:px-2.5 py-1 rounded-lg text-[11px] sm:text-xs font-bold bg-cyan-600 text-white shadow transition" title="年度：年初至今日">
               YTD
             </button>
           </div>
         </div>
 
-        <!-- 圖例列（固定呈現當期總結不跳動） -->
+        <!-- 圖例列（描述統一白色、數字呈現代表色） -->
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 font-mono text-xs font-bold">
           <div class="flex items-center gap-1.5 p-2 rounded-xl bg-slate-950 border border-slate-800 truncate">
             <span class="w-2.5 h-2.5 rounded-full bg-amber-400 shrink-0"></span>
-            <span class="text-amber-400 truncate">投組: <b id="legendAlphaVal" class="text-white">+28.48%</b></span>
+            <span class="text-white truncate">投組: <b id="legendAlphaVal" class="text-amber-400">+28.48%</b></span>
           </div>
           <div class="flex items-center gap-1.5 p-2 rounded-xl bg-slate-950 border border-slate-800 truncate">
             <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 shrink-0"></span>
-            <span class="text-emerald-400 truncate">加權: <b id="legendTaiexVal" class="text-white">+45.53%</b></span>
+            <span class="text-white truncate">加權: <b id="legendTaiexVal" class="text-emerald-400">+36.60%</b></span>
           </div>
           <div class="flex items-center gap-1.5 p-2 rounded-xl bg-slate-950 border border-slate-800 truncate">
             <span class="w-2.5 h-2.5 rounded-full bg-sky-400 shrink-0"></span>
-            <span class="text-sky-400 truncate">標普: <b id="legendSp500Val" class="text-white">+9.66%</b></span>
+            <span class="text-white truncate">標普: <b id="legendSp500Val" class="text-sky-400">+8.34%</b></span>
           </div>
           <div class="flex items-center gap-1.5 p-2 rounded-xl bg-slate-950 border border-slate-800 truncate">
             <span class="w-2.5 h-2.5 rounded-full bg-purple-400 shrink-0"></span>
-            <span class="text-purple-400 truncate">那指: <b id="legendNasdaqVal" class="text-white">+7.88%</b></span>
+            <span class="text-white truncate">那指: <b id="legendNasdaqVal" class="text-purple-400">+7.88%</b></span>
           </div>
         </div>
 
-        <!-- 走勢圖容器（智慧上下翻轉避讓，完整顯示不遮擋綠線與標題） -->
+        <!-- 走勢圖容器 -->
         <div id="mainChartContainer" class="relative w-full h-[215px] sm:h-[250px] bg-slate-950/80 rounded-2xl p-2 sm:p-3 border border-slate-800/80 overflow-visible select-none touch-pan-y">
           <svg id="svgLineChart" class="w-full h-full overflow-visible cursor-crosshair"></svg>
           <div id="mainChartTooltip" class="hidden absolute z-30 pointer-events-none px-2.5 py-1.5 rounded-xl bg-slate-900/95 backdrop-blur-md border border-amber-500/50 shadow-2xl text-[11px] font-mono space-y-1 whitespace-nowrap">
@@ -286,39 +289,39 @@
           </div>
         </div>
 
-        <!-- 三大指數看板 -->
+        <!-- 三大指數看板（外連圖示統一青藍色 cyan-400） -->
         <div class="grid grid-cols-3 gap-2">
           <div class="p-2.5 sm:p-3.5 rounded-xl bg-slate-950/80 border border-slate-800">
             <div class="flex items-center justify-between">
-              <span class="text-[11px] sm:text-xs text-slate-300 font-bold truncate">🇹🇼 加權大盤</span>
+              <span class="text-[11px] sm:text-xs text-white font-bold truncate">🇹🇼 加權大盤</span>
               <a href="https://www.google.com/finance/quote/IX0001:TPE" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300" title="在 Google 財經查看加權指數">
                 <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
               </a>
             </div>
-            <span id="idxTaiexPrice" class="text-[13px] sm:text-base font-black font-mono text-white block mt-0.5">42,711.92</span>
-            <span id="idxTaiexChange" class="text-[11px] font-bold font-mono text-rose-400 block">▲ 4.94%</span>
+            <span id="idxTaiexPrice" class="text-[13px] sm:text-base font-black font-mono text-white block mt-0.5">40,092.11</span>
+            <span id="idxTaiexChange" class="text-[10px] sm:text-[11px] font-bold font-mono text-rose-400 block">YTD ▲ 36.60%</span>
           </div>
 
           <div class="p-2.5 sm:p-3.5 rounded-xl bg-slate-950/80 border border-slate-800">
             <div class="flex items-center justify-between">
-              <span class="text-[11px] sm:text-xs text-slate-300 font-bold truncate">🇺🇸 S&P 500</span>
-              <a href="https://www.google.com/finance/quote/.INX:INDEXSP" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:text-sky-300" title="在 Google 財經查看標普500">
+              <span class="text-[11px] sm:text-xs text-white font-bold truncate">🇺🇸 S&P 500</span>
+              <a href="https://www.google.com/finance/quote/.INX:INDEXSP" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300" title="在 Google 財經查看標普500">
                 <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
               </a>
             </div>
-            <span id="idxSp500Price" class="text-[13px] sm:text-base font-black font-mono text-white block mt-0.5">7,549.94</span>
-            <span id="idxSp500Change" class="text-[11px] font-bold font-mono text-rose-400 block">▲ 0.31%</span>
+            <span id="idxSp500Price" class="text-[13px] sm:text-base font-black font-mono text-white block mt-0.5">7,416.59</span>
+            <span id="idxSp500Change" class="text-[10px] sm:text-[11px] font-bold font-mono text-rose-400 block">YTD ▲ 8.34%</span>
           </div>
 
           <div class="p-2.5 sm:p-3.5 rounded-xl bg-slate-950/80 border border-slate-800">
             <div class="flex items-center justify-between">
-              <span class="text-[11px] sm:text-xs text-slate-300 font-bold truncate">🇺🇸 那斯達克</span>
-              <a href="https://www.google.com/finance/quote/.IXIC:INDEXNASDAQ" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:text-sky-300" title="在 Google 財經查看那斯達克">
+              <span class="text-[11px] sm:text-xs text-white font-bold truncate">🇺🇸 那斯達克</span>
+              <a href="https://www.google.com/finance/quote/.IXIC:INDEXNASDAQ" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300" title="在 Google 財經查看那斯達克">
                 <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
               </a>
             </div>
-            <span id="idxNasdaqPrice" class="text-[13px] sm:text-base font-black font-mono text-white block mt-0.5">25,253.14</span>
-            <span id="idxNasdaqChange" class="text-[11px] font-bold font-mono text-rose-400 block">▲ 1.09%</span>
+            <span id="idxNasdaqPrice" class="text-[13px] sm:text-base font-black font-mono text-white block mt-0.5">24,509.76</span>
+            <span id="idxNasdaqChange" class="text-[10px] sm:text-[11px] font-bold font-mono text-rose-400 block">YTD ▲ 7.88%</span>
           </div>
         </div>
       </section>
@@ -339,7 +342,7 @@
           </div>
         </div>
 
-        <!-- SVG 甜甜圈圖 + 四大部位卡片 -->
+        <!-- 總資產階層：1. 現金 vs 2. 股票（SVG 甜甜圈圖 + 四大部位卡片） -->
         <div class="p-3.5 sm:p-6 rounded-2xl bg-slate-950/80 border border-slate-800">
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-center">
             
@@ -438,148 +441,202 @@
           </div>
         </div>
 
-        <!-- 股票資產結構：總股票資產、大盤 ETF（台美股）與個股（台美股）比例 -->
-        <div class="p-3.5 sm:p-5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3.5">
+        <!-- 整合區塊：總資產與股票部位結構 ＋ 核心策略比例試算（統一以股票總市值為基準） -->
+        <div class="p-3.5 sm:p-5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-4">
           <div class="flex items-center justify-between flex-wrap gap-2">
             <h3 class="text-sm sm:text-base font-black text-white flex items-center gap-2">
-              <i class="fa-solid fa-layer-group text-cyan-400"></i>
-              股票資產結構：大盤 ETF vs 個股
+              <i class="fa-solid fa-layer-group text-slate-300"></i>
+              總資產與股票部位結構 · 核心策略試算
             </h3>
-            <div class="flex items-center gap-1.5 text-xs sm:text-sm font-mono font-black bg-slate-900 px-2.5 py-1 rounded-xl border border-cyan-500/30">
-              <span class="text-slate-300">總股票資產:</span>
-              <span id="equityTotalMvVal" class="text-white">NT$1,847,084</span>
-              <span id="equityTotalAssetPct" class="text-cyan-400">(78.4%)</span>
+            <div class="flex items-center flex-wrap gap-1.5 text-xs sm:text-sm font-mono font-black bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-700/80 text-white">
+              <span>總資產:</span>
+              <span id="structTotalAssetVal" class="text-white">NT$2,355,244</span>
+              <span class="text-slate-500">｜</span>
+              <span>股票 <b id="stockRatioInStockHeader" class="text-cyan-300">78.4%</b></span>
+              <span class="text-slate-600">·</span>
+              <span>現金 <b id="cashRatioInStockHeader" class="text-emerald-400">21.6%</b></span>
             </div>
           </div>
 
-          <!-- 總股票內部結構進度條（大盤 ETF vs 個股 vs IB） -->
-          <div class="space-y-1.5">
-            <div class="w-full h-2.5 rounded-full bg-slate-900 overflow-hidden flex border border-slate-800">
-              <div id="barEquityEtf" class="h-full bg-gradient-to-r from-cyan-400 to-teal-400 transition-all duration-300" style="width: 47.4%"></div>
-              <div id="barEquityStock" class="h-full bg-gradient-to-r from-amber-400 to-orange-400 transition-all duration-300" style="width: 38.1%"></div>
-              <div id="barEquityIb" class="h-full bg-gradient-to-r from-purple-400 to-fuchsia-400 transition-all duration-300" style="width: 14.5%"></div>
-            </div>
-            <div class="flex items-center justify-between flex-wrap gap-2 text-[11px] sm:text-xs font-mono text-slate-400">
-              <div class="flex items-center gap-3 flex-wrap">
-                <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-cyan-400"></span>大盤 ETF <b id="subBarEtfPct" class="text-cyan-300">47.4%</b></span>
-                <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-400"></span>個股部位 <b id="subBarStockPct" class="text-amber-300">38.1%</b></span>
-                <span id="subBarIbWrap" class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-purple-400"></span>IB 部位 <b id="subBarIbPct" class="text-purple-300">14.5%</b></span>
+          <!-- 股票部位內部結構（大盤 ETF · 個股 · IB） -->
+          <div class="p-3 sm:p-4 rounded-2xl bg-slate-900/75 border border-slate-800/90 space-y-2.5">
+            <div class="flex items-center justify-between flex-wrap gap-1">
+              <span class="text-xs sm:text-sm font-black text-white">
+                股票總市值: <b id="equityTotalMvVal" class="font-mono text-white">NT$1,847,084</b>
+              </span>
+              <div class="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm font-mono font-black text-white">
+                <span>大盤 ETF: <b id="topSummaryEtfPct" class="text-white">47.4%</b></span>
+                <span class="text-slate-600">·</span>
+                <span>個股: <b id="topSummaryStockPct" class="text-white">38.1%</b></span>
+                <span class="text-slate-600">·</span>
+                <span>IB: <b id="topSummaryIbPct" class="text-purple-400">14.5%</b></span>
               </div>
-              <span class="text-[10px] sm:text-[11px] text-slate-500">括號為佔總資產 / 佔總股票比例</span>
+            </div>
+
+            <div class="w-full h-3.5 rounded-full bg-slate-950 overflow-hidden flex border border-slate-800">
+              <div id="barTopTwEtf" class="h-full bg-emerald-400 transition-all duration-300" style="width: 24.9%"></div>
+              <div id="barTopUsEtf" class="h-full bg-sky-400 transition-all duration-300" style="width: 22.5%"></div>
+              <div id="barTopTwStock" class="h-full bg-amber-400 transition-all duration-300" style="width: 20.7%"></div>
+              <div id="barTopUsStock" class="h-full bg-rose-400 transition-all duration-300" style="width: 17.5%"></div>
+              <div id="barTopIb" class="h-full bg-purple-400 transition-all duration-300" style="width: 14.5%"></div>
+            </div>
+
+            <div class="flex items-center gap-3 sm:gap-4 flex-wrap text-xs sm:text-[13px] font-mono font-bold text-slate-200 pt-0.5">
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-400 shrink-0"></span>台股ETF <b id="topLegTwEtf" class="text-emerald-400">24.9%</b></span>
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-sky-400 shrink-0"></span>美股ETF <b id="topLegUsEtf" class="text-sky-400">22.5%</b></span>
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-400 shrink-0"></span>台股個股 <b id="topLegTwStock" class="text-amber-400">20.7%</b></span>
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-rose-400 shrink-0"></span>美股個股 <b id="topLegUsStock" class="text-rose-400">17.5%</b></span>
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-purple-400 shrink-0"></span>IB <b id="topLegIb" class="text-purple-400">14.5%</b></span>
             </div>
           </div>
 
-          <!-- 大盤 ETF & 個股 雙欄明細卡片（各含總數 + 台美股個別比例） -->
+          <!-- 大盤 ETF & 個股 雙欄明細＋目標試算卡片（現況＋目標二合一） -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
             
-            <!-- 1. 大盤 ETF 比例卡片（總數 + 台股 ETF + 美股 ETF） -->
-            <div class="p-3.5 rounded-2xl bg-slate-900/95 border border-cyan-500/25 space-y-2.5">
-              <div class="flex items-center justify-between gap-2">
-                <span class="text-xs sm:text-sm font-black text-cyan-300 flex items-center gap-1.5">
-                  <i class="fa-solid fa-chart-area"></i>
-                  大盤 ETF 總數
-                </span>
-                <div class="flex items-center gap-1.5 font-mono text-[11px] sm:text-xs font-black">
-                  <span class="px-2 py-0.5 rounded-lg bg-cyan-950/90 text-cyan-300 border border-cyan-500/30">
-                    總資產 <b id="etfTotalAssetPct">37.1%</b>
+            <!-- 1. 大盤 ETF 總數＋目標試算卡片（台股 ETF = 翠綠 emerald-400 / 美股 ETF = 天藍 sky-400） -->
+            <div class="p-3.5 sm:p-4 rounded-2xl bg-slate-900/95 border border-slate-800 space-y-3 flex flex-col justify-between">
+              <div class="space-y-3">
+                <div class="flex items-center justify-between gap-2">
+                  <span class="text-sm sm:text-base font-black text-white flex items-center gap-1.5">
+                    <i class="fa-solid fa-chart-area text-slate-300"></i>
+                    大盤 ETF 總數
                   </span>
-                  <span class="px-2 py-0.5 rounded-lg bg-slate-950 text-slate-300 border border-slate-800">
-                    股票 <b id="etfTotalEquityPct">47.4%</b>
+                  <span class="px-3 py-1 rounded-xl bg-slate-800 border border-slate-600/80 font-mono text-xs sm:text-sm font-black text-white shadow-sm">
+                    佔股票 <b id="etfTotalEquityPct" class="text-cyan-300 text-sm sm:text-base">47.4%</b>
                   </span>
+                </div>
+
+                <div class="flex items-baseline justify-between flex-wrap gap-2">
+                  <span id="etfBreakdownTotalMv" class="text-xl sm:text-2xl font-black font-mono text-white">NT$874,698</span>
+                  <span class="text-xs sm:text-sm font-mono text-white font-black">台美股比例 <span id="etfTwUsSplitText" class="text-sm sm:text-base"><b class="text-emerald-400">52.5%</b> <span class="text-slate-400">:</span> <b class="text-sky-400">47.5%</b></span></span>
+                </div>
+
+                <!-- 台美股 ETF 雙色比例條 -->
+                <div class="w-full h-2.5 rounded-full bg-slate-950 overflow-hidden flex border border-slate-800/80">
+                  <div id="barTwEtf" class="h-full bg-emerald-400 transition-all duration-300" style="width: 52.5%"></div>
+                  <div id="barUsEtf" class="h-full bg-sky-400 transition-all duration-300" style="width: 47.5%"></div>
+                </div>
+
+                <!-- 台股 ETF vs 美股 ETF 個別明細 -->
+                <div class="grid grid-cols-2 gap-2 pt-1">
+                  <!-- 🇹🇼 台股 ETF：專屬翠綠色 emerald-400 -->
+                  <div class="p-2.5 rounded-xl bg-slate-950/90 border border-slate-800 space-y-1">
+                    <div class="flex items-center justify-between gap-1 text-[11px] sm:text-xs font-bold">
+                      <span class="text-emerald-400 flex items-center gap-1 shrink-0"><span class="w-2 h-2 rounded-full bg-emerald-400 shrink-0"></span>🇹🇼 台股 ETF</span>
+                      <span class="font-mono text-slate-300 shrink-0">佔ETF <b id="twEtfSharePct" class="text-emerald-400">52.5%</b></span>
+                    </div>
+                    <span id="twEtfMvVal" class="text-sm sm:text-base font-black font-mono text-white block truncate">NT$459,224</span>
+                    <div class="text-[11px] sm:text-xs font-mono text-slate-300">
+                      佔股票 <b id="twEtfEquityPct" class="text-white">24.9%</b>
+                    </div>
+                  </div>
+
+                  <!-- 🇺🇸 美股 ETF：專屬天藍色 sky-400 -->
+                  <div class="p-2.5 rounded-xl bg-slate-950/90 border border-slate-800 space-y-1">
+                    <div class="flex items-center justify-between gap-1 text-[11px] sm:text-xs font-bold">
+                      <span class="text-sky-400 flex items-center gap-1 shrink-0"><span class="w-2 h-2 rounded-full bg-sky-400 shrink-0"></span>🇺🇸 美股 ETF</span>
+                      <span class="font-mono text-slate-300 shrink-0">佔ETF <b id="usEtfSharePct" class="text-sky-400">47.5%</b></span>
+                    </div>
+                    <span id="usEtfMvVal" class="text-sm sm:text-base font-black font-mono text-white block truncate">NT$415,475</span>
+                    <div class="text-[11px] sm:text-xs font-mono text-slate-300">
+                      佔股票 <b id="usEtfEquityPct" class="text-white">22.5%</b>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <div class="flex items-baseline justify-between">
-                <span id="etfBreakdownTotalMv" class="text-lg sm:text-2xl font-black font-mono text-white">NT$874,698</span>
-                <span class="text-[11px] font-mono text-slate-400">台美股比例 <b id="etfTwUsSplitText" class="text-cyan-300">52.5% : 47.5%</b></span>
-              </div>
-
-              <!-- 台美股 ETF 雙色比例條 -->
-              <div class="w-full h-1.5 rounded-full bg-slate-950 overflow-hidden flex">
-                <div id="barTwEtf" class="h-full bg-teal-400 transition-all duration-300" style="width: 52.5%"></div>
-                <div id="barUsEtf" class="h-full bg-sky-400 transition-all duration-300" style="width: 47.5%"></div>
-              </div>
-
-              <!-- 台股 ETF vs 美股 ETF 個別明細 -->
-              <div class="grid grid-cols-2 gap-2 pt-1">
-                <div class="p-2.5 rounded-xl bg-slate-950/90 border border-slate-800 space-y-1">
-                  <div class="flex items-center justify-between text-[11px] sm:text-xs font-bold">
-                    <span class="text-teal-300">🇹🇼 台股 ETF</span>
-                    <span id="twEtfAssetPct" class="font-mono font-black text-teal-300">19.5%</span>
-                  </div>
-                  <span id="twEtfMvVal" class="text-xs sm:text-base font-black font-mono text-white block truncate">NT$459,224</span>
-                  <div class="flex items-center justify-between text-[10px] sm:text-[11px] font-mono text-slate-400">
-                    <span>佔ETF <b id="twEtfSharePct" class="text-slate-200">52.5%</b></span>
-                    <span>佔股 <b id="twEtfEquityPct" class="text-slate-200">24.9%</b></span>
-                  </div>
+              <!-- 內嵌策略試算：大盤 ETF 佔股票目標滑桿與差額 -->
+              <div class="p-3 rounded-xl bg-slate-950/90 border border-slate-800 space-y-2">
+                <div class="flex items-center justify-between text-xs font-bold">
+                  <span class="text-white flex items-center gap-1.5">
+                    <i class="fa-solid fa-sliders text-emerald-400"></i>
+                    大盤 ETF 目標佔股票比率:
+                  </span>
+                  <span id="displaySliderVal" class="text-sm sm:text-base font-mono font-black text-emerald-400">60%</span>
                 </div>
-
-                <div class="p-2.5 rounded-xl bg-slate-950/90 border border-slate-800 space-y-1">
-                  <div class="flex items-center justify-between text-[11px] sm:text-xs font-bold">
-                    <span class="text-sky-300">🇺🇸 美股 ETF</span>
-                    <span id="usEtfAssetPct" class="font-mono font-black text-sky-300">17.6%</span>
-                  </div>
-                  <span id="usEtfMvVal" class="text-xs sm:text-base font-black font-mono text-white block truncate">NT$415,475</span>
-                  <div class="flex items-center justify-between text-[10px] sm:text-[11px] font-mono text-slate-400">
-                    <span>佔ETF <b id="usEtfSharePct" class="text-slate-200">47.5%</b></span>
-                    <span>佔股 <b id="usEtfEquityPct" class="text-slate-200">22.5%</b></span>
-                  </div>
+                <input type="range" min="30" max="80" step="5" value="60" id="etfRatioSlider" oninput="handleSliderChange(this.value)" class="w-full accent-emerald-500 cursor-pointer h-1.5 bg-slate-800 rounded-lg">
+                <div class="flex justify-between text-[10px] text-slate-400 font-mono">
+                  <span>30% 成長</span>
+                  <span>60% 平衡</span>
+                  <span>80% 防禦</span>
+                </div>
+                <div class="pt-1.5 border-t border-slate-800/90 flex items-center justify-between flex-wrap gap-1">
+                  <span id="etfTargetLabelPct" class="text-xs text-white font-bold">距離 60% 目標差額:</span>
+                  <span id="gapEtfText" class="text-xs sm:text-sm font-black font-mono text-amber-400">需再加碼 +NT$233,552</span>
                 </div>
               </div>
             </div>
 
-            <!-- 2. 個股比例卡片（總數 + 台股個股 + 美股個股） -->
-            <div class="p-3.5 rounded-2xl bg-slate-900/95 border border-amber-500/25 space-y-2.5">
-              <div class="flex items-center justify-between gap-2">
-                <span class="text-xs sm:text-sm font-black text-amber-300 flex items-center gap-1.5">
-                  <i class="fa-solid fa-crosshairs"></i>
-                  個股部位總數
-                </span>
-                <div class="flex items-center gap-1.5 font-mono text-[11px] sm:text-xs font-black">
-                  <span class="px-2 py-0.5 rounded-lg bg-amber-950/90 text-amber-300 border border-amber-500/30">
-                    總資產 <b id="stockTotalAssetPct">29.9%</b>
+            <!-- 2. 個股部位總數＋上限監控卡片（台股個股 = 琥珀金 amber-400 / 美股個股 = 珊瑚粉 rose-400） -->
+            <div class="p-3.5 sm:p-4 rounded-2xl bg-slate-900/95 border border-slate-800 space-y-3 flex flex-col justify-between">
+              <div class="space-y-3">
+                <div class="flex items-center justify-between gap-2">
+                  <span class="text-sm sm:text-base font-black text-white flex items-center gap-1.5">
+                    <i class="fa-solid fa-crosshairs text-slate-300"></i>
+                    個股部位總數
                   </span>
-                  <span class="px-2 py-0.5 rounded-lg bg-slate-950 text-slate-300 border border-slate-800">
-                    股票 <b id="stockTotalEquityPct">38.1%</b>
+                  <span class="px-3 py-1 rounded-xl bg-slate-800 border border-slate-600/80 font-mono text-xs sm:text-sm font-black text-white shadow-sm">
+                    佔股票 <b id="stockTotalEquityPct" class="text-cyan-300 text-sm sm:text-base">38.1%</b>
                   </span>
+                </div>
+
+                <div class="flex items-baseline justify-between flex-wrap gap-2">
+                  <span id="stockBreakdownTotalMv" class="text-xl sm:text-2xl font-black font-mono text-white">NT$704,152</span>
+                  <span class="text-xs sm:text-sm font-mono text-white font-black">台美股比例 <span id="stockTwUsSplitText" class="text-sm sm:text-base"><b class="text-amber-400">54.2%</b> <span class="text-slate-400">:</span> <b class="text-rose-400">45.8%</b></span></span>
+                </div>
+
+                <!-- 台美股個股雙色比例條 -->
+                <div class="w-full h-2.5 rounded-full bg-slate-950 overflow-hidden flex border border-slate-800/80">
+                  <div id="barTwStock" class="h-full bg-amber-400 transition-all duration-300" style="width: 54.2%"></div>
+                  <div id="barUsStock" class="h-full bg-rose-400 transition-all duration-300" style="width: 45.8%"></div>
+                </div>
+
+                <!-- 台股個股 vs 美股個股 個別明細 -->
+                <div class="grid grid-cols-2 gap-2 pt-1">
+                  <!-- 🇹🇼 台股個股：專屬琥珀金 amber-400 -->
+                  <div class="p-2.5 rounded-xl bg-slate-950/90 border border-slate-800 space-y-1">
+                    <div class="flex items-center justify-between gap-1 text-[11px] sm:text-xs font-bold">
+                      <span class="text-amber-400 flex items-center gap-1 shrink-0"><span class="w-2 h-2 rounded-full bg-amber-400 shrink-0"></span>🇹🇼 台股個股</span>
+                      <span class="font-mono text-slate-300 shrink-0">佔個股 <b id="twStockSharePct" class="text-amber-400">54.2%</b></span>
+                    </div>
+                    <span id="twStockMvVal" class="text-sm sm:text-base font-black font-mono text-white block truncate">NT$381,454</span>
+                    <div class="text-[11px] sm:text-xs font-mono text-slate-300">
+                      佔股票 <b id="twStockEquityPct" class="text-white">20.7%</b>
+                    </div>
+                  </div>
+
+                  <!-- 🇺🇸 美股個股：專屬珊瑚粉 rose-400 -->
+                  <div class="p-2.5 rounded-xl bg-slate-950/90 border border-slate-800 space-y-1">
+                    <div class="flex items-center justify-between gap-1 text-[11px] sm:text-xs font-bold">
+                      <span class="text-rose-400 flex items-center gap-1 shrink-0"><span class="w-2 h-2 rounded-full bg-rose-400 shrink-0"></span>🇺🇸 美股個股</span>
+                      <span class="font-mono text-slate-300 shrink-0">佔個股 <b id="usStockSharePct" class="text-rose-400">45.8%</b></span>
+                    </div>
+                    <span id="usStockMvVal" class="text-sm sm:text-base font-black font-mono text-white block truncate">NT$322,697</span>
+                    <div class="text-[11px] sm:text-xs font-mono text-slate-300">
+                      佔股票 <b id="usStockEquityPct" class="text-white">17.5%</b>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <div class="flex items-baseline justify-between">
-                <span id="stockBreakdownTotalMv" class="text-lg sm:text-2xl font-black font-mono text-white">NT$704,152</span>
-                <span class="text-[11px] font-mono text-slate-400">台美股比例 <b id="stockTwUsSplitText" class="text-amber-300">54.2% : 45.8%</b></span>
-              </div>
-
-              <!-- 台美股 個股雙色比例條 -->
-              <div class="w-full h-1.5 rounded-full bg-slate-950 overflow-hidden flex">
-                <div id="barTwStock" class="h-full bg-amber-400 transition-all duration-300" style="width: 54.2%"></div>
-                <div id="barUsStock" class="h-full bg-orange-400 transition-all duration-300" style="width: 45.8%"></div>
-              </div>
-
-              <!-- 台股個股 vs 美股個股 個別明細 -->
-              <div class="grid grid-cols-2 gap-2 pt-1">
-                <div class="p-2.5 rounded-xl bg-slate-950/90 border border-slate-800 space-y-1">
-                  <div class="flex items-center justify-between text-[11px] sm:text-xs font-bold">
-                    <span class="text-amber-300">🇹🇼 台股個股</span>
-                    <span id="twStockAssetPct" class="font-mono font-black text-amber-300">16.2%</span>
-                  </div>
-                  <span id="twStockMvVal" class="text-xs sm:text-base font-black font-mono text-white block truncate">NT$381,454</span>
-                  <div class="flex items-center justify-between text-[10px] sm:text-[11px] font-mono text-slate-400">
-                    <span>佔個股 <b id="twStockSharePct" class="text-slate-200">54.2%</b></span>
-                    <span>佔股 <b id="twStockEquityPct" class="text-slate-200">20.7%</b></span>
-                  </div>
+              <!-- 內嵌策略監控：個股部位上限水位滑桿與差額 -->
+              <div class="p-3 rounded-xl bg-slate-950/90 border border-slate-800 space-y-2">
+                <div class="flex items-center justify-between text-xs font-bold">
+                  <span class="text-white flex items-center gap-1.5">
+                    <i class="fa-solid fa-shield-halved text-amber-400"></i>
+                    個股部位佔股票上限:
+                  </span>
+                  <span id="displaySingleSliderVal" class="text-sm sm:text-base font-mono font-black text-amber-400">20%</span>
                 </div>
-
-                <div class="p-2.5 rounded-xl bg-slate-950/90 border border-slate-800 space-y-1">
-                  <div class="flex items-center justify-between text-[11px] sm:text-xs font-bold">
-                    <span class="text-orange-300">🇺🇸 美股個股</span>
-                    <span id="usStockAssetPct" class="font-mono font-black text-orange-300">13.7%</span>
-                  </div>
-                  <span id="usStockMvVal" class="text-xs sm:text-base font-black font-mono text-white block truncate">NT$322,697</span>
-                  <div class="flex items-center justify-between text-[10px] sm:text-[11px] font-mono text-slate-400">
-                    <span>佔個股 <b id="usStockSharePct" class="text-slate-200">45.8%</b></span>
-                    <span>佔股 <b id="usStockEquityPct" class="text-slate-200">17.5%</b></span>
-                  </div>
+                <input type="range" min="10" max="50" step="5" value="20" id="singleRatioSlider" oninput="handleSingleSliderChange(this.value)" class="w-full accent-amber-400 cursor-pointer h-1.5 bg-slate-800 rounded-lg">
+                <div class="flex justify-between text-[10px] text-slate-400 font-mono">
+                  <span>10% 嚴控</span>
+                  <span>25% 適中</span>
+                  <span>50% 積極</span>
+                </div>
+                <div class="pt-1.5 border-t border-slate-800/90 flex items-center justify-between flex-wrap gap-1">
+                  <span id="singleLimitLabelPct" class="text-xs text-white font-bold">對比 20% 上限水位:</span>
+                  <span id="gapSingleText" class="text-xs sm:text-sm font-black font-mono text-rose-400">超重 +NT$334,735 (宜止盈)</span>
                 </div>
               </div>
             </div>
@@ -587,14 +644,14 @@
           </div>
         </div>
 
-        <!-- 個別標的資產佔比排行（預設全部收合，點擊即可展開檢視全部 17 檔） -->
+        <!-- 個別標的資產佔比排行（同步套用五大類別色） -->
         <div class="p-3.5 sm:p-5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3">
           <div onclick="toggleWeightRankingExpand()" class="flex items-center justify-between gap-2 cursor-pointer select-none">
             <h3 class="text-sm sm:text-base font-black text-white flex items-center gap-2">
-              <i class="fa-solid fa-ranking-star text-cyan-400"></i>
+              <i class="fa-solid fa-ranking-star text-slate-300"></i>
               個別標的資產佔比排行
             </h3>
-            <button type="button" id="btnToggleWeightRanking" class="px-2.5 py-1 rounded-xl bg-slate-900 hover:bg-slate-800 text-cyan-300 border border-cyan-500/30 text-[11px] sm:text-xs font-bold transition flex items-center gap-1 shrink-0">
+            <button type="button" id="btnToggleWeightRanking" class="px-2.5 py-1 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 text-[11px] sm:text-xs font-bold transition flex items-center gap-1 shrink-0">
               <span id="textToggleWeightRanking">展開排行 (17)</span>
               <i id="iconToggleWeightRanking" class="fa-solid fa-chevron-down text-[10px]"></i>
             </button>
@@ -607,8 +664,8 @@
         <!-- 各大銀行活存明細 -->
         <div class="p-3.5 sm:p-5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3">
           <div class="flex items-center justify-between flex-wrap gap-2">
-            <h3 class="text-sm sm:text-base font-black text-slate-200 flex items-center gap-2">
-              <i class="fa-solid fa-building-columns text-sky-400"></i>
+            <h3 class="text-sm sm:text-base font-black text-white flex items-center gap-2">
+              <i class="fa-solid fa-building-columns text-emerald-400"></i>
               各大銀行活存明細
             </h3>
             <span class="text-xs sm:text-sm font-mono font-black text-emerald-400 bg-emerald-950/70 px-2.5 py-1 rounded-xl border border-emerald-500/30">
@@ -617,74 +674,28 @@
           </div>
           <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 text-xs sm:text-sm font-bold">
             <div class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
-              <span class="text-slate-300 block">郵局:</span>
+              <span class="text-white block">郵局:</span>
               <input type="number" step="any" inputmode="decimal" id="bankInput-post" value="231845" oninput="handleBankDepositChange('post', this.value)" class="bank-input w-full py-1 px-2 rounded-lg bg-slate-950 border border-slate-700 text-white font-mono font-bold text-sm focus:outline-none focus:border-emerald-500">
             </div>
             <div class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
-              <span class="text-slate-300 block">華南:</span>
+              <span class="text-white block">華南:</span>
               <input type="number" step="any" inputmode="decimal" id="bankInput-huanan" value="103707" oninput="handleBankDepositChange('huanan', this.value)" class="bank-input w-full py-1 px-2 rounded-lg bg-slate-950 border border-slate-700 text-white font-mono font-bold text-sm focus:outline-none focus:border-emerald-500">
             </div>
             <div class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
-              <span class="text-slate-300 block">元大:</span>
+              <span class="text-white block">元大:</span>
               <input type="number" step="any" inputmode="decimal" id="bankInput-yuanta" value="93673" oninput="handleBankDepositChange('yuanta', this.value)" class="bank-input w-full py-1 px-2 rounded-lg bg-slate-950 border border-slate-700 text-white font-mono font-bold text-sm focus:outline-none focus:border-emerald-500">
             </div>
             <div class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
-              <span class="text-slate-300 block">國泰:</span>
+              <span class="text-white block">國泰:</span>
               <input type="number" step="any" inputmode="decimal" id="bankInput-cathay" value="44259" oninput="handleBankDepositChange('cathay', this.value)" class="bank-input w-full py-1 px-2 rounded-lg bg-slate-950 border border-slate-700 text-white font-mono font-bold text-sm focus:outline-none focus:border-emerald-500">
             </div>
             <div class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
-              <span class="text-slate-300 block">LineBank:</span>
+              <span class="text-white block">LineBank:</span>
               <input type="number" step="any" inputmode="decimal" id="bankInput-linebank" value="33798" oninput="handleBankDepositChange('linebank', this.value)" class="bank-input w-full py-1 px-2 rounded-lg bg-slate-950 border border-slate-700 text-white font-mono font-bold text-sm focus:outline-none focus:border-emerald-500">
             </div>
             <div class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
-              <span class="text-slate-300 block">合庫:</span>
+              <span class="text-white block">合庫:</span>
               <input type="number" step="any" inputmode="decimal" id="bankInput-tcb" value="878" oninput="handleBankDepositChange('tcb', this.value)" class="bank-input w-full py-1 px-2 rounded-lg bg-slate-950 border border-slate-700 text-white font-mono font-bold text-sm focus:outline-none focus:border-emerald-500">
-            </div>
-          </div>
-        </div>
-
-        <!-- 核心策略：大盤 ETF 目標比例試算 -->
-        <div class="p-3.5 sm:p-5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3.5">
-          <div class="flex items-center justify-between">
-            <h3 class="text-sm sm:text-base font-black text-white flex items-center gap-2">
-              <i class="fa-solid fa-sliders text-emerald-400"></i>
-              核心策略：大盤 ETF 目標比例試算
-            </h3>
-            <span class="text-xs px-2.5 py-0.5 rounded-xl bg-slate-900 text-emerald-400 font-mono font-bold border border-emerald-500/30">
-              目標 60% 指數化
-            </span>
-          </div>
-
-          <div class="space-y-2 p-3.5 rounded-xl bg-slate-900 border border-slate-800">
-            <div class="flex justify-between items-center text-xs sm:text-sm font-bold">
-              <span class="text-slate-200">大盤 ETF 規劃目標比率:</span>
-              <span id="displaySliderVal" class="text-base sm:text-lg font-mono font-black text-emerald-400">60%</span>
-            </div>
-            <input type="range" min="30" max="80" step="5" value="60" id="etfRatioSlider" oninput="handleSliderChange(this.value)" class="w-full accent-emerald-500 cursor-pointer h-2 bg-slate-800 rounded-lg">
-            <div class="flex justify-between text-[11px] sm:text-xs text-slate-400 font-mono">
-              <span>30% 成長</span>
-              <span>60% 平衡</span>
-              <span>80% 防禦</span>
-            </div>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div class="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
-              <span class="text-xs sm:text-sm font-extrabold text-cyan-300 block">📊 大盤 ETF 目前市值</span>
-              <span id="valEtfCurrent" class="text-lg sm:text-xl font-black font-mono text-white block">NT$874,696</span>
-              <div class="p-2 rounded-lg bg-slate-950 border border-slate-800">
-                <span class="text-xs text-slate-400 block">距離 60% 目標差額:</span>
-                <span id="gapEtfText" class="text-xs sm:text-sm font-black font-mono text-amber-400 block mt-0.5">需再加碼 +NT$538,450</span>
-              </div>
-            </div>
-
-            <div class="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
-              <span class="text-xs sm:text-sm font-extrabold text-amber-300 block">🎯 個股部位目前市值</span>
-              <span id="valSingleCurrent" class="text-lg sm:text-xl font-black font-mono text-white block">NT$704,154</span>
-              <div class="p-2 rounded-lg bg-slate-950 border border-slate-800">
-                <span class="text-xs text-slate-400 block">對比 15% 上限水位:</span>
-                <span id="gapSingleText" class="text-xs sm:text-sm font-black font-mono text-rose-400 block mt-0.5">超重 +NT$350,867 (宜止盈)</span>
-              </div>
             </div>
           </div>
         </div>
@@ -741,14 +752,14 @@
               <col class="w-[22px] sm:w-[44px]">
             </colgroup>
             <thead>
-              <tr class="bg-slate-950 text-slate-400 font-mono text-[11px] sm:text-xs border-b border-slate-800">
-                <th class="py-2.5 pl-2 pr-1 sm:px-3.5 font-bold text-slate-200 text-left">標的 / 名稱</th>
+              <tr class="bg-slate-950 text-white font-mono text-[11px] sm:text-xs border-b border-slate-800">
+                <th class="py-2.5 pl-2 pr-1 sm:px-3.5 font-bold text-left">標的 / 名稱</th>
                 <th class="py-2.5 px-1 sm:px-2.5 font-bold text-right">股數</th>
                 <th class="py-2.5 px-1 sm:px-2.5 font-bold text-right">均價</th>
                 <th class="py-2.5 px-1 sm:px-2.5 font-bold text-right">市價</th>
                 <th class="py-2.5 px-1 sm:px-3 font-bold text-right"><span class="sm:hidden">市值</span><span class="hidden sm:inline">市值(NTD)</span></th>
                 <th class="py-2.5 px-1 sm:px-3 font-bold text-right"><span class="sm:hidden">損益</span><span class="hidden sm:inline">累積損益</span></th>
-                <th class="py-2.5 px-0.5 text-center">刪</th>
+                <th class="py-2.5 px-0.5 text-center"></th>
               </tr>
             </thead>
             <tbody id="holdingsTableBody" class="divide-y divide-slate-800/60 font-mono">
@@ -768,10 +779,10 @@
         <section class="p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl bg-slate-900/95 border border-slate-800 shadow-xl space-y-3.5 sm:space-y-4">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-2">
             <div>
-              <span class="text-xs font-extrabold uppercase tracking-wider text-emerald-400">Milestone</span>
+              <span class="text-xs font-extrabold uppercase tracking-wider text-slate-400">Milestone</span>
               <h2 class="text-base sm:text-2xl font-black text-white mt-0.5">2026 期望達成總資產：NT$ 2,500,000</h2>
             </div>
-            <span class="text-xs px-2.5 py-1 rounded-xl bg-slate-950 text-slate-300 font-bold border border-slate-800 self-start sm:self-auto">
+            <span class="text-xs px-2.5 py-1 rounded-xl bg-slate-950 text-slate-200 font-bold border border-slate-800 self-start sm:self-auto">
               2026 年底結算
             </span>
           </div>
@@ -779,27 +790,27 @@
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
             <div class="lg:col-span-7 space-y-2">
               <div class="flex justify-between items-baseline font-mono">
-                <span class="text-xs sm:text-base text-slate-300 font-bold">2026 目標達成率:</span>
+                <span class="text-xs sm:text-base text-white font-bold">2026 目標達成率:</span>
                 <span id="planTargetPct" class="text-2xl sm:text-4xl font-black text-emerald-400">94.21%</span>
               </div>
               <div class="w-full h-3.5 rounded-full bg-slate-950 overflow-hidden border border-slate-800 p-0.5">
                 <div id="planProgressBar" class="h-full rounded-full bg-gradient-to-r from-emerald-500 to-cyan-400 transition-all duration-500" style="width: 94.21%"></div>
               </div>
               <div class="flex justify-between text-xs sm:text-sm font-bold pt-1">
-                <span class="text-slate-400">目前總資產: <span id="planCurrentMv" class="text-white font-mono font-black">NT$2,355,244</span></span>
-                <span class="text-slate-400">距離達標僅差: <span id="planGapValue" class="text-amber-400 font-mono font-black">NT$144,756</span></span>
+                <span class="text-slate-300">目前總資產: <span id="planCurrentMv" class="text-white font-mono font-black">NT$2,355,244</span></span>
+                <span class="text-slate-300">距離達標僅差: <span id="planGapValue" class="text-amber-400 font-mono font-black">NT$144,756</span></span>
               </div>
             </div>
 
             <div class="lg:col-span-5 p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-1.5">
               <div class="flex items-center justify-between">
-                <span class="text-xs sm:text-sm font-bold text-slate-300 flex items-center gap-1.5">
+                <span class="text-xs sm:text-sm font-bold text-white flex items-center gap-1.5">
                   <i class="fa-solid fa-calendar-check text-emerald-400"></i> 每期定期定額投入
                 </span>
-                <span class="text-xs text-slate-400 font-mono">年預算: NT$<span id="yearlyDepositSum">540,000</span></span>
+                <span class="text-xs text-slate-300 font-mono">年預算: NT$<span id="yearlyDepositSum">540,000</span></span>
               </div>
               <div class="flex items-center gap-2">
-                <span class="text-sm font-mono text-slate-400 font-bold">NT$</span>
+                <span class="text-sm font-mono text-slate-300 font-bold">NT$</span>
                 <input type="number" step="1000" inputmode="decimal" id="inlineMonthlyDepositInput" value="45000" oninput="handleMonthlyDepositInput(this.value)" class="w-full py-1.5 px-3 rounded-xl bg-slate-900 border border-slate-700 text-base sm:text-xl font-mono font-black text-emerald-400 focus:outline-none focus:border-emerald-500">
               </div>
             </div>
@@ -808,7 +819,7 @@
           <!-- 長期千萬資產階梯進度 -->
           <div class="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-2.5">
             <div class="flex justify-between items-center text-xs sm:text-sm font-bold">
-              <span class="text-slate-300 flex items-center gap-1.5">
+              <span class="text-white flex items-center gap-1.5">
                 <i class="fa-solid fa-stairs text-cyan-400"></i> 長期千萬資產階梯進度
               </span>
               <span id="ladderOverallPct" class="text-cyan-400 font-mono font-black">23.55% (距千萬)</span>
@@ -818,15 +829,15 @@
             </div>
             <div class="grid grid-cols-3 gap-2 text-center text-xs font-bold pt-0.5">
               <div class="p-2 rounded-xl bg-slate-900/90 border border-emerald-500/30">
-                <span class="text-slate-400 block text-[11px]">2026 首年</span>
+                <span class="text-slate-300 block text-[11px]">2026 首年</span>
                 <span class="text-emerald-400 font-mono font-black block text-sm">250 萬</span>
               </div>
               <div class="p-2 rounded-xl bg-slate-900/90 border border-cyan-500/30">
-                <span class="text-slate-400 block text-[11px]">2030 中期</span>
+                <span class="text-slate-300 block text-[11px]">2030 中期</span>
                 <span class="text-cyan-400 font-mono font-black block text-sm">500 萬</span>
               </div>
               <div class="p-2 rounded-xl bg-slate-900/90 border border-violet-500/30">
-                <span class="text-slate-400 block text-[11px]">2035 長期</span>
+                <span class="text-slate-300 block text-[11px]">2035 長期</span>
                 <span class="text-violet-400 font-mono font-black block text-sm">1,000 萬</span>
               </div>
             </div>
@@ -842,7 +853,7 @@
             </h3>
             <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-950 border border-slate-800 font-mono text-xs font-bold shrink-0">
               <span class="w-2 h-2 rounded-full bg-amber-400"></span>
-              <span class="text-slate-300">總數:</span>
+              <span class="text-white">總數:</span>
               <b id="legPlanTotalOnly" class="text-amber-400">235.5萬</b>
             </div>
           </div>
@@ -869,14 +880,14 @@
           </div>
         </section>
 
-        <!-- 2026 年歷史資產總表（含每月操作覆盤備忘錄） -->
+        <!-- 2026 年歷史資產總表 -->
         <section class="rounded-2xl sm:rounded-3xl bg-slate-900/95 border border-slate-800 shadow-xl overflow-hidden space-y-3 p-3.5 sm:p-6">
           <div onclick="toggleHistory2026()" class="flex items-center justify-between cursor-pointer select-none">
             <h3 class="text-xs sm:text-base font-black text-white flex items-center gap-1.5">
               <i class="fa-solid fa-clock-rotate-left text-cyan-400"></i>
               2026 年度每月資產歷程紀錄總表
             </h3>
-            <button type="button" id="btnToggleHistory2026" class="px-3 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold transition flex items-center gap-1.5 border border-slate-700 shrink-0">
+            <button type="button" id="btnToggleHistory2026" class="px-3 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold transition flex items-center gap-1.5 border border-slate-700 shrink-0">
               <i id="iconToggleHistory2026" class="fa-solid fa-chevron-down text-cyan-400"></i>
               <span id="textToggleHistory2026">展開紀錄</span>
             </button>
@@ -885,7 +896,7 @@
           <div id="history2026TableContainer" class="overflow-x-auto transition-all duration-300 hidden pt-2 border-t border-slate-800">
             <table class="w-full text-left text-xs sm:text-sm border-collapse font-mono min-w-[720px]">
               <thead>
-                <tr class="bg-slate-950 text-slate-400 border-b border-slate-800">
+                <tr class="bg-slate-950 text-white border-b border-slate-800">
                   <th class="py-2 px-3">時間</th>
                   <th class="py-2 px-3">台股市值</th>
                   <th class="py-2 px-3">美股市值</th>
@@ -893,8 +904,8 @@
                   <th class="py-2 px-3">現金</th>
                   <th class="py-2 px-3 font-bold text-white">總數</th>
                   <th class="py-2 px-3">累積本金</th>
-                  <th class="py-2 px-3 text-rose-400">累積總損益</th>
-                  <th class="py-2 px-3 text-amber-300 font-sans min-w-[165px]">當月操作覆盤筆記</th>
+                  <th class="py-2 px-3">累積總損益</th>
+                  <th class="py-2 px-3 font-sans min-w-[165px]">當月操作覆盤筆記</th>
                 </tr>
               </thead>
               <tbody id="historyTableBody" class="divide-y divide-slate-800/60 text-slate-300">
@@ -947,7 +958,7 @@
       <div class="space-y-3 text-xs sm:text-sm font-bold">
         <div>
           <div class="flex items-center justify-between gap-2 mb-1">
-            <label class="text-slate-400">股票代號 (自動帶出名稱與屬性):</label>
+            <label class="text-slate-300">股票代號 (自動帶出名稱與屬性):</label>
             <span id="autoCategoryBadge" onclick="toggleDetectedCategory()" title="系統已自動判斷 ETF / 個股（點擊可手動切換）" class="cursor-pointer text-[11px] px-2 py-0.5 rounded-full font-mono font-bold bg-slate-800 text-slate-400 border border-slate-700 transition select-none">
               🤖 自動判定：待輸入
             </span>
@@ -958,11 +969,11 @@
 
         <div class="grid grid-cols-2 gap-2">
           <div>
-            <label class="text-slate-400 block mb-1">股票名稱 (自動帶出):</label>
+            <label class="text-slate-300 block mb-1">股票名稱 (自動帶出):</label>
             <input type="text" id="newHoldName" oninput="this.dataset.autoFilled='0'" placeholder="輸入代號自動帶出" class="w-full py-2 px-3 rounded-xl bg-slate-950 border border-slate-700 text-white focus:outline-none">
           </div>
           <div>
-            <label class="text-slate-400 block mb-1">市場 / 券商:</label>
+            <label class="text-slate-300 block mb-1">市場 / 券商:</label>
             <select id="newHoldMarket" onchange="userSelectedMarketManually = true; calculateAddHoldingPreview();" class="w-full py-2 px-3 rounded-xl bg-slate-950 border border-slate-700 text-white focus:outline-none">
               <option value="TW">🇹🇼 台灣股票 (TWD)</option>
               <option value="US">🇺🇸 美國股票 (USD)</option>
@@ -973,26 +984,26 @@
 
         <div class="grid grid-cols-3 gap-2">
           <div>
-            <label class="text-slate-400 block mb-1">持有股數:</label>
+            <label class="text-slate-300 block mb-1">持有股數:</label>
             <input type="number" step="any" inputmode="decimal" id="newHoldShares" oninput="calculateAddHoldingPreview()" placeholder="股數" class="w-full py-2 px-3 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono focus:outline-none">
           </div>
           <div>
-            <label class="text-slate-400 block mb-1">買入均價:</label>
+            <label class="text-slate-300 block mb-1">買入均價:</label>
             <input type="number" step="any" inputmode="decimal" id="newHoldAvgPrice" oninput="calculateAddHoldingPreview()" placeholder="成本" class="w-full py-2 px-3 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono focus:outline-none">
           </div>
           <div>
-            <label class="text-slate-400 block mb-1">當前市價:</label>
+            <label class="text-slate-300 block mb-1">當前市價:</label>
             <input type="number" step="any" inputmode="decimal" id="newHoldCurrentPrice" oninput="this.dataset.autoFilled='0'; calculateAddHoldingPreview();" placeholder="市價" class="w-full py-2 px-3 rounded-xl bg-slate-950 border border-slate-700 text-emerald-400 font-mono font-bold focus:outline-none">
           </div>
         </div>
 
         <div class="p-3 rounded-2xl bg-slate-950/90 border border-slate-800 flex items-center justify-between font-mono text-xs">
           <div>
-            <span class="text-slate-400 block text-[10px]">試算總市值 (NTD)</span>
+            <span class="text-slate-300 block text-[10px]">試算總市值 (NTD)</span>
             <span id="previewMvVal" class="text-sm sm:text-base font-black text-white">NT$ 0</span>
           </div>
           <div class="text-right">
-            <span class="text-slate-400 block text-[10px]">預計損益 (NTD)</span>
+            <span class="text-slate-300 block text-[10px]">預計損益 (NTD)</span>
             <span id="previewPnlVal" class="text-sm sm:text-base font-black text-rose-400">+NT$ 0</span>
           </div>
         </div>
@@ -1025,7 +1036,7 @@
       <!-- 雙向雲端備份與還原 -->
       <div class="p-3.5 rounded-2xl bg-slate-950/90 border border-slate-800 space-y-2.5">
         <div class="flex items-center justify-between text-xs font-bold">
-          <span class="text-slate-300">最後雲端互通時間:</span>
+          <span class="text-white">最後雲端互通時間:</span>
           <span id="modalSyncTimeDisplay" class="font-mono text-cyan-400">2026/11/08 21:57:12</span>
         </div>
         <div class="grid grid-cols-2 gap-2">
@@ -1043,7 +1054,7 @@
       <!-- Google Apps Script 網址設定 -->
       <div class="space-y-2 text-xs font-bold">
         <div class="flex items-center justify-between">
-          <label class="text-slate-300">Google Apps Script 網頁應用程式網址:</label>
+          <label class="text-white">Google Apps Script 網頁應用程式網址:</label>
           <span id="urlSavedStatus" class="hidden text-emerald-400 font-mono text-[11px]">✓ 已綁定</span>
         </div>
         <input type="url" id="googleScriptUrlInput" oninput="handleUrlInputLive(this.value)" placeholder="https://script.google.com/macros/s/.../exec" class="w-full py-2 px-3 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono text-xs focus:outline-none focus:border-amber-400">
@@ -1059,7 +1070,7 @@
         <!-- 行情同步狀態診斷框 -->
         <div id="syncDiagnosticBox" class="hidden p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-[11px] font-mono space-y-1">
           <div class="flex items-center justify-between">
-            <span class="text-slate-400">上次股價比對結果:</span>
+            <span class="text-slate-300">上次股價比對結果:</span>
             <span id="syncDiagSummary" class="text-emerald-400 font-bold">全部成功</span>
           </div>
           <div id="syncDiagMissingList" class="text-amber-300 leading-relaxed break-all"></div>
@@ -1102,7 +1113,7 @@
       };
     })();
 
-    /* 1. 常數與真實基準設定 (100% 依據 2026/11/01 結算月報) */
+    /* 1. 常數與真實基準設定 */
     let usTwdRate = 32.3899;
     const IB_COST_NTD = 245141.62;
     const IB_MARKET_NTD = 268234.26;
@@ -1173,7 +1184,7 @@
       '2882': { name: '國泰金', market: 'TW', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/2882:TPE' },
       '2891': { name: '中信金', market: 'TW', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/2891:TPE' },
 
-      // 美股 & IB 海外 ETF（含槓桿型、指數型、英股 UCITS）
+      // 美股 & IB 海外 ETF
       'VOO': { name: '先鋒標普500 ETF', market: 'US', category: 'ETF', price: 694.81, link: 'https://www.google.com/finance/quote/VOO:NYSEARCA' },
       'QQQ': { name: '那斯達克100 ETF', market: 'US', category: 'ETF', price: 690.49, link: 'https://www.google.com/finance/quote/QQQ:NASDAQ' },
       'QQQM': { name: '那斯達克微型 ETF', market: 'US', category: 'ETF', price: 284.34, link: 'https://www.google.com/finance/quote/QQQM:NASDAQ' },
@@ -1264,6 +1275,7 @@
     let deletedHoldingBackup = null;
     let activeFilter = 'ALL';
     let targetEtfRatio = 60;
+    let maxSingleRatio = 20;
     let isHistory2026Collapsed = true;
     let isWeightRankingExpanded = false;
     let activeTimeframe = 'YTD';
@@ -1285,13 +1297,14 @@
       '1W': { taiex: null, sp500: null, nasdaq: null },
       '1M': { taiex: null, sp500: null, nasdaq: null },
       '1Q': { taiex: null, sp500: null, nasdaq: null },
+      '6M': { taiex: null, sp500: null, nasdaq: null },
       'YTD': { taiex: null, sp500: null, nasdaq: null }
     };
 
     let liveIndicesState = {
-      taiex: { price: 42711.92, pct: 4.94 },
-      sp500: { price: 7549.94, pct: 0.31 },
-      nasdaq: { price: 25253.14, pct: 1.09 }
+      taiex: { price: 40092.11, pct: 36.60 },
+      sp500: { price: 7416.59, pct: 8.34 },
+      nasdaq: { price: 24509.76, pct: 7.88 }
     };
 
     /* 2. 本機狀態讀寫與核心工具函式 */
@@ -1336,6 +1349,16 @@
       });
       const depEl = document.getElementById('inlineMonthlyDepositInput');
       if (depEl) depEl.value = monthlyDeposit;
+      const etfSlider = document.getElementById('etfRatioSlider');
+      if (etfSlider) etfSlider.value = targetEtfRatio;
+      const etfDisp = document.getElementById('displaySliderVal');
+      if (etfDisp) etfDisp.innerText = `${targetEtfRatio}%`;
+
+      const singleSlider = document.getElementById('singleRatioSlider');
+      if (singleSlider) singleSlider.value = maxSingleRatio;
+      const singleDisp = document.getElementById('displaySingleSliderVal');
+      if (singleDisp) singleDisp.innerText = `${maxSingleRatio}%`;
+
       const savedUrl = safeStorage.getItem('eddie_gas_url') || '';
       const urlEl = document.getElementById('googleScriptUrlInput');
       if (urlEl) urlEl.value = savedUrl;
@@ -1374,6 +1397,12 @@
       const savedDep = safeStorage.getItem('eddie_portfolio_monthly_dep');
       if (savedDep && !isNaN(parseFloat(savedDep))) monthlyDeposit = parseFloat(savedDep);
 
+      const savedEtfTarget = safeStorage.getItem('eddie_portfolio_etf_target');
+      if (savedEtfTarget && !isNaN(parseFloat(savedEtfTarget))) targetEtfRatio = parseFloat(savedEtfTarget);
+
+      const savedSingleLimit = safeStorage.getItem('eddie_portfolio_single_limit');
+      if (savedSingleLimit && !isNaN(parseFloat(savedSingleLimit))) maxSingleRatio = parseFloat(savedSingleLimit);
+
       const savedRate = safeStorage.getItem('eddie_portfolio_ustwd');
       if (savedRate && !isNaN(parseFloat(savedRate))) usTwdRate = parseFloat(savedRate);
 
@@ -1405,19 +1434,33 @@
     }
 
     function updateIndicesDisplay() {
-      const setIdx = (priceId, chgId, obj) => {
+      const tfLabelMap = { '1W': '本週', '1M': '本月', '1Q': '本季', '6M': '6M', 'YTD': 'YTD' };
+      const periodPrefix = tfLabelMap[activeTimeframe] || 'YTD';
+      const activeMetrics = liveSyncedMetrics[activeTimeframe] || {};
+
+      const fallbackPeriodPct = {
+        '1W': { taiex: -8.86, sp500: 0.31, nasdaq: 1.09 },
+        '1M': { taiex: -11.32, sp500: 0.45, nasdaq: 0.88 },
+        '1Q': { taiex: -4.85, sp500: -0.65, nasdaq: -0.35 },
+        '6M': { taiex: 12.40, sp500: 3.80, nasdaq: 4.20 },
+        'YTD': { taiex: 36.60, sp500: 8.34, nasdaq: 7.88 }
+      };
+      const fb = fallbackPeriodPct[activeTimeframe] || fallbackPeriodPct['YTD'];
+
+      const setIdx = (priceId, chgId, obj, tfPct, fbPct) => {
         const pEl = document.getElementById(priceId);
         const cEl = document.getElementById(chgId);
         if (pEl && obj.price) pEl.innerText = Number(obj.price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-        if (cEl && obj.pct !== null && !isNaN(obj.pct)) {
-          const up = obj.pct >= 0;
-          cEl.innerText = `${up ? '▲' : '▼'} ${Math.abs(obj.pct).toFixed(2)}%`;
-          cEl.className = `text-[11px] font-bold font-mono block ${up ? 'text-rose-400' : 'text-emerald-400'}`;
+        const pctVal = (tfPct !== null && tfPct !== undefined && !isNaN(tfPct)) ? tfPct : fbPct;
+        if (cEl && pctVal !== null && !isNaN(pctVal)) {
+          const up = pctVal >= 0;
+          cEl.innerText = `${periodPrefix} ${up ? '▲' : '▼'} ${Math.abs(pctVal).toFixed(2)}%`;
+          cEl.className = `text-[10px] sm:text-[11px] font-bold font-mono block ${up ? 'text-rose-400' : 'text-emerald-400'}`;
         }
       };
-      setIdx('idxTaiexPrice', 'idxTaiexChange', liveIndicesState.taiex);
-      setIdx('idxSp500Price', 'idxSp500Change', liveIndicesState.sp500);
-      setIdx('idxNasdaqPrice', 'idxNasdaqChange', liveIndicesState.nasdaq);
+      setIdx('idxTaiexPrice', 'idxTaiexChange', liveIndicesState.taiex, activeMetrics.taiex, fb.taiex);
+      setIdx('idxSp500Price', 'idxSp500Change', liveIndicesState.sp500, activeMetrics.sp500, fb.sp500);
+      setIdx('idxNasdaqPrice', 'idxNasdaqChange', liveIndicesState.nasdaq, activeMetrics.nasdaq, fb.nasdaq);
     }
 
     /* 3. 頂部三功能按鈕：隱私遮罩、即時更新、雲端同步設定 */
@@ -1570,12 +1613,19 @@
           const parseCleanNumber = (val) => {
             if (typeof val === 'number') return val;
             if (val === null || val === undefined) return NaN;
-            const cleaned = String(val).replace(/NT\$|US\$|TWD|USD|[$,\s]/gi, '').trim();
+            const cleaned = String(val).replace(/NT\$|US\$|TWD|USD|[$,%\s]/gi, '').trim();
             if (!cleaned || cleaned.includes('#')) return NaN;
             return parseFloat(cleaned);
           };
 
-          // 建立中文名稱對照股票代號的反查表（支援試算表左欄寫「台積電」、「中鋼」等名稱）
+          const pickFirstValidNum = (dict, keys) => {
+            for (let i = 0; i < keys.length; i++) {
+              const v = dict[keys[i]];
+              if (v !== undefined && v !== null && !isNaN(v)) return v;
+            }
+            return null;
+          };
+
           const nameToSymbolMap = {};
           Object.entries(STOCK_DATABASE).forEach(([dbSym, info]) => {
             if (info && info.name) {
@@ -1640,6 +1690,54 @@
             }
           });
 
+          const periodMap = [
+            { tf: '1W', suffixes: ['1W', '5D', '週'] },
+            { tf: '1M', suffixes: ['1M', '月'] },
+            { tf: '1Q', suffixes: ['1Q', '季'] },
+            { tf: '6M', suffixes: ['6M', '半年'] },
+            { tf: 'YTD', suffixes: ['YTD', '今年'] }
+          ];
+          const taiexPrefixes = ['台灣大盤', '台灣加權指數', '加權指數', '加權大盤', 'TAIEX', 'IX0001'];
+          const spPrefixes = ['標普', '標普500', 'S&P500', 'SP500', 'INX', 'GSPC'];
+          const nasdaqPrefixes = ['那斯達克', '那斯達克指數', '那斯達克綜合指數', 'NASDAQ', 'IXIC'];
+
+          periodMap.forEach(p => {
+            const buildKeys = (prefs) => {
+              const list = [];
+              prefs.forEach(pref => p.suffixes.forEach(suf => list.push(`${pref}${suf}`)));
+              return list;
+            };
+            const twVal = pickFirstValidNum(quotes, buildKeys(taiexPrefixes));
+            const spVal = pickFirstValidNum(quotes, buildKeys(spPrefixes));
+            const nasVal = pickFirstValidNum(quotes, buildKeys(nasdaqPrefixes));
+            if (twVal !== null) liveSyncedMetrics[p.tf].taiex = twVal;
+            if (spVal !== null) liveSyncedMetrics[p.tf].sp500 = spVal;
+            if (nasVal !== null) liveSyncedMetrics[p.tf].nasdaq = nasVal;
+          });
+          safeStorage.setItem('eddie_portfolio_metrics', JSON.stringify(liveSyncedMetrics));
+
+          const idxTaiexPrice = (res.indices && res.indices.taiex && res.indices.taiex.price)
+            || pickFirstValidNum(quotes, ['台灣加權指數', '加權指數', '加權大盤', 'TAIEX', 'TPE:TAIEX', 'IX0001', '^TWII']);
+          const idxSp500Price = (res.indices && res.indices.sp500 && res.indices.sp500.price)
+            || pickFirstValidNum(quotes, ['標普', '標普500', 'S&P500', 'SP500', '.INX', 'INX', 'INDEXSP:.INX', '^GSPC']);
+          const idxNasdaqPrice = (res.indices && res.indices.nasdaq && res.indices.nasdaq.price)
+            || pickFirstValidNum(quotes, ['那斯達克', '那斯達克指數', '那斯達克綜合指數', 'NASDAQ', '.IXIC', 'IXIC', 'INDEXNASDAQ:.IXIC', '^IXIC']);
+
+          if (idxTaiexPrice && idxTaiexPrice > 0) liveIndicesState.taiex.price = idxTaiexPrice;
+          if (idxSp500Price && idxSp500Price > 0) liveIndicesState.sp500.price = idxSp500Price;
+          if (idxNasdaqPrice && idxNasdaqPrice > 0) liveIndicesState.nasdaq.price = idxNasdaqPrice;
+          if (liveSyncedMetrics[activeTimeframe] && liveSyncedMetrics[activeTimeframe].taiex !== null) {
+            liveIndicesState.taiex.pct = liveSyncedMetrics[activeTimeframe].taiex;
+          }
+          if (liveSyncedMetrics[activeTimeframe] && liveSyncedMetrics[activeTimeframe].sp500 !== null) {
+            liveIndicesState.sp500.pct = liveSyncedMetrics[activeTimeframe].sp500;
+          }
+          if (liveSyncedMetrics[activeTimeframe] && liveSyncedMetrics[activeTimeframe].nasdaq !== null) {
+            liveIndicesState.nasdaq.pct = liveSyncedMetrics[activeTimeframe].nasdaq;
+          }
+          safeStorage.setItem('eddie_portfolio_indices', JSON.stringify(liveIndicesState));
+          updateIndicesDisplay();
+
           const diagBox = document.getElementById('syncDiagnosticBox');
           const diagSum = document.getElementById('syncDiagSummary');
           const diagMissing = document.getElementById('syncDiagMissingList');
@@ -1655,42 +1753,14 @@
               diagMissing.innerText = '✨ 所有持股均已成功對齊試算表最新報價！';
             }
             if (diagRaw) {
+              const idxSummary = `加權=${liveIndicesState.taiex.price} / 標普=${liveIndicesState.sp500.price} / 那指=${liveIndicesState.nasdaq.price}`;
               const rawEntries = Object.entries(rawQuotes)
-                .filter(([k]) => !/YTD|1Q|1M|1W/i.test(k))
-                .slice(0, 12)
+                .filter(([k]) => !/YTD|6M|1Q|1M|1W|5D/i.test(k))
+                .slice(0, 8)
                 .map(([k, v]) => `${k}=${v}`)
                 .join('、');
-              diagRaw.innerText = rawEntries
-                ? `📥 試算表實際回傳預覽: ${rawEntries}`
-                : '⚠️ 試算表回傳為空，請確認工作表分頁名稱是否為「即時行情」';
+              diagRaw.innerText = `📥 指數現價: ${idxSummary}${rawEntries ? ` ｜ 個股回傳: ${rawEntries}` : ''}`;
             }
-          }
-
-          const periodMap = [
-            { tf: '1W', suffix: '1W' },
-            { tf: '1M', suffix: '1M' },
-            { tf: '1Q', suffix: '1Q' },
-            { tf: 'YTD', suffix: 'YTD' }
-          ];
-          periodMap.forEach(p => {
-            const twVal = parseFloat(quotes[`台灣大盤${p.suffix}`]);
-            const spVal = parseFloat(quotes[`標普${p.suffix}`]);
-            const nasVal = parseFloat(quotes[`那斯達克${p.suffix}`]);
-            if (!isNaN(twVal)) liveSyncedMetrics[p.tf].taiex = twVal;
-            if (!isNaN(spVal)) liveSyncedMetrics[p.tf].sp500 = spVal;
-            if (!isNaN(nasVal)) liveSyncedMetrics[p.tf].nasdaq = nasVal;
-          });
-          safeStorage.setItem('eddie_portfolio_metrics', JSON.stringify(liveSyncedMetrics));
-
-          if (res.indices) {
-            if (res.indices.taiex && res.indices.taiex.price) liveIndicesState.taiex.price = res.indices.taiex.price;
-            if (res.indices.sp500 && res.indices.sp500.price) liveIndicesState.sp500.price = res.indices.sp500.price;
-            if (res.indices.nasdaq && res.indices.nasdaq.price) liveIndicesState.nasdaq.price = res.indices.nasdaq.price;
-            if (liveSyncedMetrics['1W'].taiex !== null) liveIndicesState.taiex.pct = liveSyncedMetrics['1W'].taiex;
-            if (liveSyncedMetrics['1W'].sp500 !== null) liveIndicesState.sp500.pct = liveSyncedMetrics['1W'].sp500;
-            if (liveSyncedMetrics['1W'].nasdaq !== null) liveIndicesState.nasdaq.pct = liveSyncedMetrics['1W'].nasdaq;
-            safeStorage.setItem('eddie_portfolio_indices', JSON.stringify(liveIndicesState));
-            updateIndicesDisplay();
           }
 
           saveHoldingsState();
@@ -1700,7 +1770,7 @@
             const previewMissing = missingSymbols.slice(0, 3).join(', ') + (missingSymbols.length > 3 ? ` 等${missingSymbols.length}檔` : '');
             showToast(`✅ 更新 ${updatedCount} 檔（未抓到: ${previewMissing}）`);
           } else {
-            showToast(`✅ 行情同步完成！(全部 ${updatedCount} 檔股價已更新)`);
+            showToast(`✅ 行情同步完成！(全部 ${updatedCount} 檔股價與指數已更新)`);
           }
         } else {
           showToast(`⚠️ 同步未完成: ${(res && res.message) || '請確認試算表設定'}`);
@@ -1737,6 +1807,8 @@
         holdings: slimHoldings,
         bankDeposits,
         monthlyDeposit,
+        targetEtfRatio,
+        maxSingleRatio,
         usTwdRate,
         liveSyncedMetrics,
         memoMap
@@ -1781,6 +1853,14 @@
           if (d.monthlyDeposit) {
             monthlyDeposit = parseFloat(d.monthlyDeposit) || 45000;
             safeStorage.setItem('eddie_portfolio_monthly_dep', monthlyDeposit);
+          }
+          if (d.targetEtfRatio) {
+            targetEtfRatio = parseFloat(d.targetEtfRatio) || 60;
+            safeStorage.setItem('eddie_portfolio_etf_target', targetEtfRatio);
+          }
+          if (d.maxSingleRatio) {
+            maxSingleRatio = parseFloat(d.maxSingleRatio) || 20;
+            safeStorage.setItem('eddie_portfolio_single_limit', maxSingleRatio);
           }
           if (d.usTwdRate) {
             usTwdRate = parseFloat(d.usTwdRate) || 32.3899;
@@ -2118,7 +2198,8 @@
         const pnlStr = isPrivacyMasked ? '••••••' : `${investmentPnl >= 0 ? '+' : ''}NT$${Math.round(investmentPnl).toLocaleString()}`;
         const gainStr = isPrivacyMasked ? '••••••' : `${netAssetGain >= 0 ? '+' : ''}NT$${Math.round(netAssetGain).toLocaleString()}`;
         const ytdSignStr = `${netYtdPct >= 0 ? '+' : ''}${netYtdPct.toFixed(2)}%`;
-        subEl.innerHTML = `<span class="inline-block">投資獲利: <span class="font-mono ${investmentPnl >= 0 ? 'text-rose-400' : 'text-emerald-400'} font-bold">${pnlStr}</span></span> <span class="text-slate-600 mx-0.5">｜</span> <span class="inline-block">淨資產增值: <span class="font-mono text-emerald-300 font-bold">${gainStr} (${ytdSignStr})</span></span>`;
+        const gainColorClass = netAssetGain >= 0 ? 'text-rose-400' : 'text-emerald-400';
+        subEl.innerHTML = `<span class="inline-block">投資獲利: <span class="font-mono ${investmentPnl >= 0 ? 'text-rose-400' : 'text-emerald-400'} font-bold">${pnlStr}</span></span> <span class="text-slate-600 mx-0.5">｜</span> <span class="inline-block">淨資產增值: <span class="font-mono ${gainColorClass} font-bold">${gainStr} (${ytdSignStr})</span></span>`;
       }
 
       const costEl = document.getElementById('kpiTotalCost');
@@ -2176,88 +2257,98 @@
       const bankTotEl = document.getElementById('displayBankTotal');
       if (bankTotEl) bankTotEl.innerText = isPrivacyMasked ? '••••••' : Math.round(cashTotal).toLocaleString();
 
-      // 第二頁：總股票資產、大盤 ETF（台美股）與個股（台美股）結構比例
+      // 第二頁：總資產（股票 vs 現金） ➔ 股票拆解（大盤 ETF · 個股 · IB） ➔ 再分台股 vs 美股
       const totalEtfMv = twEtfMv + usEtfMv;
       const totalStockMv = twStockMv + usStockMv;
       const safeEquity = Math.max(totalEquityMv, 1);
+      const setText = (id, val) => { const el = document.getElementById(id); if (el) el.innerText = val; };
 
-      const eqMvEl = document.getElementById('equityTotalMvVal');
-      const eqPctEl = document.getElementById('equityTotalAssetPct');
-      if (eqMvEl) eqMvEl.innerText = formatMasked(`NT$${Math.round(totalEquityMv).toLocaleString()}`);
-      if (eqPctEl) eqPctEl.innerText = `(${((totalEquityMv / safeTotal) * 100).toFixed(1)}%)`;
+      setText('structTotalAssetVal', formatMasked(`NT$${Math.round(totalMv).toLocaleString()}`));
+      setText('stockRatioInStockHeader', `${((totalEquityMv / safeTotal) * 100).toFixed(1)}%`);
+      setText('cashRatioInStockHeader', `${((cashTotal / safeTotal) * 100).toFixed(1)}%`);
+      setText('equityTotalMvVal', formatMasked(`NT$${Math.round(totalEquityMv).toLocaleString()}`));
 
       const etfEqPct = (totalEtfMv / safeEquity) * 100;
       const stkEqPct = (totalStockMv / safeEquity) * 100;
+      const twEtfEqPct = (twEtfMv / safeEquity) * 100;
+      const usEtfEqPct = (usEtfMv / safeEquity) * 100;
+      const twStkEqPct = (twStockMv / safeEquity) * 100;
+      const usStkEqPct = (usStockMv / safeEquity) * 100;
       const ibEqPct = (effectiveIbMv / safeEquity) * 100;
 
-      const barEtf = document.getElementById('barEquityEtf');
-      const barStk = document.getElementById('barEquityStock');
-      const barIb = document.getElementById('barEquityIb');
-      if (barEtf) barEtf.style.width = `${etfEqPct.toFixed(1)}%`;
-      if (barStk) barStk.style.width = `${stkEqPct.toFixed(1)}%`;
-      if (barIb) barIb.style.width = `${ibEqPct.toFixed(1)}%`;
+      // 頂部五色結構比例條（嚴格對應五大類別）
+      const barTopTwEtf = document.getElementById('barTopTwEtf');
+      const barTopUsEtf = document.getElementById('barTopUsEtf');
+      const barTopTwStock = document.getElementById('barTopTwStock');
+      const barTopUsStock = document.getElementById('barTopUsStock');
+      const barTopIb = document.getElementById('barTopIb');
+      if (barTopTwEtf) barTopTwEtf.style.width = `${twEtfEqPct.toFixed(1)}%`;
+      if (barTopUsEtf) barTopUsEtf.style.width = `${usEtfEqPct.toFixed(1)}%`;
+      if (barTopTwStock) barTopTwStock.style.width = `${twStkEqPct.toFixed(1)}%`;
+      if (barTopUsStock) barTopUsStock.style.width = `${usStkEqPct.toFixed(1)}%`;
+      if (barTopIb) barTopIb.style.width = `${ibEqPct.toFixed(1)}%`;
 
-      const subEtf = document.getElementById('subBarEtfPct');
-      const subStk = document.getElementById('subBarStockPct');
-      const subIb = document.getElementById('subBarIbPct');
-      if (subEtf) subEtf.innerText = `${etfEqPct.toFixed(1)}%`;
-      if (subStk) subStk.innerText = `${stkEqPct.toFixed(1)}%`;
-      if (subIb) subIb.innerText = `${ibEqPct.toFixed(1)}%`;
+      setText('topSummaryEtfPct', `${etfEqPct.toFixed(1)}%`);
+      setText('topSummaryStockPct', `${stkEqPct.toFixed(1)}%`);
+      setText('topSummaryIbPct', `${ibEqPct.toFixed(1)}%`);
 
-      // 大盤 ETF 總數與台美股明細
-      const setText = (id, val) => { const el = document.getElementById(id); if (el) el.innerText = val; };
-      setText('etfTotalAssetPct', `${((totalEtfMv / safeTotal) * 100).toFixed(1)}%`);
+      setText('topLegTwEtf', `${twEtfEqPct.toFixed(1)}%`);
+      setText('topLegUsEtf', `${usEtfEqPct.toFixed(1)}%`);
+      setText('topLegTwStock', `${twStkEqPct.toFixed(1)}%`);
+      setText('topLegUsStock', `${usStkEqPct.toFixed(1)}%`);
+      setText('topLegIb', `${ibEqPct.toFixed(1)}%`);
+
+      // 大盤 ETF 總數與台美股明細（台股ETF=翠綠 emerald-400 / 美股ETF=天藍 sky-400）
       setText('etfTotalEquityPct', `${etfEqPct.toFixed(1)}%`);
       setText('etfBreakdownTotalMv', formatMasked(`NT$${Math.round(totalEtfMv).toLocaleString()}`));
 
       const safeEtf = Math.max(totalEtfMv, 1);
       const twEtfShare = (twEtfMv / safeEtf) * 100;
       const usEtfShare = (usEtfMv / safeEtf) * 100;
-      setText('etfTwUsSplitText', `${twEtfShare.toFixed(1)}% : ${usEtfShare.toFixed(1)}%`);
+      const etfSplitEl = document.getElementById('etfTwUsSplitText');
+      if (etfSplitEl) {
+        etfSplitEl.innerHTML = `<b class="text-emerald-400">${twEtfShare.toFixed(1)}%</b> <span class="text-slate-400">:</span> <b class="text-sky-400">${usEtfShare.toFixed(1)}%</b>`;
+      }
       const barTwEtf = document.getElementById('barTwEtf');
       const barUsEtf = document.getElementById('barUsEtf');
       if (barTwEtf) barTwEtf.style.width = `${twEtfShare.toFixed(1)}%`;
       if (barUsEtf) barUsEtf.style.width = `${usEtfShare.toFixed(1)}%`;
 
-      setText('twEtfAssetPct', `${((twEtfMv / safeTotal) * 100).toFixed(1)}%`);
       setText('twEtfMvVal', formatMasked(`NT$${Math.round(twEtfMv).toLocaleString()}`));
       setText('twEtfSharePct', `${twEtfShare.toFixed(1)}%`);
-      setText('twEtfEquityPct', `${((twEtfMv / safeEquity) * 100).toFixed(1)}%`);
+      setText('twEtfEquityPct', `${twEtfEqPct.toFixed(1)}%`);
 
-      setText('usEtfAssetPct', `${((usEtfMv / safeTotal) * 100).toFixed(1)}%`);
       setText('usEtfMvVal', formatMasked(`NT$${Math.round(usEtfMv).toLocaleString()}`));
       setText('usEtfSharePct', `${usEtfShare.toFixed(1)}%`);
-      setText('usEtfEquityPct', `${((usEtfMv / safeEquity) * 100).toFixed(1)}%`);
+      setText('usEtfEquityPct', `${usEtfEqPct.toFixed(1)}%`);
 
-      // 個股部位總數與台美股明細
-      setText('stockTotalAssetPct', `${((totalStockMv / safeTotal) * 100).toFixed(1)}%`);
+      // 個股部位總數與台美股明細（台股個股=琥珀金 amber-400 / 美股個股=珊瑚粉 rose-400）
       setText('stockTotalEquityPct', `${stkEqPct.toFixed(1)}%`);
       setText('stockBreakdownTotalMv', formatMasked(`NT$${Math.round(totalStockMv).toLocaleString()}`));
 
       const safeStk = Math.max(totalStockMv, 1);
       const twStkShare = (twStockMv / safeStk) * 100;
       const usStkShare = (usStockMv / safeStk) * 100;
-      setText('stockTwUsSplitText', `${twStkShare.toFixed(1)}% : ${usStkShare.toFixed(1)}%`);
+      const stkSplitEl = document.getElementById('stockTwUsSplitText');
+      if (stkSplitEl) {
+        stkSplitEl.innerHTML = `<b class="text-amber-400">${twStkShare.toFixed(1)}%</b> <span class="text-slate-400">:</span> <b class="text-rose-400">${usStkShare.toFixed(1)}%</b>`;
+      }
       const barTwStk = document.getElementById('barTwStock');
       const barUsStk = document.getElementById('barUsStock');
       if (barTwStk) barTwStk.style.width = `${twStkShare.toFixed(1)}%`;
       if (barUsStk) barUsStk.style.width = `${usStkShare.toFixed(1)}%`;
 
-      setText('twStockAssetPct', `${((twStockMv / safeTotal) * 100).toFixed(1)}%`);
       setText('twStockMvVal', formatMasked(`NT$${Math.round(twStockMv).toLocaleString()}`));
       setText('twStockSharePct', `${twStkShare.toFixed(1)}%`);
-      setText('twStockEquityPct', `${((twStockMv / safeEquity) * 100).toFixed(1)}%`);
+      setText('twStockEquityPct', `${twStkEqPct.toFixed(1)}%`);
 
-      setText('usStockAssetPct', `${((usStockMv / safeTotal) * 100).toFixed(1)}%`);
       setText('usStockMvVal', formatMasked(`NT$${Math.round(usStockMv).toLocaleString()}`));
       setText('usStockSharePct', `${usStkShare.toFixed(1)}%`);
-      setText('usStockEquityPct', `${((usStockMv / safeEquity) * 100).toFixed(1)}%`);
+      setText('usStockEquityPct', `${usStkEqPct.toFixed(1)}%`);
 
-      // 核心策略目標比例試算
-      setText('valEtfCurrent', formatMasked(`NT$${Math.round(totalEtfMv).toLocaleString()}`));
-      setText('valSingleCurrent', formatMasked(`NT$${Math.round(totalStockMv).toLocaleString()}`));
-
-      const targetEtfMv = totalMv * (targetEtfRatio / 100);
+      // 二合一核心策略試算（統一採用「股票總市值 totalEquityMv」為分母，對齊佔股票 %）
+      setText('etfTargetLabelPct', `距離 ${targetEtfRatio}% 目標差額:`);
+      const targetEtfMv = totalEquityMv * (targetEtfRatio / 100);
       const etfGap = targetEtfMv - totalEtfMv;
       const gapEtfEl = document.getElementById('gapEtfText');
       if (gapEtfEl) {
@@ -2265,14 +2356,15 @@
           gapEtfEl.innerText = '••••••';
         } else if (etfGap > 0) {
           gapEtfEl.innerText = `需再加碼 +NT$${Math.round(etfGap).toLocaleString()}`;
-          gapEtfEl.className = 'text-xs sm:text-sm font-black font-mono text-amber-400 block mt-0.5';
+          gapEtfEl.className = 'text-xs sm:text-sm font-black font-mono text-amber-400';
         } else {
           gapEtfEl.innerText = `已達標超出 +NT$${Math.round(Math.abs(etfGap)).toLocaleString()}`;
-          gapEtfEl.className = 'text-xs sm:text-sm font-black font-mono text-emerald-400 block mt-0.5';
+          gapEtfEl.className = 'text-xs sm:text-sm font-black font-mono text-emerald-400';
         }
       }
 
-      const maxSingleMv = totalMv * 0.15;
+      setText('singleLimitLabelPct', `對比 ${maxSingleRatio}% 上限水位:`);
+      const maxSingleMv = totalEquityMv * (maxSingleRatio / 100);
       const singleGap = totalStockMv - maxSingleMv;
       const gapSingleEl = document.getElementById('gapSingleText');
       if (gapSingleEl) {
@@ -2280,10 +2372,10 @@
           gapSingleEl.innerText = '••••••';
         } else if (singleGap > 0) {
           gapSingleEl.innerText = `超重 +NT$${Math.round(singleGap).toLocaleString()} (宜止盈)`;
-          gapSingleEl.className = 'text-xs sm:text-sm font-black font-mono text-rose-400 block mt-0.5';
+          gapSingleEl.className = 'text-xs sm:text-sm font-black font-mono text-rose-400';
         } else {
           gapSingleEl.innerText = `安全空間 +NT$${Math.round(Math.abs(singleGap)).toLocaleString()}`;
-          gapSingleEl.className = 'text-xs sm:text-sm font-black font-mono text-emerald-400 block mt-0.5';
+          gapSingleEl.className = 'text-xs sm:text-sm font-black font-mono text-emerald-400';
         }
       }
 
@@ -2306,7 +2398,6 @@
       const legTotal = document.getElementById('legPlanTotalOnly');
       if (legTotal) legTotal.innerText = isPrivacyMasked ? '••••' : `${(totalMv / 10000).toFixed(1)}萬`;
 
-      // 即時更新第三頁每列市值下方的佔總資產百分比，並渲染第二頁個別標的佔比排行
       holdings.forEach(h => {
         const sh = parseFloat(h.shares) || 0;
         const cur = parseFloat(h.currentPrice) || 0;
@@ -2319,7 +2410,6 @@
       });
 
       renderHoldingsWeightRanking(totalMv, totalEquityMv);
-
       renderSvgDonutChart(twMv, usMv, effectiveIbMv, cashTotal);
 
       if (renderTable) renderHoldingsTable(totalMv);
@@ -2332,7 +2422,7 @@
       }
     }
 
-    /* 精準現金流內部報酬率 (XIRR) 演算法：扣除每月本金增減時間權重，計算真實年化投資報酬率 */
+    /* 精準現金流內部報酬率 (XIRR) 演算法 */
     function calculatePortfolioXIRR(currentEquityMv) {
       if (!historyMonthlyData || historyMonthlyData.length === 0) return 0;
 
@@ -2389,6 +2479,42 @@
       recalculateAll(false);
     }
 
+    function getCategoryTheme(market, category) {
+      if (market === 'IB') {
+        return {
+          barClass: 'bg-purple-400',
+          textClass: 'text-purple-400',
+          pillClass: 'bg-purple-500/15 text-purple-300 border-purple-500/30'
+        };
+      }
+      if (market === 'TW' && category === 'ETF') {
+        return {
+          barClass: 'bg-emerald-400',
+          textClass: 'text-emerald-400',
+          pillClass: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30'
+        };
+      }
+      if (market === 'US' && category === 'ETF') {
+        return {
+          barClass: 'bg-sky-400',
+          textClass: 'text-sky-400',
+          pillClass: 'bg-sky-500/15 text-sky-300 border-sky-500/30'
+        };
+      }
+      if (market === 'TW') {
+        return {
+          barClass: 'bg-amber-400',
+          textClass: 'text-amber-400',
+          pillClass: 'bg-amber-500/15 text-amber-300 border-amber-500/30'
+        };
+      }
+      return {
+        barClass: 'bg-rose-400',
+        textClass: 'text-rose-400',
+        pillClass: 'bg-rose-500/15 text-rose-300 border-rose-500/30'
+      };
+    }
+
     function renderHoldingsWeightRanking(totalMv, totalEquityMv) {
       const container = document.getElementById('individualWeightRankingList');
       const btnText = document.getElementById('textToggleWeightRanking');
@@ -2421,12 +2547,8 @@
       const maxPct = ranked.length > 0 ? Math.max(ranked[0].assetPct, 0.1) : 1;
 
       container.innerHTML = ranked.map((item, idx) => {
-        const isEtf = item.category === 'ETF';
+        const theme = getCategoryTheme(item.market, item.category);
         const barWidth = Math.min((item.assetPct / maxPct) * 100, 100);
-        const barColor = isEtf
-          ? 'bg-gradient-to-r from-cyan-400 to-teal-400'
-          : 'bg-gradient-to-r from-amber-400 to-orange-400';
-        const pctColor = isEtf ? 'text-cyan-300' : 'text-amber-300';
         const rankBadgeClass = idx === 0
           ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
           : idx === 1
@@ -2449,15 +2571,15 @@
               <div class="flex items-center justify-between gap-1.5">
                 <div class="flex items-center gap-1.5 min-w-0">
                   <span class="font-mono font-black text-xs sm:text-sm text-white shrink-0">${flag} ${item.symbol}</span>
-                  <span class="text-[11px] sm:text-xs text-slate-400 truncate">${item.name}</span>
+                  <span class="text-[11px] sm:text-xs text-slate-300 truncate">${item.name}</span>
                 </div>
                 <div class="flex items-baseline gap-1.5 font-mono shrink-0">
-                  <span class="text-xs sm:text-sm font-black ${pctColor}">${dispAssetPct}</span>
-                  <span class="text-[10px] text-slate-500">${dispEquityPct}</span>
+                  <span class="text-xs sm:text-sm font-black ${theme.textClass}">${dispAssetPct}</span>
+                  <span class="text-[10px] text-slate-400">${dispEquityPct}</span>
                 </div>
               </div>
               <div class="w-full h-1.5 rounded-full bg-slate-950 overflow-hidden">
-                <div class="h-full rounded-full ${barColor} transition-all duration-300" style="width: ${isPrivacyMasked ? 0 : barWidth.toFixed(1)}%"></div>
+                <div class="h-full rounded-full ${theme.barClass} transition-all duration-300" style="width: ${isPrivacyMasked ? 0 : barWidth.toFixed(1)}%"></div>
               </div>
             </div>
           </div>
@@ -2490,10 +2612,10 @@
       });
 
       const groups = [
-        { key: 'TW-ETF', title: '🇹🇼 台股 ETF', badgeColor: 'bg-teal-500/15 text-teal-300 border-teal-500/30', match: h => h.market === 'TW' && h.category === 'ETF' },
+        { key: 'TW-ETF', title: '🇹🇼 台股 ETF', badgeColor: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30', match: h => h.market === 'TW' && h.category === 'ETF' },
         { key: 'TW-STOCK', title: '🇹🇼 台股個股', badgeColor: 'bg-amber-500/15 text-amber-300 border-amber-500/30', match: h => h.market === 'TW' && h.category === 'STOCK' },
         { key: 'US-ETF', title: '🇺🇸 美股 ETF', badgeColor: 'bg-sky-500/15 text-sky-300 border-sky-500/30', match: h => h.market === 'US' && h.category === 'ETF' },
-        { key: 'US-STOCK', title: '🇺🇸 美股個股', badgeColor: 'bg-orange-500/15 text-orange-300 border-orange-500/30', match: h => h.market === 'US' && h.category === 'STOCK' },
+        { key: 'US-STOCK', title: '🇺🇸 美股個股', badgeColor: 'bg-rose-500/15 text-rose-300 border-rose-500/30', match: h => h.market === 'US' && h.category === 'STOCK' },
         { key: 'IB-ALL', title: '🌐 IB 海外部位', badgeColor: 'bg-purple-500/15 text-purple-300 border-purple-500/30', match: h => h.market === 'IB' }
       ];
 
@@ -2525,18 +2647,19 @@
 
         html += `
           <tr class="bg-slate-950/90 border-t border-b border-slate-800">
-            <td colspan="7" class="py-1.5 px-2 sm:px-3.5">
-              <div class="flex items-center justify-between gap-1 text-[11px] sm:text-xs">
-                <div class="flex items-center gap-1.5 shrink-0">
+            <td colspan="7" class="py-1.5 px-1.5 sm:px-3.5">
+              <div class="flex items-center justify-between flex-wrap gap-x-1.5 gap-y-0.5 text-[10px] sm:text-xs">
+                <div class="flex items-center gap-1 shrink-0">
                   <span class="px-1.5 py-0.5 rounded-md font-bold border ${grp.badgeColor}">
                     ${grp.title}
                   </span>
-                  <span class="text-slate-400 font-mono text-[10px]">(${groupHoldings.length}檔 · ${subAssetPct.toFixed(1)}%)</span>
+                  <span class="text-white font-mono text-[10px] sm:text-xs">(${groupHoldings.length}檔·<b class="text-slate-200">${subAssetPct.toFixed(1)}%</b>)</span>
                 </div>
-                <div class="flex items-center gap-2 font-mono text-[11px] sm:text-xs truncate">
-                  <span class="text-slate-400">小計:<b class="text-white font-bold ml-0.5">${formatMasked('NT$' + Math.round(subMv).toLocaleString())}</b></span>
+                <div class="flex items-center gap-1 sm:gap-2 font-mono text-[10px] sm:text-xs ml-auto whitespace-nowrap">
+                  <span class="hidden sm:inline text-white">小計:</span>
+                  <b class="text-white font-bold">${formatMasked('NT$' + Math.round(subMv).toLocaleString())}</b>
                   <span class="${subPnl >= 0 ? 'text-rose-400' : 'text-emerald-400'} font-bold">
-                    ${maskedSubPnl} (${subPnl >= 0 ? '+' : ''}${subPnlPct.toFixed(1)}%)
+                    ${maskedSubPnl}(${subPnl >= 0 ? '+' : ''}${subPnlPct.toFixed(1)}%)
                   </span>
                 </div>
               </div>
@@ -2568,6 +2691,7 @@
             ? (pnlNtd >= 0 ? '+••••' : '-••••')
             : `${pnlNtd >= 0 ? '+' : ''}${Math.round(pnlNtd).toLocaleString()}`;
           const googleFinanceUrl = getGoogleFinanceUrl(h.symbol, h.market);
+          const theme = getCategoryTheme(h.market, h.category);
 
           html += `
             <tr class="hover:bg-slate-800/35 transition">
@@ -2577,9 +2701,9 @@
                     <span class="truncate">${h.symbol}</span>
                     <i class="fa-solid fa-arrow-up-right-from-square text-[9px] sm:text-[10px] text-cyan-400 group-hover:text-cyan-300 shrink-0"></i>
                   </a>
-                  <span class="hidden sm:inline-block text-[10px] px-1.5 py-0.2 rounded shrink-0 ${h.category === 'ETF' ? 'bg-cyan-500/15 text-cyan-300' : 'bg-amber-500/15 text-amber-300'}">${h.category}</span>
+                  <span class="hidden sm:inline-block text-[10px] px-1.5 py-0.2 rounded border shrink-0 ${theme.pillClass}">${h.category}</span>
                 </div>
-                <span class="text-[10px] sm:text-xs text-slate-400 font-sans block truncate">${h.name}</span>
+                <span class="text-[10px] sm:text-xs text-slate-300 font-sans block truncate">${h.name}</span>
               </td>
 
               <td class="py-2 px-0.5 sm:px-2 text-right align-middle">
@@ -2604,7 +2728,7 @@
 
               <td class="py-2 px-1 sm:px-3 text-right font-black text-white text-xs sm:text-sm tracking-tighter sm:tracking-normal align-middle">
                 <span id="rowMv-${h.id}" class="block leading-tight">${maskedRowMv}</span>
-                <span id="rowPct-${h.id}" class="block text-[9px] sm:text-[10px] leading-tight text-cyan-400 font-semibold">${maskedRowWeight}</span>
+                <span id="rowPct-${h.id}" class="block text-[9px] sm:text-[10px] leading-tight text-slate-400 font-semibold">${maskedRowWeight}</span>
               </td>
 
               <td id="rowPnl-${h.id}" class="py-2 px-1 sm:px-3 text-right text-[11px] sm:text-xs font-bold tracking-tighter sm:tracking-normal align-middle">
@@ -2647,6 +2771,7 @@
         activeBtn.classList.add('bg-cyan-600', 'text-white', 'shadow');
       }
       renderSvgLineChart();
+      updateIndicesDisplay();
     }
 
     function formatSignedPctText(val) {
@@ -2802,32 +2927,32 @@
       };
 
       if (activeTimeframe === '1W') {
-        chartData.title = `自然當週：本週一至今日`;
-        chartData.labels = ['週一', '週二', '週三', '週四', '今日/週五'];
-        chartData.fullLabels = ['週一', '週二', '週三', '週四', '今日/週五'];
+        chartData.title = `自然當週：近 5 交易日至今日`;
+        chartData.labels = ['D-4', 'D-3', 'D-2', 'D-1', '今日'];
+        chartData.fullLabels = ['5日前', '4日前', '3日前', '昨日', '今日'];
         chartData.alpha = [0.0, 0.25, -0.15, 0.42, 0.58];
 
-        const sTaiex = liveSyncedMetrics['1W'].taiex !== null ? liveSyncedMetrics['1W'].taiex : 0.85;
+        const sTaiex = liveSyncedMetrics['1W'].taiex !== null ? liveSyncedMetrics['1W'].taiex : -8.86;
         const sSp = liveSyncedMetrics['1W'].sp500 !== null ? liveSyncedMetrics['1W'].sp500 : 0.31;
         const sNas = liveSyncedMetrics['1W'].nasdaq !== null ? liveSyncedMetrics['1W'].nasdaq : 1.09;
 
-        chartData.taiex = [0.0, 0.35, -0.20, 0.50, sTaiex];
+        chartData.taiex = [0.0, sTaiex * 0.25, sTaiex * 0.55, sTaiex * 0.80, sTaiex];
         chartData.sp500 = [0.0, -0.10, 0.15, -0.05, sSp];
         chartData.nasdaq = [0.0, -0.25, 0.40, 0.30, sNas];
 
       } else if (activeTimeframe === '1M') {
-        chartData.title = `自然當月：${curMonth}/01 至今日`;
+        chartData.title = `自然當月：近 1 個月至今日`;
         chartData.labels = [`${curMonth}/01`, `${curMonth}/04`, `${curMonth}/07`, `${curMonth}/10`, '今日'];
         chartData.fullLabels = [`${curMonth}/01`, `${curMonth}/04`, `${curMonth}/07`, `${curMonth}/10`, '今日'];
 
         const mtdAlpha = ((curTotalMv - NOV_01_MV) / NOV_01_MV) * 100;
         chartData.alpha = [0.0, 0.35, -0.42, 0.15, parseFloat(mtdAlpha.toFixed(2))];
 
-        const sTaiex = liveSyncedMetrics['1M'].taiex !== null ? liveSyncedMetrics['1M'].taiex : 1.25;
+        const sTaiex = liveSyncedMetrics['1M'].taiex !== null ? liveSyncedMetrics['1M'].taiex : -11.32;
         const sSp = liveSyncedMetrics['1M'].sp500 !== null ? liveSyncedMetrics['1M'].sp500 : 0.45;
         const sNas = liveSyncedMetrics['1M'].nasdaq !== null ? liveSyncedMetrics['1M'].nasdaq : 0.88;
 
-        chartData.taiex = [0.0, 0.65, -0.30, 0.85, sTaiex];
+        chartData.taiex = [0.0, sTaiex * 0.20, sTaiex * 0.45, sTaiex * 0.75, sTaiex];
         chartData.sp500 = [0.0, 0.20, -0.15, 0.30, sSp];
         chartData.nasdaq = [0.0, 0.40, -0.20, 0.60, sNas];
 
@@ -2857,6 +2982,41 @@
           chartData.nasdaq = [0.0, 0.9, 1.8, 2.4];
         }
 
+      } else if (activeTimeframe === '6M') {
+        const slice6M = historyMonthlyData.slice(-7);
+        const start6M = slice6M[0] || { date: '2026/5/9', total: 2238459 };
+        chartData.title = `近半年走勢：${start6M.date} 至今日 (6M)`;
+
+        chartData.labels = slice6M.map(h => {
+          const parts = h.date.split('/');
+          return parts.length >= 2 ? `${parts[1]}月` : h.date;
+        }).concat(['今日']);
+
+        chartData.fullLabels = slice6M.map(h => {
+          const parts = h.date.split('/');
+          return parts.length >= 3 ? `${parts[1]}/${parts[2]} (${parts[1]}月)` : h.date;
+        }).concat(['今日']);
+
+        const base6M = Math.max(start6M.total, 1);
+        const monthly6MAlpha = slice6M.map(h => parseFloat((((h.total - base6M) / base6M) * 100).toFixed(2)));
+        const current6MAlpha = parseFloat((((curTotalMv - base6M) / base6M) * 100).toFixed(2));
+        chartData.alpha = [...monthly6MAlpha, current6MAlpha];
+
+        const sTaiex = liveSyncedMetrics['6M'].taiex !== null ? liveSyncedMetrics['6M'].taiex : 12.40;
+        const sSp = liveSyncedMetrics['6M'].sp500 !== null ? liveSyncedMetrics['6M'].sp500 : 3.80;
+        const sNas = liveSyncedMetrics['6M'].nasdaq !== null ? liveSyncedMetrics['6M'].nasdaq : 4.20;
+
+        const weights6M = [0.0, 0.38, 0.72, 0.40, 0.88, 1.32, 0.92, 1.0];
+        const build6MCurve = (endVal) => weights6M.map((w, i) => {
+          if (i === 0) return 0.0;
+          if (i === weights6M.length - 1) return parseFloat(Number(endVal).toFixed(2));
+          return parseFloat((endVal * w).toFixed(2));
+        });
+
+        chartData.taiex = build6MCurve(sTaiex);
+        chartData.sp500 = build6MCurve(sSp);
+        chartData.nasdaq = build6MCurve(sNas);
+
       } else {
         chartData.title = `自然年度：${curYear} 年初至今日`;
         chartData.labels = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '今日'];
@@ -2872,13 +3032,13 @@
         const currentYtd = parseFloat((((curTotalMv - startYearTotal) / startYearTotal) * 100).toFixed(2));
         chartData.alpha = [...monthlyAlphaSeries, currentYtd];
 
-        const sTaiex = liveSyncedMetrics['YTD'].taiex !== null ? liveSyncedMetrics['YTD'].taiex : 45.53;
-        const sSp = liveSyncedMetrics['YTD'].sp500 !== null ? liveSyncedMetrics['YTD'].sp500 : 9.66;
+        const sTaiex = liveSyncedMetrics['YTD'].taiex !== null ? liveSyncedMetrics['YTD'].taiex : 36.60;
+        const sSp = liveSyncedMetrics['YTD'].sp500 !== null ? liveSyncedMetrics['YTD'].sp500 : 8.34;
         const sNas = liveSyncedMetrics['YTD'].nasdaq !== null ? liveSyncedMetrics['YTD'].nasdaq : 7.88;
 
-        chartData.taiex  = [0.0, 2.40, 5.85, 11.20, 20.90, 28.40, 35.15, 28.64, 37.80, 46.54, 45.53, sTaiex];
-        chartData.sp500  = [0.0, 1.35, 2.45,  4.60,  7.85,  9.55, 11.25, 11.12, 11.18, 11.22,  9.66, sSp];
-        chartData.nasdaq = [0.0, 1.10, 2.15,  3.85,  6.60,  8.75, 10.85,  9.72,  9.30,  8.85,  7.88, sNas];
+        chartData.taiex  = [0.0, 2.40, 5.85, 11.20, 20.90, 28.40, 35.15, 28.64, 37.80, 46.54, 38.20, sTaiex];
+        chartData.sp500  = [0.0, 1.35, 2.45,  4.60,  7.85,  9.55, 11.25, 11.12, 11.18, 11.22,  9.10, sSp];
+        chartData.nasdaq = [0.0, 1.10, 2.15,  3.85,  6.60,  8.75, 10.85,  9.72,  9.30,  8.85,  8.15, sNas];
       }
 
       const periodLabelEl = document.getElementById('currentPeriodLabel');
@@ -2963,7 +3123,7 @@
       const pathSp500 = makePath(chartData.sp500);
       const pathNasdaq = makePath(chartData.nasdaq);
 
-      const xFontSize = (chartData.labels.length > 8 && W < 520) ? '9' : '11';
+      const xFontSize = (chartData.labels.length > 7 && W < 520) ? '9' : '11';
       const xGrid = chartData.labels.map((lbl, i) => {
         const x = getX(i);
         return `
@@ -3040,8 +3200,17 @@
 
     function handleSliderChange(val) {
       targetEtfRatio = parseFloat(val) || 60;
+      safeStorage.setItem('eddie_portfolio_etf_target', targetEtfRatio);
       const disp = document.getElementById('displaySliderVal');
       if (disp) disp.innerText = `${targetEtfRatio}%`;
+      recalculateAll(false);
+    }
+
+    function handleSingleSliderChange(val) {
+      maxSingleRatio = parseFloat(val) || 20;
+      safeStorage.setItem('eddie_portfolio_single_limit', maxSingleRatio);
+      const disp = document.getElementById('displaySingleSliderVal');
+      if (disp) disp.innerText = `${maxSingleRatio}%`;
       recalculateAll(false);
     }
 
@@ -3113,12 +3282,8 @@
       planChartPoints.forEach((p, i) => {
         const c = document.getElementById(`planPointCircle-${i}`);
         const lbl = document.getElementById(`planXLabel-${i}`);
-        if (c) {
-          c.setAttribute('opacity', i === idx ? '1' : '0');
-        }
-        if (lbl) {
-          lbl.setAttribute('fill', i === idx ? '#fbbf24' : '#94a3b8');
-        }
+        if (c) c.setAttribute('opacity', i === idx ? '1' : '0');
+        if (lbl) lbl.setAttribute('fill', i === idx ? '#fbbf24' : '#94a3b8');
       });
 
       const wanStr = isPrivacyMasked ? '••••' : `${(pt.total / 10000).toFixed(1)}萬`;
