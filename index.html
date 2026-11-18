@@ -268,8 +268,8 @@
             <span class="text-white truncate">標普: <b id="legendSp500Val" class="text-sky-400">+8.34%</b></span>
           </div>
           <div class="flex items-center gap-1.5 p-2 rounded-xl bg-slate-950 border border-slate-800 truncate">
-            <span class="w-2.5 h-2.5 rounded-full bg-purple-400 shrink-0"></span>
-            <span class="text-white truncate">那指: <b id="legendNasdaqVal" class="text-purple-400">+7.88%</b></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-fuchsia-400 shrink-0"></span>
+            <span class="text-white truncate">那指: <b id="legendNasdaqVal" class="text-fuchsia-400">+7.88%</b></span>
           </div>
         </div>
 
@@ -284,7 +284,7 @@
             <div class="flex items-center gap-2.5 text-[10px]">
               <span>加權 <b id="ttMainTaiex" class="text-emerald-400">+46.54%</b></span>
               <span>標普 <b id="ttMainSp500" class="text-sky-400">+11.22%</b></span>
-              <span>那指 <b id="ttMainNasdaq" class="text-purple-400">+8.85%</b></span>
+              <span>那指 <b id="ttMainNasdaq" class="text-fuchsia-400">+8.85%</b></span>
             </div>
           </div>
         </div>
@@ -342,7 +342,7 @@
           </div>
         </div>
 
-        <!-- 總資產階層：1. 現金 vs 2. 股票（SVG 甜甜圈圖 + 四大部位卡片） -->
+        <!-- 總資產階層（統一色系：台股=暖金橘 amber/orange｜美股=冷藍 sky/indigo｜IB=洋紅紫 fuchsia｜現金=翠綠 emerald） -->
         <div class="p-3 sm:p-6 rounded-2xl bg-slate-950/80 border border-slate-800">
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-center">
             
@@ -360,18 +360,18 @@
             <!-- 右側：四大核心部位卡片 (2x2 排列；點擊可聚焦，點擊旁邊空白處或再點一次恢復整體) -->
             <div class="lg:col-span-7 grid grid-cols-2 gap-2.5 sm:gap-3.5 items-stretch">
               
-              <!-- 🇹🇼 台股 -->
+              <!-- 🇹🇼 台股（暖金橘色系：主色 amber-400，內分台股ETF amber-400 與台股個股 orange-400） -->
               <div id="cardBoxTw" data-donut-interactive="true"
-                   class="p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800/90 shadow cursor-pointer transition-all duration-300 flex flex-col justify-between h-full hover:border-cyan-400 select-none"
+                   class="p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800/90 shadow cursor-pointer transition-all duration-300 flex flex-col justify-between h-full hover:border-amber-400 select-none"
                    onclick="toggleSegmentHighlight('tw', event)"
                    onmouseenter="handleDonutHover('tw')"
                    onmouseleave="handleDonutLeave()">
                 <div class="flex items-center justify-between gap-1">
                   <span class="text-xs sm:text-base font-black text-white flex items-center gap-1.5 truncate">
-                    <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-gradient-to-r from-cyan-400 to-teal-300 shrink-0 shadow-sm shadow-cyan-400/60"></span>
+                    <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-amber-400 shrink-0 shadow-sm shadow-amber-400/60"></span>
                     🇹🇼 台股
                   </span>
-                  <span id="cardPctTw" class="text-xs sm:text-base font-mono font-black text-cyan-300 shrink-0">35.7%</span>
+                  <span id="cardPctTw" class="text-xs sm:text-base font-mono font-black text-amber-300 shrink-0">35.7%</span>
                 </div>
                 <span id="cardMvTw" class="text-base sm:text-2xl font-black font-mono text-white block tracking-tight my-1.5 truncate">NT$840,678</span>
                 <div class="text-[11px] sm:text-sm text-slate-400 flex items-center justify-between pt-1.5 border-t border-slate-800/80 font-medium">
@@ -380,7 +380,7 @@
                 </div>
               </div>
 
-              <!-- 🇺🇸 美股 -->
+              <!-- 🇺🇸 美股（冷藍靛色系：主色 sky-400，內分美股ETF sky-400 與美股個股 indigo-400） -->
               <div id="cardBoxUs" data-donut-interactive="true"
                    class="p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800/90 shadow cursor-pointer transition-all duration-300 flex flex-col justify-between h-full hover:border-sky-400 select-none"
                    onclick="toggleSegmentHighlight('us', event)"
@@ -388,7 +388,7 @@
                    onmouseleave="handleDonutLeave()">
                 <div class="flex items-center justify-between gap-1">
                   <span class="text-xs sm:text-base font-black text-white flex items-center gap-1.5 truncate">
-                    <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-gradient-to-r from-sky-400 to-blue-400 shrink-0 shadow-sm shadow-sky-400/60"></span>
+                    <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-sky-400 shrink-0 shadow-sm shadow-sky-400/60"></span>
                     🇺🇸 美股
                   </span>
                   <span id="cardPctUs" class="text-xs sm:text-base font-mono font-black text-sky-300 shrink-0">31.3%</span>
@@ -400,18 +400,18 @@
                 </div>
               </div>
 
-              <!-- 🌐 IB 部位 -->
+              <!-- 🌐 IB 部位（專屬亮洋紅紫 fuchsia-400） -->
               <div id="cardBoxIb" data-donut-interactive="true"
-                   class="p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800/90 shadow cursor-pointer transition-all duration-300 flex flex-col justify-between h-full hover:border-purple-400 select-none"
+                   class="p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800/90 shadow cursor-pointer transition-all duration-300 flex flex-col justify-between h-full hover:border-fuchsia-400 select-none"
                    onclick="toggleSegmentHighlight('ib', event)"
                    onmouseenter="handleDonutHover('ib')"
                    onmouseleave="handleDonutLeave()">
                 <div class="flex items-center justify-between gap-1">
                   <span class="text-xs sm:text-base font-black text-white flex items-center gap-1.5 truncate">
-                    <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-gradient-to-r from-fuchsia-400 to-purple-400 shrink-0 shadow-sm shadow-purple-400/60"></span>
+                    <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-fuchsia-400 shrink-0 shadow-sm shadow-fuchsia-400/60"></span>
                     🌐 IB
                   </span>
-                  <span id="cardPctIb" class="text-xs sm:text-base font-mono font-black text-purple-300 shrink-0">11.4%</span>
+                  <span id="cardPctIb" class="text-xs sm:text-base font-mono font-black text-fuchsia-300 shrink-0">11.4%</span>
                 </div>
                 <span id="cardMvIb" class="text-base sm:text-2xl font-black font-mono text-white block tracking-tight my-1.5 truncate">NT$268,234</span>
                 <div class="text-[11px] sm:text-sm text-slate-400 flex items-center justify-between pt-1.5 border-t border-slate-800/80 font-medium">
@@ -420,7 +420,7 @@
                 </div>
               </div>
 
-              <!-- 💵 現金活存 -->
+              <!-- 💵 現金活存（專屬翠綠色 emerald-400，股票部位完全不重複使用） -->
               <div id="cardBoxCash" data-donut-interactive="true"
                    class="p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800/90 shadow cursor-pointer transition-all duration-300 flex flex-col justify-between h-full hover:border-emerald-400 select-none"
                    onclick="toggleSegmentHighlight('cash', event)"
@@ -428,7 +428,7 @@
                    onmouseleave="handleDonutLeave()">
                 <div class="flex items-center justify-between gap-1">
                   <span class="text-xs sm:text-base font-black text-white flex items-center gap-1.5 truncate">
-                    <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-gradient-to-r from-emerald-400 to-teal-300 shrink-0 shadow-sm shadow-emerald-400/60"></span>
+                    <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-emerald-400 shrink-0 shadow-sm shadow-emerald-400/60"></span>
                     💵 現金
                   </span>
                   <span id="cardPctCash" class="text-xs sm:text-base font-mono font-black text-emerald-300 shrink-0">21.6%</span>
@@ -462,7 +462,7 @@
             </div>
           </div>
 
-          <!-- 股票部位內部結構（大盤 ETF · 個股 · IB） -->
+          <!-- 股票部位內部結構（台股色系：amber-400 / orange-400 ｜ 美股色系：sky-400 / indigo-400 ｜ IB：fuchsia-400） -->
           <div class="p-3 sm:p-4 rounded-2xl bg-slate-900/75 border border-slate-800/90 space-y-2.5">
             <div class="flex items-center justify-between flex-wrap gap-1">
               <span class="text-xs sm:text-sm font-black text-white">
@@ -473,31 +473,31 @@
                 <span class="text-slate-600">·</span>
                 <span>個股: <b id="topSummaryStockPct" class="text-white">38.1%</b></span>
                 <span class="text-slate-600">·</span>
-                <span>IB: <b id="topSummaryIbPct" class="text-purple-400">14.5%</b></span>
+                <span>IB: <b id="topSummaryIbPct" class="text-fuchsia-400">14.5%</b></span>
               </div>
             </div>
 
             <div class="w-full h-3.5 rounded-full bg-slate-950 overflow-hidden flex border border-slate-800">
-              <div id="barTopTwEtf" class="h-full bg-emerald-400 transition-all duration-300" style="width: 24.9%"></div>
+              <div id="barTopTwEtf" class="h-full bg-amber-400 transition-all duration-300" style="width: 24.9%"></div>
+              <div id="barTopTwStock" class="h-full bg-orange-400 transition-all duration-300" style="width: 20.7%"></div>
               <div id="barTopUsEtf" class="h-full bg-sky-400 transition-all duration-300" style="width: 22.5%"></div>
-              <div id="barTopTwStock" class="h-full bg-amber-400 transition-all duration-300" style="width: 20.7%"></div>
-              <div id="barTopUsStock" class="h-full bg-rose-400 transition-all duration-300" style="width: 17.5%"></div>
-              <div id="barTopIb" class="h-full bg-purple-400 transition-all duration-300" style="width: 14.5%"></div>
+              <div id="barTopUsStock" class="h-full bg-indigo-400 transition-all duration-300" style="width: 17.5%"></div>
+              <div id="barTopIb" class="h-full bg-fuchsia-400 transition-all duration-300" style="width: 14.5%"></div>
             </div>
 
             <div class="flex items-center gap-3 sm:gap-4 flex-wrap text-xs sm:text-[13px] font-mono font-bold text-slate-200 pt-0.5">
-              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-400 shrink-0"></span>台股ETF <b id="topLegTwEtf" class="text-emerald-400">24.9%</b></span>
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-400 shrink-0"></span>台股ETF <b id="topLegTwEtf" class="text-amber-400">24.9%</b></span>
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-orange-400 shrink-0"></span>台股個股 <b id="topLegTwStock" class="text-orange-400">20.7%</b></span>
               <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-sky-400 shrink-0"></span>美股ETF <b id="topLegUsEtf" class="text-sky-400">22.5%</b></span>
-              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-400 shrink-0"></span>台股個股 <b id="topLegTwStock" class="text-amber-400">20.7%</b></span>
-              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-rose-400 shrink-0"></span>美股個股 <b id="topLegUsStock" class="text-rose-400">17.5%</b></span>
-              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-purple-400 shrink-0"></span>IB <b id="topLegIb" class="text-purple-400">14.5%</b></span>
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-indigo-400 shrink-0"></span>美股個股 <b id="topLegUsStock" class="text-indigo-400">17.5%</b></span>
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-fuchsia-400 shrink-0"></span>IB <b id="topLegIb" class="text-fuchsia-400">14.5%</b></span>
             </div>
           </div>
 
           <!-- 大盤 ETF & 個股 雙欄明細＋目標試算卡片（現況＋目標二合一） -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
             
-            <!-- 1. 大盤 ETF 總數＋目標試算卡片（台股 ETF = 翠綠 emerald-400 / 美股 ETF = 天藍 sky-400） -->
+            <!-- 1. 大盤 ETF 總數＋目標試算卡片（台股 ETF = 琥珀金 amber-400 / 美股 ETF = 亮天藍 sky-400） -->
             <div class="p-3 sm:p-4 rounded-2xl bg-slate-900/95 border border-slate-800 space-y-3 flex flex-col justify-between">
               <div class="space-y-3">
                 <div class="flex items-center justify-between gap-2">
@@ -512,28 +512,28 @@
 
                 <div class="flex items-baseline justify-between flex-wrap gap-2">
                   <span id="etfBreakdownTotalMv" class="text-xl sm:text-2xl font-black font-mono text-white">NT$874,698</span>
-                  <span class="text-xs sm:text-sm font-mono text-white font-black">台美股比例 <span id="etfTwUsSplitText" class="text-sm sm:text-base"><b class="text-emerald-400">52.5%</b> <span class="text-slate-400">:</span> <b class="text-sky-400">47.5%</b></span></span>
+                  <span class="text-xs sm:text-sm font-mono text-white font-black">台美股比例 <span id="etfTwUsSplitText" class="text-sm sm:text-base"><b class="text-amber-400">52.5%</b> <span class="text-slate-400">:</span> <b class="text-sky-400">47.5%</b></span></span>
                 </div>
 
                 <!-- 台美股 ETF 雙色比例條 -->
                 <div class="w-full h-2.5 rounded-full bg-slate-950 overflow-hidden flex border border-slate-800/80">
-                  <div id="barTwEtf" class="h-full bg-emerald-400 transition-all duration-300" style="width: 52.5%"></div>
+                  <div id="barTwEtf" class="h-full bg-amber-400 transition-all duration-300" style="width: 52.5%"></div>
                   <div id="barUsEtf" class="h-full bg-sky-400 transition-all duration-300" style="width: 47.5%"></div>
                 </div>
 
                 <!-- 台股 ETF vs 美股 ETF 個別明細（手機版獨立分行、零溢出） -->
                 <div class="grid grid-cols-2 gap-2 pt-1">
-                  <!-- 🇹🇼 台股 ETF：專屬翠綠色 emerald-400 -->
+                  <!-- 🇹🇼 台股 ETF：專屬琥珀金 amber-400 -->
                   <div class="p-2.5 rounded-xl bg-slate-950/90 border border-slate-800 space-y-1.5 min-w-0">
                     <div class="flex items-center justify-between gap-1 text-xs font-bold">
-                      <span class="text-emerald-400 flex items-center gap-1 truncate"><span class="w-2 h-2 rounded-full bg-emerald-400 shrink-0"></span>🇹🇼 台股 ETF</span>
-                      <span class="hidden sm:inline font-mono text-slate-300 shrink-0">佔ETF <b id="twEtfSharePct" class="text-emerald-400">52.5%</b></span>
+                      <span class="text-amber-400 flex items-center gap-1 truncate"><span class="w-2 h-2 rounded-full bg-amber-400 shrink-0"></span>🇹🇼 台股 ETF</span>
+                      <span class="hidden sm:inline font-mono text-slate-300 shrink-0">佔ETF <b id="twEtfSharePct" class="text-amber-400">52.5%</b></span>
                     </div>
                     <span id="twEtfMvVal" class="text-[13px] sm:text-base font-black font-mono text-white block truncate">NT$459,224</span>
                     <div class="sm:hidden text-[11px] font-mono space-y-0.5 pt-1 border-t border-slate-800/80">
                       <div class="flex items-center justify-between text-slate-300">
                         <span>佔ETF</span>
-                        <b id="twEtfSharePctMobile" class="text-emerald-400">52.5%</b>
+                        <b id="twEtfSharePctMobile" class="text-amber-400">52.5%</b>
                       </div>
                       <div class="flex items-center justify-between text-slate-300">
                         <span>佔股票</span>
@@ -545,7 +545,7 @@
                     </div>
                   </div>
 
-                  <!-- 🇺🇸 美股 ETF：專屬天藍色 sky-400 -->
+                  <!-- 🇺🇸 美股 ETF：專屬亮天藍 sky-400 -->
                   <div class="p-2.5 rounded-xl bg-slate-950/90 border border-slate-800 space-y-1.5 min-w-0">
                     <div class="flex items-center justify-between gap-1 text-xs font-bold">
                       <span class="text-sky-400 flex items-center gap-1 truncate"><span class="w-2 h-2 rounded-full bg-sky-400 shrink-0"></span>🇺🇸 美股 ETF</span>
@@ -573,12 +573,12 @@
               <div class="p-3 rounded-xl bg-slate-950/90 border border-slate-800 space-y-2">
                 <div class="flex items-center justify-between text-xs font-bold">
                   <span class="text-white flex items-center gap-1.5">
-                    <i class="fa-solid fa-sliders text-emerald-400"></i>
+                    <i class="fa-solid fa-sliders text-cyan-400"></i>
                     大盤 ETF 目標佔股票比率:
                   </span>
-                  <span id="displaySliderVal" class="text-sm sm:text-base font-mono font-black text-emerald-400">60%</span>
+                  <span id="displaySliderVal" class="text-sm sm:text-base font-mono font-black text-cyan-300">60%</span>
                 </div>
-                <input type="range" min="30" max="80" step="5" value="60" id="etfRatioSlider" oninput="handleSliderChange(this.value)" class="w-full accent-emerald-500 cursor-pointer h-1.5 bg-slate-800 rounded-lg">
+                <input type="range" min="30" max="80" step="5" value="60" id="etfRatioSlider" oninput="handleSliderChange(this.value)" class="w-full accent-cyan-400 cursor-pointer h-1.5 bg-slate-800 rounded-lg">
                 <div class="flex justify-between text-[10px] text-slate-400 font-mono">
                   <span>30% 成長</span>
                   <span>60% 平衡</span>
@@ -591,7 +591,7 @@
               </div>
             </div>
 
-            <!-- 2. 個股部位總數＋上限監控卡片（台股個股 = 琥珀金 amber-400 / 美股個股 = 珊瑚粉 rose-400） -->
+            <!-- 2. 個股部位總數＋上限監控卡片（台股個股 = 亮橙橘 orange-400 / 美股個股 = 亮靛藍 indigo-400） -->
             <div class="p-3 sm:p-4 rounded-2xl bg-slate-900/95 border border-slate-800 space-y-3 flex flex-col justify-between">
               <div class="space-y-3">
                 <div class="flex items-center justify-between gap-2">
@@ -606,28 +606,28 @@
 
                 <div class="flex items-baseline justify-between flex-wrap gap-2">
                   <span id="stockBreakdownTotalMv" class="text-xl sm:text-2xl font-black font-mono text-white">NT$704,152</span>
-                  <span class="text-xs sm:text-sm font-mono text-white font-black">台美股比例 <span id="stockTwUsSplitText" class="text-sm sm:text-base"><b class="text-amber-400">54.2%</b> <span class="text-slate-400">:</span> <b class="text-rose-400">45.8%</b></span></span>
+                  <span class="text-xs sm:text-sm font-mono text-white font-black">台美股比例 <span id="stockTwUsSplitText" class="text-sm sm:text-base"><b class="text-orange-400">54.2%</b> <span class="text-slate-400">:</span> <b class="text-indigo-400">45.8%</b></span></span>
                 </div>
 
                 <!-- 台美股個股雙色比例條 -->
                 <div class="w-full h-2.5 rounded-full bg-slate-950 overflow-hidden flex border border-slate-800/80">
-                  <div id="barTwStock" class="h-full bg-amber-400 transition-all duration-300" style="width: 54.2%"></div>
-                  <div id="barUsStock" class="h-full bg-rose-400 transition-all duration-300" style="width: 45.8%"></div>
+                  <div id="barTwStock" class="h-full bg-orange-400 transition-all duration-300" style="width: 54.2%"></div>
+                  <div id="barUsStock" class="h-full bg-indigo-400 transition-all duration-300" style="width: 45.8%"></div>
                 </div>
 
                 <!-- 台股個股 vs 美股個股 個別明細（手機版獨立分行、零溢出） -->
                 <div class="grid grid-cols-2 gap-2 pt-1">
-                  <!-- 🇹🇼 台股個股：專屬琥珀金 amber-400 -->
+                  <!-- 🇹🇼 台股個股：專屬亮橙橘 orange-400 -->
                   <div class="p-2.5 rounded-xl bg-slate-950/90 border border-slate-800 space-y-1.5 min-w-0">
                     <div class="flex items-center justify-between gap-1 text-xs font-bold">
-                      <span class="text-amber-400 flex items-center gap-1 truncate"><span class="w-2 h-2 rounded-full bg-amber-400 shrink-0"></span>🇹🇼 台股個股</span>
-                      <span class="hidden sm:inline font-mono text-slate-300 shrink-0">佔個股 <b id="twStockSharePct" class="text-amber-400">54.2%</b></span>
+                      <span class="text-orange-400 flex items-center gap-1 truncate"><span class="w-2 h-2 rounded-full bg-orange-400 shrink-0"></span>🇹🇼 台股個股</span>
+                      <span class="hidden sm:inline font-mono text-slate-300 shrink-0">佔個股 <b id="twStockSharePct" class="text-orange-400">54.2%</b></span>
                     </div>
                     <span id="twStockMvVal" class="text-[13px] sm:text-base font-black font-mono text-white block truncate">NT$381,454</span>
                     <div class="sm:hidden text-[11px] font-mono space-y-0.5 pt-1 border-t border-slate-800/80">
                       <div class="flex items-center justify-between text-slate-300">
                         <span>佔個股</span>
-                        <b id="twStockSharePctMobile" class="text-amber-400">54.2%</b>
+                        <b id="twStockSharePctMobile" class="text-orange-400">54.2%</b>
                       </div>
                       <div class="flex items-center justify-between text-slate-300">
                         <span>佔股票</span>
@@ -639,17 +639,17 @@
                     </div>
                   </div>
 
-                  <!-- 🇺🇸 美股個股：專屬珊瑚粉 rose-400 -->
+                  <!-- 🇺🇸 美股個股：專屬亮靛藍 indigo-400 -->
                   <div class="p-2.5 rounded-xl bg-slate-950/90 border border-slate-800 space-y-1.5 min-w-0">
                     <div class="flex items-center justify-between gap-1 text-xs font-bold">
-                      <span class="text-rose-400 flex items-center gap-1 truncate"><span class="w-2 h-2 rounded-full bg-rose-400 shrink-0"></span>🇺🇸 美股個股</span>
-                      <span class="hidden sm:inline font-mono text-slate-300 shrink-0">佔個股 <b id="usStockSharePct" class="text-rose-400">45.8%</b></span>
+                      <span class="text-indigo-400 flex items-center gap-1 truncate"><span class="w-2 h-2 rounded-full bg-indigo-400 shrink-0"></span>🇺🇸 美股個股</span>
+                      <span class="hidden sm:inline font-mono text-slate-300 shrink-0">佔個股 <b id="usStockSharePct" class="text-indigo-400">45.8%</b></span>
                     </div>
                     <span id="usStockMvVal" class="text-[13px] sm:text-base font-black font-mono text-white block truncate">NT$322,697</span>
                     <div class="sm:hidden text-[11px] font-mono space-y-0.5 pt-1 border-t border-slate-800/80">
                       <div class="flex items-center justify-between text-slate-300">
                         <span>佔個股</span>
-                        <b id="usStockSharePctMobile" class="text-rose-400">45.8%</b>
+                        <b id="usStockSharePctMobile" class="text-indigo-400">45.8%</b>
                       </div>
                       <div class="flex items-center justify-between text-slate-300">
                         <span>佔股票</span>
@@ -667,12 +667,12 @@
               <div class="p-3 rounded-xl bg-slate-950/90 border border-slate-800 space-y-2">
                 <div class="flex items-center justify-between text-xs font-bold">
                   <span class="text-white flex items-center gap-1.5">
-                    <i class="fa-solid fa-shield-halved text-amber-400"></i>
+                    <i class="fa-solid fa-shield-halved text-cyan-400"></i>
                     個股部位佔股票上限:
                   </span>
-                  <span id="displaySingleSliderVal" class="text-sm sm:text-base font-mono font-black text-amber-400">20%</span>
+                  <span id="displaySingleSliderVal" class="text-sm sm:text-base font-mono font-black text-cyan-300">20%</span>
                 </div>
-                <input type="range" min="10" max="50" step="5" value="20" id="singleRatioSlider" oninput="handleSingleSliderChange(this.value)" class="w-full accent-amber-400 cursor-pointer h-1.5 bg-slate-800 rounded-lg">
+                <input type="range" min="10" max="50" step="5" value="20" id="singleRatioSlider" oninput="handleSingleSliderChange(this.value)" class="w-full accent-cyan-400 cursor-pointer h-1.5 bg-slate-800 rounded-lg">
                 <div class="flex justify-between text-[10px] text-slate-400 font-mono">
                   <span>10% 嚴控</span>
                   <span>25% 適中</span>
@@ -688,7 +688,7 @@
           </div>
         </div>
 
-        <!-- 個別標的資產佔比排行（同步套用五大類別色） -->
+        <!-- 個別標的資產佔比排行（同步套用同色系五大類別色） -->
         <div class="p-3 sm:p-5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3">
           <div onclick="toggleWeightRankingExpand()" class="flex items-center justify-between gap-2 cursor-pointer select-none">
             <h3 class="text-sm sm:text-base font-black text-white flex items-center gap-2">
@@ -705,7 +705,7 @@
           </div>
         </div>
 
-        <!-- 各大銀行活存明細 -->
+        <!-- 各大銀行活存明細（現金專屬翠綠色 emerald-400） -->
         <div class="p-3 sm:p-5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3">
           <div class="flex items-center justify-between flex-wrap gap-2">
             <h3 class="text-sm sm:text-base font-black text-white flex items-center gap-2">
@@ -915,9 +915,9 @@
                 <span id="ttPlanTotal" class="text-xs sm:text-sm font-black text-white">NT$1,833,198</span>
               </div>
               <div id="ttPlanBreakdown" class="grid grid-cols-2 gap-x-2 gap-y-0.5 text-[10px] text-slate-300 pt-0.5 border-t border-slate-800/70">
-                <span>台股: <b class="text-cyan-300">38.8萬</b></span>
+                <span>台股: <b class="text-amber-300">38.8萬</b></span>
                 <span>美股: <b class="text-sky-300">48.1萬</b></span>
-                <span>IB: <b class="text-purple-300">14.4萬</b></span>
+                <span>IB: <b class="text-fuchsia-300">14.4萬</b></span>
                 <span>現金: <b class="text-emerald-300">82.0萬</b></span>
               </div>
             </div>
@@ -1037,7 +1037,7 @@
           </div>
           <div>
             <label class="text-slate-300 block mb-1">當前市價:</label>
-            <input type="number" step="any" inputmode="decimal" id="newHoldCurrentPrice" oninput="this.dataset.autoFilled='0'; calculateAddHoldingPreview();" placeholder="市價" class="w-full py-2 px-3 rounded-xl bg-slate-950 border border-slate-700 text-emerald-400 font-mono font-bold focus:outline-none">
+            <input type="number" step="any" inputmode="decimal" id="newHoldCurrentPrice" oninput="this.dataset.autoFilled='0'; calculateAddHoldingPreview();" placeholder="市價" class="w-full py-2 px-3 rounded-xl bg-slate-950 border border-slate-700 text-cyan-300 font-mono font-bold focus:outline-none">
           </div>
         </div>
 
@@ -2006,16 +2006,16 @@
       }, { passive: true });
     }
 
-    /* 5. 第二頁甜甜圈圖與互動高亮（隔離 iOS 觸控模擬 mouseenter，點擊旁邊空白處即時恢復整體） */
+    /* 5. 第二頁甜甜圈圖與互動高亮（統一色系：台股暖金橘 amber / 美股冷藍 sky / IB亮洋紅紫 fuchsia / 現金翠綠 emerald） */
     let activeDonutKey = null;
     let activeDonutSource = null;
     let lastTouchTimestamp = 0;
     let latestDonutState = {
       total: 2355244,
       segments: {
-        tw: { label: '🇹🇼 台股', val: 840678, pct: 35.7, cardId: 'cardBoxTw', activeBorder: 'border-cyan-400', subColor: 'text-cyan-300' },
+        tw: { label: '🇹🇼 台股', val: 840678, pct: 35.7, cardId: 'cardBoxTw', activeBorder: 'border-amber-400', subColor: 'text-amber-300' },
         us: { label: '🇺🇸 美股', val: 738172, pct: 31.3, cardId: 'cardBoxUs', activeBorder: 'border-sky-400', subColor: 'text-sky-300' },
-        ib: { label: '🌐 IB', val: 268234, pct: 11.4, cardId: 'cardBoxIb', activeBorder: 'border-purple-400', subColor: 'text-purple-300' },
+        ib: { label: '🌐 IB', val: 268234, pct: 11.4, cardId: 'cardBoxIb', activeBorder: 'border-fuchsia-400', subColor: 'text-fuchsia-300' },
         cash: { label: '💵 現金', val: 508160, pct: 21.6, cardId: 'cardBoxCash', activeBorder: 'border-emerald-400', subColor: 'text-emerald-300' }
       }
     };
@@ -2063,9 +2063,9 @@
       latestDonutState.segments.cash.pct = (cashMv / total) * 100;
 
       const segments = [
-        { key: 'tw', label: '🇹🇼 台股', val: twMv, color: '#22d3ee' },
+        { key: 'tw', label: '🇹🇼 台股', val: twMv, color: '#fbbf24' },
         { key: 'us', label: '🇺🇸 美股', val: usMv, color: '#38bdf8' },
-        { key: 'ib', label: '🌐 IB', val: ibMv, color: '#c084fc' },
+        { key: 'ib', label: '🌐 IB', val: ibMv, color: '#e879f9' },
         { key: 'cash', label: '💵 現金', val: cashMv, color: '#34d399' }
       ];
 
@@ -2138,7 +2138,7 @@
         const item = latestDonutState.segments[k];
         const card = item ? document.getElementById(item.cardId) : null;
         if (card) {
-          card.classList.remove('border-cyan-400', 'border-sky-400', 'border-purple-400', 'border-emerald-400', 'border-slate-800/90', 'opacity-65');
+          card.classList.remove('border-amber-400', 'border-sky-400', 'border-fuchsia-400', 'border-emerald-400', 'border-slate-800/90', 'opacity-65');
           if (k === key) {
             card.classList.add(item.activeBorder);
           } else {
@@ -2176,7 +2176,7 @@
         const item = latestDonutState.segments[k];
         const card = item ? document.getElementById(item.cardId) : null;
         if (card) {
-          card.classList.remove('border-cyan-400', 'border-sky-400', 'border-purple-400', 'border-emerald-400', 'opacity-65');
+          card.classList.remove('border-amber-400', 'border-sky-400', 'border-fuchsia-400', 'border-emerald-400', 'opacity-65');
           card.classList.add('border-slate-800/90');
         }
       });
@@ -2410,7 +2410,7 @@
       const bankTotEl = document.getElementById('displayBankTotal');
       if (bankTotEl) bankTotEl.innerText = isPrivacyMasked ? '••••••' : Math.round(cashTotal).toLocaleString();
 
-      // 第二頁：總資產（股票 vs 現金） ➔ 股票拆解（大盤 ETF · 個股 · IB） ➔ 再分台股 vs 美股
+      // 第二頁：總資產（股票 vs 現金） ➔ 股票拆解（台股暖金橘 / 美股冷藍 / IB洋紅紫）
       const totalEtfMv = twEtfMv + usEtfMv;
       const totalStockMv = twStockMv + usStockMv;
       const safeEquity = Math.max(totalEquityMv, 1);
@@ -2429,15 +2429,15 @@
       const usStkEqPct = (usStockMv / safeEquity) * 100;
       const ibEqPct = (effectiveIbMv / safeEquity) * 100;
 
-      // 頂部五色結構比例條（嚴格對應五大類別）
+      // 頂部五色結構比例條（同色系排列：台股ETF amber-400 + 台股個股 orange-400 + 美股ETF sky-400 + 美股個股 indigo-400 + IB fuchsia-400）
       const barTopTwEtf = document.getElementById('barTopTwEtf');
-      const barTopUsEtf = document.getElementById('barTopUsEtf');
       const barTopTwStock = document.getElementById('barTopTwStock');
+      const barTopUsEtf = document.getElementById('barTopUsEtf');
       const barTopUsStock = document.getElementById('barTopUsStock');
       const barTopIb = document.getElementById('barTopIb');
       if (barTopTwEtf) barTopTwEtf.style.width = `${twEtfEqPct.toFixed(1)}%`;
-      if (barTopUsEtf) barTopUsEtf.style.width = `${usEtfEqPct.toFixed(1)}%`;
       if (barTopTwStock) barTopTwStock.style.width = `${twStkEqPct.toFixed(1)}%`;
+      if (barTopUsEtf) barTopUsEtf.style.width = `${usEtfEqPct.toFixed(1)}%`;
       if (barTopUsStock) barTopUsStock.style.width = `${usStkEqPct.toFixed(1)}%`;
       if (barTopIb) barTopIb.style.width = `${ibEqPct.toFixed(1)}%`;
 
@@ -2446,12 +2446,12 @@
       setText('topSummaryIbPct', `${ibEqPct.toFixed(1)}%`);
 
       setText('topLegTwEtf', `${twEtfEqPct.toFixed(1)}%`);
-      setText('topLegUsEtf', `${usEtfEqPct.toFixed(1)}%`);
       setText('topLegTwStock', `${twStkEqPct.toFixed(1)}%`);
+      setText('topLegUsEtf', `${usEtfEqPct.toFixed(1)}%`);
       setText('topLegUsStock', `${usStkEqPct.toFixed(1)}%`);
       setText('topLegIb', `${ibEqPct.toFixed(1)}%`);
 
-      // 大盤 ETF 總數與台美股明細（台股ETF=翠綠 emerald-400 / 美股ETF=天藍 sky-400）
+      // 大盤 ETF 總數與台美股明細（台股ETF=琥珀金 amber-400 / 美股ETF=亮天藍 sky-400）
       setText('etfTotalEquityPct', `${etfEqPct.toFixed(1)}%`);
       setText('etfBreakdownTotalMv', formatMasked(`NT$${Math.round(totalEtfMv).toLocaleString()}`));
 
@@ -2460,7 +2460,7 @@
       const usEtfShare = (usEtfMv / safeEtf) * 100;
       const etfSplitEl = document.getElementById('etfTwUsSplitText');
       if (etfSplitEl) {
-        etfSplitEl.innerHTML = `<b class="text-emerald-400">${twEtfShare.toFixed(1)}%</b> <span class="text-slate-400">:</span> <b class="text-sky-400">${usEtfShare.toFixed(1)}%</b>`;
+        etfSplitEl.innerHTML = `<b class="text-amber-400">${twEtfShare.toFixed(1)}%</b> <span class="text-slate-400">:</span> <b class="text-sky-400">${usEtfShare.toFixed(1)}%</b>`;
       }
       const barTwEtf = document.getElementById('barTwEtf');
       const barUsEtf = document.getElementById('barUsEtf');
@@ -2479,7 +2479,7 @@
       setText('usEtfEquityPct', `${usEtfEqPct.toFixed(1)}%`);
       setText('usEtfEquityPctMobile', `${usEtfEqPct.toFixed(1)}%`);
 
-      // 個股部位總數與台美股明細（台股個股=琥珀金 amber-400 / 美股個股=珊瑚粉 rose-400）
+      // 個股部位總數與台美股明細（台股個股=亮橙橘 orange-400 / 美股個股=亮靛藍 indigo-400）
       setText('stockTotalEquityPct', `${stkEqPct.toFixed(1)}%`);
       setText('stockBreakdownTotalMv', formatMasked(`NT$${Math.round(totalStockMv).toLocaleString()}`));
 
@@ -2488,7 +2488,7 @@
       const usStkShare = (usStockMv / safeStk) * 100;
       const stkSplitEl = document.getElementById('stockTwUsSplitText');
       if (stkSplitEl) {
-        stkSplitEl.innerHTML = `<b class="text-amber-400">${twStkShare.toFixed(1)}%</b> <span class="text-slate-400">:</span> <b class="text-rose-400">${usStkShare.toFixed(1)}%</b>`;
+        stkSplitEl.innerHTML = `<b class="text-orange-400">${twStkShare.toFixed(1)}%</b> <span class="text-slate-400">:</span> <b class="text-indigo-400">${usStkShare.toFixed(1)}%</b>`;
       }
       const barTwStk = document.getElementById('barTwStock');
       const barUsStk = document.getElementById('barUsStock');
@@ -2520,7 +2520,7 @@
           gapEtfEl.className = 'text-xs sm:text-sm font-black font-mono text-amber-400';
         } else {
           gapEtfEl.innerText = `已達標超出 +NT$${Math.round(Math.abs(etfGap)).toLocaleString()}`;
-          gapEtfEl.className = 'text-xs sm:text-sm font-black font-mono text-emerald-400';
+          gapEtfEl.className = 'text-xs sm:text-sm font-black font-mono text-cyan-300';
         }
       }
 
@@ -2536,7 +2536,7 @@
           gapSingleEl.className = 'text-xs sm:text-sm font-black font-mono text-rose-400';
         } else {
           gapSingleEl.innerText = `安全空間 +NT$${Math.round(Math.abs(singleGap)).toLocaleString()}`;
-          gapSingleEl.className = 'text-xs sm:text-sm font-black font-mono text-emerald-400';
+          gapSingleEl.className = 'text-xs sm:text-sm font-black font-mono text-cyan-300';
         }
       }
 
@@ -2640,19 +2640,27 @@
       recalculateAll(false);
     }
 
+    /* 統一色系主題對照表：台股(amber/orange)｜美股(sky/indigo)｜IB(fuchsia) */
     function getCategoryTheme(market, category) {
       if (market === 'IB') {
         return {
-          barClass: 'bg-purple-400',
-          textClass: 'text-purple-400',
-          pillClass: 'bg-purple-500/15 text-purple-300 border-purple-500/30'
+          barClass: 'bg-fuchsia-400',
+          textClass: 'text-fuchsia-400',
+          pillClass: 'bg-fuchsia-500/15 text-fuchsia-300 border-fuchsia-500/30'
         };
       }
       if (market === 'TW' && category === 'ETF') {
         return {
-          barClass: 'bg-emerald-400',
-          textClass: 'text-emerald-400',
-          pillClass: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30'
+          barClass: 'bg-amber-400',
+          textClass: 'text-amber-400',
+          pillClass: 'bg-amber-500/15 text-amber-300 border-amber-500/30'
+        };
+      }
+      if (market === 'TW') {
+        return {
+          barClass: 'bg-orange-400',
+          textClass: 'text-orange-400',
+          pillClass: 'bg-orange-500/15 text-orange-300 border-orange-500/30'
         };
       }
       if (market === 'US' && category === 'ETF') {
@@ -2662,17 +2670,10 @@
           pillClass: 'bg-sky-500/15 text-sky-300 border-sky-500/30'
         };
       }
-      if (market === 'TW') {
-        return {
-          barClass: 'bg-amber-400',
-          textClass: 'text-amber-400',
-          pillClass: 'bg-amber-500/15 text-amber-300 border-amber-500/30'
-        };
-      }
       return {
-        barClass: 'bg-rose-400',
-        textClass: 'text-rose-400',
-        pillClass: 'bg-rose-500/15 text-rose-300 border-rose-500/30'
+        barClass: 'bg-indigo-400',
+        textClass: 'text-indigo-400',
+        pillClass: 'bg-indigo-500/15 text-indigo-300 border-indigo-500/30'
       };
     }
 
@@ -2773,11 +2774,11 @@
       });
 
       const groups = [
-        { key: 'TW-ETF', title: '🇹🇼 台股 ETF', badgeColor: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30', match: h => h.market === 'TW' && h.category === 'ETF' },
-        { key: 'TW-STOCK', title: '🇹🇼 台股個股', badgeColor: 'bg-amber-500/15 text-amber-300 border-amber-500/30', match: h => h.market === 'TW' && h.category === 'STOCK' },
+        { key: 'TW-ETF', title: '🇹🇼 台股 ETF', badgeColor: 'bg-amber-500/15 text-amber-300 border-amber-500/30', match: h => h.market === 'TW' && h.category === 'ETF' },
+        { key: 'TW-STOCK', title: '🇹🇼 台股個股', badgeColor: 'bg-orange-500/15 text-orange-300 border-orange-500/30', match: h => h.market === 'TW' && h.category === 'STOCK' },
         { key: 'US-ETF', title: '🇺🇸 美股 ETF', badgeColor: 'bg-sky-500/15 text-sky-300 border-sky-500/30', match: h => h.market === 'US' && h.category === 'ETF' },
-        { key: 'US-STOCK', title: '🇺🇸 美股個股', badgeColor: 'bg-rose-500/15 text-rose-300 border-rose-500/30', match: h => h.market === 'US' && h.category === 'STOCK' },
-        { key: 'IB-ALL', title: '🌐 IB 海外部位', badgeColor: 'bg-purple-500/15 text-purple-300 border-purple-500/30', match: h => h.market === 'IB' }
+        { key: 'US-STOCK', title: '🇺🇸 美股個股', badgeColor: 'bg-indigo-500/15 text-indigo-300 border-indigo-500/30', match: h => h.market === 'US' && h.category === 'STOCK' },
+        { key: 'IB-ALL', title: '🌐 IB 海外部位', badgeColor: 'bg-fuchsia-500/15 text-fuchsia-300 border-fuchsia-500/30', match: h => h.market === 'IB' }
       ];
 
       let html = '';
@@ -2884,7 +2885,7 @@
               <td class="py-2 px-0.5 sm:px-2 text-right align-middle">
                 <input type="number" step="any" inputmode="decimal" value="${h.currentPrice}" 
                        oninput="updateHoldingField('${h.id}', 'currentPrice', this.value)" 
-                       class="input-table w-full py-1 px-1 sm:px-2 rounded-md sm:rounded-lg bg-slate-950 border border-slate-700/90 text-right font-mono text-xs sm:text-sm tracking-tighter sm:tracking-normal text-emerald-400 font-bold">
+                       class="input-table w-full py-1 px-1 sm:px-2 rounded-md sm:rounded-lg bg-slate-950 border border-slate-700/90 text-right font-mono text-xs sm:text-sm tracking-tighter sm:tracking-normal text-cyan-300 font-bold">
               </td>
 
               <td class="py-2 px-1 sm:px-3 text-right font-black text-white text-xs sm:text-sm tracking-tighter sm:tracking-normal align-middle">
@@ -3315,7 +3316,7 @@
       const interactiveDots = mainChartPoints.map((pt, i) => `
         <circle id="mainDotTaiex-${i}" cx="${pt.x.toFixed(1)}" cy="${pt.yTaiex.toFixed(1)}" r="3.6" fill="#10b981" stroke="#ffffff" stroke-width="1.5" opacity="0" />
         <circle id="mainDotSp500-${i}" cx="${pt.x.toFixed(1)}" cy="${pt.ySp500.toFixed(1)}" r="3.6" fill="#38bdf8" stroke="#ffffff" stroke-width="1.5" opacity="0" />
-        <circle id="mainDotNasdaq-${i}" cx="${pt.x.toFixed(1)}" cy="${pt.yNasdaq.toFixed(1)}" r="3.6" fill="#c084fc" stroke="#ffffff" stroke-width="1.5" opacity="0" />
+        <circle id="mainDotNasdaq-${i}" cx="${pt.x.toFixed(1)}" cy="${pt.yNasdaq.toFixed(1)}" r="3.6" fill="#e879f9" stroke="#ffffff" stroke-width="1.5" opacity="0" />
         <circle id="mainDotAlpha-${i}" cx="${pt.x.toFixed(1)}" cy="${pt.yAlpha.toFixed(1)}" r="5.8" fill="#f59e0b" stroke="#ffffff" stroke-width="2.2" opacity="0" />
       `).join('');
 
@@ -3326,7 +3327,7 @@
         <line id="mainChartCrosshair" x1="0" y1="${padT}" x2="0" y2="${padT + plotH}" stroke="#f59e0b" stroke-width="1.2" stroke-dasharray="3 3" class="hidden" />
         <path d="${pathTaiex}" fill="none" stroke="#10b981" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.88" />
         <path d="${pathSp500}" fill="none" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.88" />
-        <path d="${pathNasdaq}" fill="none" stroke="#c084fc" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 4" opacity="0.88" />
+        <path d="${pathNasdaq}" fill="none" stroke="#e879f9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 4" opacity="0.88" />
         <path d="${pathAlpha}" fill="none" stroke="#f59e0b" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" filter="drop-shadow(0 2px 8px rgba(245, 158, 11, 0.4))" />
         ${interactiveDots}
       `;
@@ -3463,9 +3464,9 @@
         if (ttBreak) {
           const fmtSub = (v) => isPrivacyMasked ? '••' : `${(v / 10000).toFixed(1)}萬`;
           ttBreak.innerHTML = `
-            <span>台股: <b class="text-cyan-300">${fmtSub(pt.tw)}</b></span>
+            <span>台股: <b class="text-amber-300">${fmtSub(pt.tw)}</b></span>
             <span>美股: <b class="text-sky-300">${fmtSub(pt.us)}</b></span>
-            <span>IB: <b class="text-purple-300">${fmtSub(pt.ib)}</b></span>
+            <span>IB: <b class="text-fuchsia-300">${fmtSub(pt.ib)}</b></span>
             <span>現金: <b class="text-emerald-300">${fmtSub(pt.cash)}</b></span>
           `;
         }
