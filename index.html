@@ -1132,6 +1132,127 @@
     </div>
   </div>
 
+  <!-- ==================== 彈窗 3：個股交易明細與買賣加減碼紀錄 ==================== -->
+  <div id="txHistoryModal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-4" onclick="if(event.target === this) closeTxModal()">
+    <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-lg w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
+      
+      <!-- 頂部標題列 -->
+      <div class="p-4 sm:p-5 border-b border-slate-800 flex items-center justify-between gap-2 shrink-0">
+        <div class="min-w-0">
+          <div class="flex items-center gap-2">
+            <span id="txModalTitle" class="text-base sm:text-lg font-black text-white truncate">🇹🇼 0050 元大台灣50</span>
+            <span id="txModalCategoryBadge" class="text-[10px] px-1.5 py-0.5 rounded border font-mono font-bold shrink-0">ETF</span>
+          </div>
+          <span class="text-[11px] text-slate-400 block mt-0.5">點擊下方記錄買入或賣出，自動重算持股與均價</span>
+        </div>
+        <button onclick="closeTxModal()" class="w-8 h-8 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center shrink-0 transition">
+          <i class="fa-solid fa-xmark text-sm"></i>
+        </button>
+      </div>
+
+      <!-- 可捲動內容區 -->
+      <div class="p-4 sm:p-5 space-y-4 overflow-y-auto flex-1">
+        
+        <!-- 當前庫存摘要列 -->
+        <div class="grid grid-cols-3 gap-2 p-3 rounded-2xl bg-slate-950/90 border border-slate-800 text-center font-mono">
+          <div>
+            <span class="text-[10px] text-slate-400 font-sans block">目前持有股數</span>
+            <span id="txSummaryShares" class="text-sm sm:text-base font-black text-white block mt-0.5">2,803</span>
+          </div>
+          <div>
+            <span class="text-[10px] text-slate-400 font-sans block">持股均價 (<span id="txSummaryCurr1">TWD</span>)</span>
+            <span id="txSummaryAvg" class="text-sm sm:text-base font-black text-white block mt-0.5">78.78</span>
+          </div>
+          <div>
+            <span class="text-[10px] text-slate-400 font-sans block">目前市價 (<span id="txSummaryCurr2">TWD</span>)</span>
+            <span id="txSummaryCur" class="text-sm sm:text-base font-black text-cyan-300 block mt-0.5">104.95</span>
+          </div>
+        </div>
+
+        <!-- 新增買入 / 賣出紀錄表單 -->
+        <div class="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3">
+          <div class="flex items-center justify-between gap-2">
+            <span class="text-xs sm:text-sm font-black text-white flex items-center gap-1.5">
+              <i class="fa-solid fa-pen-to-square text-cyan-400"></i>
+              新增交易紀錄
+            </span>
+            <!-- 買入 / 賣出切換 -->
+            <div class="grid grid-cols-2 gap-1 p-0.5 rounded-xl bg-slate-900 border border-slate-800 w-36 shrink-0">
+              <button type="button" id="txTypeBtn-BUY" onclick="setTxType('BUY')" class="py-1 rounded-lg text-xs font-black bg-rose-600 text-white shadow transition">
+                ＋ 買入
+              </button>
+              <button type="button" id="txTypeBtn-SELL" onclick="setTxType('SELL')" class="py-1 rounded-lg text-xs font-black text-slate-400 hover:text-white transition">
+                － 賣出
+              </button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-3 gap-2 text-xs font-bold">
+            <div>
+              <label class="text-slate-300 block mb-1 text-[11px]">成交日期</label>
+              <input type="date" id="txInputDate" class="w-full py-1.5 px-2 rounded-xl bg-slate-900 border border-slate-700 text-white font-mono text-xs focus:outline-none focus:border-cyan-400">
+            </div>
+            <div>
+              <label class="text-slate-300 block mb-1 text-[11px]">成交股數</label>
+              <input type="number" step="any" inputmode="decimal" id="txInputShares" oninput="updateTxPreview()" placeholder="例如 50" class="w-full py-1.5 px-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white font-mono text-xs focus:outline-none focus:border-cyan-400">
+            </div>
+            <div>
+              <label class="text-slate-300 block mb-1 text-[11px]">成交單價</label>
+              <input type="number" step="any" inputmode="decimal" id="txInputPrice" oninput="updateTxPreview()" placeholder="成交價" class="w-full py-1.5 px-2.5 rounded-xl bg-slate-900 border border-slate-700 text-cyan-300 font-mono font-bold text-xs focus:outline-none focus:border-cyan-400">
+            </div>
+          </div>
+
+          <div class="text-xs font-bold">
+            <input type="text" id="txInputNote" placeholder="備註（選填，如：定期定額、逢低加碼、獲利了結）" class="w-full py-1.5 px-3 rounded-xl bg-slate-900 border border-slate-700 text-slate-200 placeholder-slate-500 text-xs focus:outline-none focus:border-cyan-400">
+          </div>
+
+          <!-- 賣出均價計算說明（採用損益攤平降成本模型，僅於選擇賣出且勾選自動更新時顯示） -->
+          <div id="txSellModeBox" class="hidden px-3 py-2 rounded-xl bg-cyan-950/30 border border-cyan-500/25 flex items-center gap-2 text-[11px] text-cyan-200">
+            <i class="fa-solid fa-scale-balanced text-cyan-400 shrink-0"></i>
+            <span class="leading-snug">採用<b>「損益攤平（降成本）」</b>模型：賣出金額直接抵扣剩餘總成本，賣賺自動攤低保本均價（可降至零成本）。</span>
+          </div>
+
+          <!-- 即時變更試算預覽 -->
+          <div id="txPreviewBox" class="p-2.5 rounded-xl bg-slate-900/90 border border-slate-800 text-[11px] font-mono space-y-1">
+            <div class="flex items-center justify-between text-slate-300">
+              <span>本次成交金額:</span>
+              <b id="txPreviewAmount" class="text-white">--</b>
+            </div>
+            <div id="txPreviewEffect" class="text-slate-400 leading-relaxed">
+              請輸入成交股數與單價以預覽變更結果
+            </div>
+          </div>
+
+          <!-- 自動同步選項與送出按鈕 -->
+          <div class="flex items-center justify-between gap-2 pt-0.5">
+            <label class="flex items-center gap-1.5 text-[11px] text-slate-300 cursor-pointer select-none">
+              <input type="checkbox" id="txAutoSyncCheckbox" checked onchange="updateTxPreview()" class="accent-cyan-400 w-3.5 h-3.5 rounded cursor-pointer">
+              <span>自動更新持股股數與均價</span>
+            </label>
+            <button type="button" id="txSubmitBtn" onclick="confirmAddTransaction()" class="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 active:scale-95 text-white text-xs font-black shadow transition shrink-0">
+              確認買入
+            </button>
+          </div>
+        </div>
+
+        <!-- 歷史交易明細列表 -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <h4 class="text-xs sm:text-sm font-black text-white flex items-center gap-1.5">
+              <i class="fa-solid fa-clock-rotate-left text-amber-400"></i>
+              歷史交易明細 (<span id="txListCount">0</span>)
+            </h4>
+            <span id="txRealizedTotalBadge" class="hidden text-[11px] font-mono font-bold px-2 py-0.5 rounded-lg bg-slate-950 border border-slate-800"></span>
+          </div>
+          <div id="txHistoryList" class="space-y-2">
+            <!-- 動態渲染交易明細卡片 -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
   <!-- ==================== 底部 Toast 通知提示框 ==================== -->
   <div id="toast" class="fixed bottom-16 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 rounded-2xl bg-slate-900/95 backdrop-blur-md border border-slate-700 text-white text-xs sm:text-sm font-bold shadow-2xl flex items-center gap-3 transition-all duration-300 translate-y-20 opacity-0 pointer-events-none whitespace-nowrap max-w-[92vw]">
     <span id="toastMsg" class="truncate">操作完成</span>
@@ -1421,7 +1542,8 @@
           if (Array.isArray(parsed) && parsed.length > 0) {
             holdings = parsed.map(h => ({
               ...h,
-              link: getGoogleFinanceUrl(h.symbol, h.market)
+              link: getGoogleFinanceUrl(h.symbol, h.market),
+              transactions: Array.isArray(h.transactions) ? h.transactions : []
             }));
           } else {
             holdings = JSON.parse(JSON.stringify(DEFAULT_HOLDINGS));
@@ -1841,7 +1963,8 @@
         category: h.category,
         shares: h.shares,
         avgPrice: h.avgPrice,
-        currentPrice: h.currentPrice
+        currentPrice: h.currentPrice,
+        transactions: Array.isArray(h.transactions) ? h.transactions : []
       }));
       const memoMap = {};
       historyMonthlyData.forEach(row => { memoMap[row.date] = row.memo || ''; });
@@ -1886,7 +2009,8 @@
           if (Array.isArray(d.holdings) && d.holdings.length > 0) {
             holdings = d.holdings.map(item => ({
               ...item,
-              link: getGoogleFinanceUrl(item.symbol, item.market)
+              link: getGoogleFinanceUrl(item.symbol, item.market),
+              transactions: Array.isArray(item.transactions) ? item.transactions : []
             }));
             saveHoldingsState();
           }
@@ -1980,7 +2104,7 @@
         if (!e.touches || e.touches.length !== 1) return;
         const target = e.target;
         if (
-          target.closest('input, select, textarea, #mainChartContainer, #planChartContainer, #history2026TableContainer, .no-scrollbar, #syncModal, #addHoldingModal') ||
+          target.closest('input, select, textarea, #mainChartContainer, #planChartContainer, #history2026TableContainer, .no-scrollbar, #syncModal, #addHoldingModal, #txHistoryModal') ||
           e.touches[0].clientX < 24 ||
           e.touches[0].clientX > window.innerWidth - 24
         ) {
@@ -2221,9 +2345,12 @@
         const maskedRowPnl = isPrivacyMasked
           ? (pnlNtd >= 0 ? '+••••' : '-••••')
           : `${pnlNtd >= 0 ? '+' : ''}${Math.round(pnlNtd).toLocaleString()}`;
+        const pnlPctLabel = costNtd > 0
+          ? `${pnlPct >= 0 ? '+' : ''}${pnlPct.toFixed(1)}%`
+          : (mvNtd > 0 ? '零成本' : '0.0%');
         pnlEl.innerHTML = `
           <span class="${pnlNtd >= 0 ? 'text-rose-400' : 'text-emerald-400'} block leading-tight">${maskedRowPnl}</span>
-          <span class="block text-[9px] sm:text-[10px] leading-tight ${pnlNtd >= 0 ? 'text-rose-300' : 'text-emerald-300'}">${pnlPct >= 0 ? '+' : ''}${pnlPct.toFixed(1)}%</span>
+          <span class="block text-[9px] sm:text-[10px] leading-tight ${pnlNtd >= 0 ? 'text-rose-300' : 'text-emerald-300'}">${pnlPctLabel}</span>
         `;
       }
     }
@@ -2845,6 +2972,9 @@
 
           const pnlNtd = mvNtd - costNtd;
           const pnlPct = costNtd > 0 ? (pnlNtd / costNtd) * 100 : 0;
+          const pnlPctLabel = costNtd > 0
+            ? `${pnlPct >= 0 ? '+' : ''}${pnlPct.toFixed(1)}%`
+            : (mvNtd > 0 ? '零成本' : '0.0%');
           const assetWeightPct = computedTotalMv > 0 ? (mvNtd / computedTotalMv) * 100 : 0;
 
           const maskedRowMv = isPrivacyMasked ? '••••••' : Math.round(mvNtd).toLocaleString();
@@ -2854,18 +2984,25 @@
             : `${pnlNtd >= 0 ? '+' : ''}${Math.round(pnlNtd).toLocaleString()}`;
           const googleFinanceUrl = getGoogleFinanceUrl(h.symbol, h.market);
           const theme = getCategoryTheme(h.market, h.category);
+          const txCount = Array.isArray(h.transactions) ? h.transactions.length : 0;
 
           html += `
             <tr class="hover:bg-slate-800/35 transition">
-              <td class="py-2 pl-2 pr-1 sm:px-3.5 align-middle">
+              <td onclick="openTxModal('${h.id}')" class="py-2 pl-2 pr-1 sm:px-3.5 align-middle cursor-pointer group/cell select-none" title="點擊查看與新增 ${h.symbol} 交易明細">
                 <div class="flex items-center gap-1">
-                  <a href="${googleFinanceUrl}" target="_blank" rel="noopener noreferrer" title="在 Google 財經查看 ${h.symbol}" class="inline-flex items-center gap-1 font-black text-white hover:text-cyan-300 text-xs sm:text-sm max-w-full group">
-                    <span class="truncate">${h.symbol}</span>
-                    <i class="fa-solid fa-arrow-up-right-from-square text-[9px] sm:text-[10px] text-cyan-400 group-hover:text-cyan-300 shrink-0"></i>
+                  <span class="font-black text-white group-hover/cell:text-cyan-300 text-xs sm:text-sm truncate transition">${h.symbol}</span>
+                  <a href="${googleFinanceUrl}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" title="在 Google 財經查看 ${h.symbol}" class="text-cyan-400 hover:text-cyan-300 shrink-0 px-0.5">
+                    <i class="fa-solid fa-arrow-up-right-from-square text-[9px] sm:text-[10px]"></i>
                   </a>
                   <span class="hidden sm:inline-block text-[10px] px-1.5 py-0.2 rounded border shrink-0 ${theme.pillClass}">${h.category}</span>
                 </div>
-                <span class="text-[10px] sm:text-xs text-slate-300 font-sans block truncate">${h.name}</span>
+                <div class="flex items-center gap-1 mt-0.5">
+                  <span class="text-[10px] sm:text-xs text-slate-300 font-sans truncate">${h.name}</span>
+                  ${txCount > 0
+                    ? `<span class="text-[9px] px-1 py-0 rounded bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 font-mono font-bold shrink-0 leading-tight">${txCount}筆</span>`
+                    : `<i class="fa-solid fa-receipt text-[9px] text-slate-500 group-hover/cell:text-cyan-400 shrink-0 transition"></i>`
+                  }
+                </div>
               </td>
 
               <td class="py-2 px-0.5 sm:px-2 text-right align-middle">
@@ -2898,7 +3035,7 @@
                   ${maskedRowPnl}
                 </span>
                 <span class="block text-[9px] sm:text-[10px] leading-tight ${pnlNtd >= 0 ? 'text-rose-300' : 'text-emerald-300'}">
-                  ${pnlPct >= 0 ? '+' : ''}${pnlPct.toFixed(1)}%
+                  ${pnlPctLabel}
                 </span>
               </td>
 
@@ -3812,6 +3949,15 @@
 
       const newId = `${mkt.toLowerCase()}-${sym.toLowerCase()}-${Date.now().toString().slice(-4)}`;
       const link = getGoogleFinanceUrl(sym, mkt);
+      const todayStr = getLocalDateStr();
+      const initialTx = shares > 0 ? [{
+        id: 'tx-' + Date.now(),
+        type: 'BUY',
+        date: todayStr,
+        shares: shares,
+        price: avg || cur || 0,
+        note: '初始建倉'
+      }] : [];
 
       holdings.push({
         id: newId,
@@ -3822,13 +3968,457 @@
         shares: shares,
         avgPrice: avg,
         currentPrice: cur || avg,
-        link: link
+        link: link,
+        transactions: initialTx
       });
 
       saveHoldingsState();
       closeAddHoldingModal();
       recalculateAll(true);
       showToast(`✅ 已新增 ${sym} (${cat === 'ETF' ? '大盤ETF' : '個股'}) 至持股清單！`);
+    }
+
+    /* 13-B. 個股交易明細（買入 / 賣出記錄與均價重算，統一採用損益攤平降成本模型） */
+    let activeTxHoldingId = null;
+    let activeTxType = 'BUY';
+    const sellCostMode = 'NET';
+    let deletedTxBackup = null;
+
+    function getLocalDateStr() {
+      const now = new Date();
+      const y = now.getFullYear();
+      const m = String(now.getMonth() + 1).padStart(2, '0');
+      const d = String(now.getDate()).padStart(2, '0');
+      return `${y}-${m}-${d}`;
+    }
+
+    function updateSellModeBoxVisibility() {
+      const box = document.getElementById('txSellModeBox');
+      const autoSync = document.getElementById('txAutoSyncCheckbox')?.checked !== false;
+      if (box) {
+        box.classList.toggle('hidden', !(activeTxType === 'SELL' && autoSync));
+      }
+    }
+
+    function openTxModal(holdingId) {
+      const h = holdings.find(item => item.id === holdingId);
+      if (!h) return;
+      if (!Array.isArray(h.transactions)) h.transactions = [];
+
+      activeTxHoldingId = holdingId;
+      const flag = h.market === 'TW' ? '🇹🇼' : (h.market === 'IB' ? '🌐' : '🇺🇸');
+      const curr = h.market === 'TW' ? 'TWD' : 'USD';
+      const theme = getCategoryTheme(h.market, h.category);
+
+      const titleEl = document.getElementById('txModalTitle');
+      const badgeEl = document.getElementById('txModalCategoryBadge');
+      if (titleEl) titleEl.innerText = `${flag} ${h.symbol} ${h.name}`;
+      if (badgeEl) {
+        badgeEl.innerText = h.category;
+        badgeEl.className = `text-[10px] px-1.5 py-0.5 rounded border font-mono font-bold shrink-0 ${theme.pillClass}`;
+      }
+
+      const c1 = document.getElementById('txSummaryCurr1');
+      const c2 = document.getElementById('txSummaryCurr2');
+      if (c1) c1.innerText = curr;
+      if (c2) c2.innerText = curr;
+
+      // 重設表單預設值（日期為今日，單價預填目前市價）
+      const dateInp = document.getElementById('txInputDate');
+      const shInp = document.getElementById('txInputShares');
+      const priceInp = document.getElementById('txInputPrice');
+      const noteInp = document.getElementById('txInputNote');
+      const autoSyncChk = document.getElementById('txAutoSyncCheckbox');
+
+      if (dateInp) dateInp.value = getLocalDateStr();
+      if (shInp) shInp.value = '';
+      if (priceInp) priceInp.value = h.currentPrice || h.avgPrice || '';
+      if (noteInp) noteInp.value = '';
+      if (autoSyncChk) autoSyncChk.checked = true;
+
+      setTxType('BUY');
+      refreshTxModalView(h);
+
+      const modal = document.getElementById('txHistoryModal');
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeTxModal() {
+      const modal = document.getElementById('txHistoryModal');
+      if (modal) modal.classList.add('hidden');
+      activeTxHoldingId = null;
+    }
+
+    function setTxType(type) {
+      activeTxType = type;
+      const buyBtn = document.getElementById('txTypeBtn-BUY');
+      const sellBtn = document.getElementById('txTypeBtn-SELL');
+      const submitBtn = document.getElementById('txSubmitBtn');
+
+      if (buyBtn && sellBtn) {
+        if (type === 'BUY') {
+          buyBtn.className = 'py-1 rounded-lg text-xs font-black bg-rose-600 text-white shadow transition';
+          sellBtn.className = 'py-1 rounded-lg text-xs font-black text-slate-400 hover:text-white transition';
+        } else {
+          buyBtn.className = 'py-1 rounded-lg text-xs font-black text-slate-400 hover:text-white transition';
+          sellBtn.className = 'py-1 rounded-lg text-xs font-black bg-emerald-600 text-white shadow transition';
+        }
+      }
+
+      if (submitBtn) {
+        if (type === 'BUY') {
+          submitBtn.innerText = '確認買入';
+          submitBtn.className = 'px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 active:scale-95 text-white text-xs font-black shadow transition shrink-0';
+        } else {
+          submitBtn.innerText = '確認賣出';
+          submitBtn.className = 'px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white text-xs font-black shadow transition shrink-0';
+        }
+      }
+
+      updateSellModeBoxVisibility();
+      updateTxPreview();
+    }
+
+    function updateTxPreview() {
+      updateSellModeBoxVisibility();
+      const h = holdings.find(item => item.id === activeTxHoldingId);
+      const amtEl = document.getElementById('txPreviewAmount');
+      const effEl = document.getElementById('txPreviewEffect');
+      if (!h || !amtEl || !effEl) return;
+
+      const txShares = parseFloat(document.getElementById('txInputShares')?.value) || 0;
+      const txPrice = parseFloat(document.getElementById('txInputPrice')?.value) || 0;
+      const autoSync = document.getElementById('txAutoSyncCheckbox')?.checked !== false;
+
+      if (txShares <= 0) {
+        amtEl.innerText = '--';
+        effEl.className = 'text-slate-400 leading-relaxed';
+        effEl.innerText = '請輸入成交股數與單價以預覽變更結果';
+        return;
+      }
+
+      const isTw = h.market === 'TW';
+      const nativeAmt = txShares * txPrice;
+      const ntdAmt = isTw ? nativeAmt : nativeAmt * usTwdRate;
+
+      if (isPrivacyMasked) {
+        amtEl.innerText = '••••••';
+      } else if (isTw) {
+        amtEl.innerText = `NT$${Math.round(nativeAmt).toLocaleString()}`;
+      } else {
+        amtEl.innerText = `US$${nativeAmt.toFixed(2)} (約 NT$${Math.round(ntdAmt).toLocaleString()})`;
+      }
+
+      if (!autoSync) {
+        effEl.className = 'text-slate-400 leading-relaxed';
+        effEl.innerText = '僅記錄歷史明細，不會變動目前持股股數與均價';
+        return;
+      }
+
+      const oldShares = parseFloat(h.shares) || 0;
+      const oldAvg = parseFloat(h.avgPrice) || 0;
+
+      if (activeTxType === 'BUY') {
+        const nextShares = Number((oldShares + txShares).toFixed(5));
+        const nextAvg = nextShares > 0 ? ((oldShares * oldAvg) + (txShares * txPrice)) / nextShares : txPrice;
+        effEl.className = 'text-slate-300 leading-relaxed';
+        effEl.innerHTML = isPrivacyMasked
+          ? `更新預覽：股數 <b class="text-white">••••</b> ｜ 均價 <b class="text-amber-300">${nextAvg.toFixed(2)}</b>`
+          : `更新預覽：股數 <b class="text-white">${oldShares} ➔ ${nextShares}</b> ｜ 均價 <b class="text-amber-300">${oldAvg.toFixed(2)} ➔ ${nextAvg.toFixed(2)}</b>`;
+      } else {
+        if (txShares > oldShares + 0.00001) {
+          effEl.className = 'text-amber-400 font-bold leading-relaxed';
+          effEl.innerText = `⚠️ 賣出股數 (${txShares}) 超過目前持有股數 (${oldShares})`;
+          return;
+        }
+        const nextShares = Math.max(0, Number((oldShares - txShares).toFixed(5)));
+        const pnlNative = (txPrice - oldAvg) * txShares;
+        const pnlNtd = isTw ? pnlNative : pnlNative * usTwdRate;
+        const pnlColor = pnlNtd >= 0 ? 'text-rose-400' : 'text-emerald-400';
+        const pnlStr = isPrivacyMasked ? '••••' : `${pnlNtd >= 0 ? '+' : ''}NT$${Math.round(pnlNtd).toLocaleString()}`;
+
+        let avgPreviewHtml = '';
+        if (nextShares === 0) {
+          avgPreviewHtml = `均價 <b class="text-slate-300">全數出清 (0.00)</b>`;
+        } else if (sellCostMode === 'NET') {
+          const nextAvg = ((oldShares * oldAvg) - (txShares * txPrice)) / nextShares;
+          const zeroCostTag = nextAvg <= 0 ? ' <span class="text-emerald-400">(零成本)</span>' : '';
+          avgPreviewHtml = isPrivacyMasked
+            ? `攤平均價 <b class="text-amber-300">${nextAvg.toFixed(2)}</b>${zeroCostTag}`
+            : `攤平均價 <b class="text-amber-300">${oldAvg.toFixed(2)} ➔ ${nextAvg.toFixed(2)}</b>${zeroCostTag}`;
+        } else {
+          avgPreviewHtml = `均價維持 <b class="text-slate-200">${oldAvg.toFixed(2)}</b>`;
+        }
+
+        effEl.className = 'text-slate-300 leading-relaxed';
+        effEl.innerHTML = isPrivacyMasked
+          ? `剩餘股數 <b class="text-white">••••</b> ｜ ${avgPreviewHtml} ｜ 預估已實現 <b class="${pnlColor}">${pnlStr}</b>`
+          : `剩餘股數 <b class="text-white">${oldShares} ➔ ${nextShares}</b> ｜ ${avgPreviewHtml}<br>預估已實現損益 <b class="${pnlColor}">${pnlStr}</b>`;
+      }
+    }
+
+    function confirmAddTransaction() {
+      const h = holdings.find(item => item.id === activeTxHoldingId);
+      if (!h) return;
+
+      const txDate = document.getElementById('txInputDate')?.value || getLocalDateStr();
+      const txShares = parseFloat(document.getElementById('txInputShares')?.value) || 0;
+      const txPrice = parseFloat(document.getElementById('txInputPrice')?.value);
+      const txNote = (document.getElementById('txInputNote')?.value || '').trim();
+      const autoSync = document.getElementById('txAutoSyncCheckbox')?.checked !== false;
+
+      if (txShares <= 0) {
+        showToast('❌ 請輸入大於 0 的成交股數');
+        return;
+      }
+      if (isNaN(txPrice) || txPrice < 0) {
+        showToast('❌ 請輸入正確的成交單價');
+        return;
+      }
+
+      const oldShares = parseFloat(h.shares) || 0;
+      const oldAvg = parseFloat(h.avgPrice) || 0;
+
+      if (activeTxType === 'SELL' && autoSync && txShares > oldShares + 0.00001) {
+        showToast(`⚠️ 賣出股數不可超過目前持股 (${oldShares} 股)`);
+        return;
+      }
+
+      const isTw = h.market === 'TW';
+      let realizedPnlNtd = null;
+
+      if (activeTxType === 'SELL') {
+        const pnlNative = (txPrice - oldAvg) * txShares;
+        realizedPnlNtd = Math.round(isTw ? pnlNative : pnlNative * usTwdRate);
+      }
+
+      let nextShares = oldShares;
+      let nextAvg = oldAvg;
+
+      if (autoSync) {
+        if (activeTxType === 'BUY') {
+          nextShares = Number((oldShares + txShares).toFixed(5));
+          nextAvg = nextShares > 0 ? Number((((oldShares * oldAvg) + (txShares * txPrice)) / nextShares).toFixed(2)) : Number(txPrice.toFixed(2));
+        } else {
+          nextShares = Math.max(0, Number((oldShares - txShares).toFixed(5)));
+          if (nextShares === 0) {
+            nextAvg = 0;
+          } else if (sellCostMode === 'NET') {
+            nextAvg = Number((((oldShares * oldAvg) - (txShares * txPrice)) / nextShares).toFixed(2));
+          } else {
+            nextAvg = oldAvg;
+          }
+        }
+        h.shares = nextShares;
+        h.avgPrice = nextAvg;
+      }
+
+      if (!Array.isArray(h.transactions)) h.transactions = [];
+      const newTx = {
+        id: 'tx-' + Date.now(),
+        type: activeTxType,
+        date: txDate,
+        shares: txShares,
+        price: txPrice,
+        note: txNote,
+        applied: autoSync,
+        sellCostMode: activeTxType === 'SELL' ? sellCostMode : null,
+        prevAvg: oldAvg,
+        nextAvg: autoSync ? nextAvg : null
+      };
+      if (realizedPnlNtd !== null) newTx.realizedPnl = realizedPnlNtd;
+
+      h.transactions.unshift(newTx);
+
+      saveHoldingsState();
+      recalculateAll(true);
+
+      // 清空本次輸入並刷新彈窗顯示
+      const shInp = document.getElementById('txInputShares');
+      const noteInp = document.getElementById('txInputNote');
+      if (shInp) shInp.value = '';
+      if (noteInp) noteInp.value = '';
+      refreshTxModalView(h);
+      updateTxPreview();
+
+      const actionLabel = activeTxType === 'BUY' ? '買入' : '賣出';
+      const avgToastHint = autoSync ? `（新均價 ${nextAvg.toFixed(2)}）` : '';
+      showToast(`✅ 已記錄 ${h.symbol} ${actionLabel} ${txShares} 股${avgToastHint}`);
+    }
+
+    function deleteTransaction(holdingId, txId) {
+      const h = holdings.find(item => item.id === holdingId);
+      if (!h || !Array.isArray(h.transactions)) return;
+      const idx = h.transactions.findIndex(t => t.id === txId);
+      if (idx === -1) return;
+
+      const tx = h.transactions[idx];
+      deletedTxBackup = {
+        holdingId,
+        index: idx,
+        tx,
+        prevShares: h.shares,
+        prevAvg: h.avgPrice
+      };
+      h.transactions.splice(idx, 1);
+
+      // 若該筆明細原本有自動連動持股，刪除時一併反向回算股數與均價
+      if (tx.applied) {
+        const curSh = parseFloat(h.shares) || 0;
+        const curAvg = parseFloat(h.avgPrice) || 0;
+        const txSh = parseFloat(tx.shares) || 0;
+        const txPr = parseFloat(tx.price) || 0;
+
+        if (tx.type !== 'SELL') {
+          const revertedSh = Math.max(0, Number((curSh - txSh).toFixed(5)));
+          const revertedAvg = revertedSh > 0
+            ? Number((((curSh * curAvg) - (txSh * txPr)) / revertedSh).toFixed(2))
+            : 0;
+          h.shares = revertedSh;
+          h.avgPrice = revertedAvg;
+        } else {
+          const revertedSh = Number((curSh + txSh).toFixed(5));
+          let revertedAvg = curAvg;
+          if (curSh === 0 && typeof tx.prevAvg === 'number') {
+            revertedAvg = tx.prevAvg;
+          } else if (tx.sellCostMode !== 'STANDARD' && revertedSh > 0) {
+            revertedAvg = Number((((curSh * curAvg) + (txSh * txPr)) / revertedSh).toFixed(2));
+          }
+          h.shares = revertedSh;
+          h.avgPrice = revertedAvg;
+        }
+      }
+
+      saveHoldingsState();
+      recalculateAll(true);
+      refreshTxModalView(h);
+      updateTxPreview();
+
+      showToast(tx.applied ? '🗑️ 已刪除明細並回算股數與均價' : '🗑️ 已刪除該筆交易明細', () => {
+        if (!deletedTxBackup) return;
+        const targetH = holdings.find(item => item.id === deletedTxBackup.holdingId);
+        if (targetH) {
+          if (!Array.isArray(targetH.transactions)) targetH.transactions = [];
+          targetH.transactions.splice(deletedTxBackup.index, 0, deletedTxBackup.tx);
+          targetH.shares = deletedTxBackup.prevShares;
+          targetH.avgPrice = deletedTxBackup.prevAvg;
+          saveHoldingsState();
+          recalculateAll(true);
+          if (activeTxHoldingId === targetH.id) {
+            refreshTxModalView(targetH);
+            updateTxPreview();
+          }
+          showToast('↩️ 已復原交易明細與均價');
+        }
+        deletedTxBackup = null;
+      });
+    }
+
+    function refreshTxModalView(h) {
+      const shEl = document.getElementById('txSummaryShares');
+      const avgEl = document.getElementById('txSummaryAvg');
+      const curEl = document.getElementById('txSummaryCur');
+      const countEl = document.getElementById('txListCount');
+      const listEl = document.getElementById('txHistoryList');
+      const realizedBadge = document.getElementById('txRealizedTotalBadge');
+
+      if (shEl) shEl.innerText = isPrivacyMasked ? '••••' : Number(h.shares || 0).toLocaleString();
+      if (avgEl) {
+        const avgNum = Number(h.avgPrice || 0);
+        avgEl.innerText = isPrivacyMasked ? '••••' : avgNum.toFixed(2);
+        avgEl.className = `text-sm sm:text-base font-black block mt-0.5 ${avgNum <= 0 && (h.shares || 0) > 0 ? 'text-emerald-400' : 'text-white'}`;
+      }
+      if (curEl) curEl.innerText = Number(h.currentPrice || 0).toFixed(2);
+
+      const txs = Array.isArray(h.transactions) ? [...h.transactions] : [];
+      // 依日期由新到舊排序
+      txs.sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
+
+      if (countEl) countEl.innerText = txs.length;
+
+      // 統計累積已實現損益
+      const sellTxs = txs.filter(t => t.type === 'SELL' && typeof t.realizedPnl === 'number');
+      if (realizedBadge) {
+        if (sellTxs.length > 0) {
+          const totalRealized = sellTxs.reduce((s, t) => s + t.realizedPnl, 0);
+          const colorCls = totalRealized >= 0 ? 'text-rose-400' : 'text-emerald-400';
+          realizedBadge.className = `text-[11px] font-mono font-bold px-2 py-0.5 rounded-lg bg-slate-950 border border-slate-800 ${colorCls}`;
+          realizedBadge.innerText = isPrivacyMasked
+            ? '已實現 ••••'
+            : `已實現 ${totalRealized >= 0 ? '+' : ''}NT$${Math.round(totalRealized).toLocaleString()}`;
+          realizedBadge.classList.remove('hidden');
+        } else {
+          realizedBadge.classList.add('hidden');
+        }
+      }
+
+      if (!listEl) return;
+      if (txs.length === 0) {
+        listEl.innerHTML = `
+          <div class="p-4 rounded-2xl bg-slate-950/60 border border-dashed border-slate-800 text-center text-xs text-slate-400">
+            尚無交易明細，可於上方記錄每次買入或賣出，系統將自動重算持股數與均價。
+          </div>
+        `;
+        return;
+      }
+
+      const isTw = h.market === 'TW';
+      const escapeHtml = (str) => String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+      listEl.innerHTML = txs.map(tx => {
+        const isBuy = tx.type !== 'SELL';
+        const badgeCls = isBuy
+          ? 'bg-rose-500/15 text-rose-300 border-rose-500/35'
+          : 'bg-emerald-500/15 text-emerald-300 border-emerald-500/35';
+        const sign = isBuy ? '+' : '-';
+        const nativeTotal = (parseFloat(tx.shares) || 0) * (parseFloat(tx.price) || 0);
+        const totalStr = isPrivacyMasked
+          ? '••••••'
+          : (isTw ? `NT$${Math.round(nativeTotal).toLocaleString()}` : `US$${nativeTotal.toFixed(2)}`);
+        const sharesStr = isPrivacyMasked ? '••••' : `${sign}${Number(tx.shares || 0).toLocaleString()} 股`;
+        const priceStr = Number(tx.price || 0).toFixed(2);
+        const dateDisp = String(tx.date || '').replace(/-/g, '/');
+
+        let realizedHtml = '';
+        if (!isBuy && typeof tx.realizedPnl === 'number') {
+          const rColor = tx.realizedPnl >= 0 ? 'text-rose-400' : 'text-emerald-400';
+          const rText = isPrivacyMasked ? '••••' : `${tx.realizedPnl >= 0 ? '+' : ''}NT$${Math.round(tx.realizedPnl).toLocaleString()}`;
+          realizedHtml = `<span class="text-[10px] font-mono font-bold ${rColor}">已實現 ${rText}</span>`;
+        }
+
+        let avgChangeHtml = '';
+        if (tx.applied && typeof tx.prevAvg === 'number' && typeof tx.nextAvg === 'number') {
+          avgChangeHtml = `<div class="text-[10px] font-mono text-amber-300/90">均價 ${isPrivacyMasked ? '••••' : `${tx.prevAvg.toFixed(2)} ➔ ${tx.nextAvg.toFixed(2)}`}</div>`;
+        }
+
+        return `
+          <div class="p-3 rounded-2xl bg-slate-950/90 border border-slate-800 flex items-center justify-between gap-2">
+            <div class="min-w-0 space-y-1">
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="px-1.5 py-0.5 rounded-md border text-[10px] font-black ${badgeCls}">${isBuy ? '買入' : '賣出'}</span>
+                <span class="text-xs font-mono text-slate-300 font-bold">${dateDisp}</span>
+                ${realizedHtml}
+              </div>
+              <div class="text-xs sm:text-sm font-mono text-white font-bold">
+                <span>${sharesStr}</span>
+                <span class="text-slate-500 mx-1">@</span>
+                <span class="text-cyan-300">${priceStr}</span>
+              </div>
+              ${avgChangeHtml}
+              ${tx.note ? `<div class="text-[11px] text-slate-400 font-sans truncate">${escapeHtml(tx.note)}</div>` : ''}
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+              <div class="text-right font-mono">
+                <span class="text-xs sm:text-sm font-black text-white block">${totalStr}</span>
+                <span class="text-[10px] text-slate-500 block">${isTw ? 'TWD' : 'USD'}</span>
+              </div>
+              <button type="button" onclick="deleteTransaction('${h.id}', '${tx.id}')" class="p-1.5 rounded-lg text-slate-500 hover:text-rose-400 hover:bg-rose-500/10 transition" title="刪除此筆明細">
+                <i class="fa-solid fa-trash-can text-xs"></i>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
     }
 
     /* 14. Toast 提示 */
@@ -3845,7 +4435,8 @@
         if (showUndo) {
           undoBtn.classList.remove('hidden');
           undoBtn.onclick = () => {
-            undoDeleteHolding();
+            if (typeof showUndo === 'function') showUndo();
+            else undoDeleteHolding();
             toast.classList.add('translate-y-20', 'opacity-0');
           };
         } else {
