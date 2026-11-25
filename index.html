@@ -2195,47 +2195,102 @@
     }
 
     async function uploadToCloud() {
-      const gasUrl = safeStorage.getItem('eddie_gas_url') || '';
+      const inputUrl = (document.getElementById('googleScriptUrlInput') || {}).value || '';
+      const gasUrl = (safeStorage.getItem('eddie_gas_url') || inputUrl).trim();
       if (!gasUrl) {
         showToast('❌ 請先輸入並儲存 Apps Script 網址');
         return;
       }
+      safeStorage.setItem('eddie_gas_url', gasUrl);
       showToast('☁️ 正在上傳備份至雲端...');
-      const slimHoldings = holdings.map(h => ({
-        id: h.id,
-        market: h.market,
-        symbol: h.symbol,
-        name: h.name,
-        category: h.category,
-        shares: h.shares,
-        exactTotalCost: h.exactTotalCost,
-        avgPrice: h.avgPrice,
-        currentPrice: h.currentPrice,
-        transactions: Array.isArray(h.transactions) ? h.transactions : []
-      }));
-      const memoMap = {};
-      historyMonthlyData.forEach(r => { memoMap[r.date] = r.memo || ''; });
-      memoMap['CURRENT'] = currentMonthMemo || '';
 
-      const payloadObj = {
-        holdings: slimHoldings,
-        bankDeposits,
-        monthlyDeposit,
-        targetEtfRatio,
-        maxSingleRatio,
-        usTwdRate,
-        memos: memoMap
+      const buildPayloadString = (includePreloadedSeed) => {
+        const slimHoldings = holdings.map(h => {
+          const txs = Array.isArray(h.transactions) ? h.transactions : [];
+          const filteredTxs = includePreloadedSeed
+            ? txs
+            : txs.filter(t => !/^tx-(0050|00923|00631l|2002|2330|2454|2646|3081|goog|msft|nvda|qqq|qqqm|voo)-\d+$/i.test(String(t.id || '')));
+          return {
+            id: h.id,
+            market: h.market,
+            symbol: h.symbol,
+            name: h.name,
+            category: h.category,
+            shares: h.shares,
+            exactTotalCost: h.exactTotalCost,
+            avgPrice: h.avgPrice,
+            currentPrice: h.currentPrice,
+            transactions: filteredTxs
+          };
+        });
+        const memoMap = {};
+        historyMonthlyData.forEach(r => { memoMap[r.date] = r.memo || ''; });
+        memoMap['CURRENT'] = currentMonthMemo || '';
+
+        return JSON.stringify({
+          holdings: slimHoldings,
+          bankDeposits,
+          monthlyDeposit,
+          targetEtfRatio,
+          maxSingleRatio,
+          usTwdRate,
+          memos: memoMap
+        });
       };
+
       try {
-        const encoded = encodeURIComponent(JSON.stringify(payloadObj));
-        const res = await jsonpRequest(`${gasUrl}?action=upload&payload=${encoded}`);
-        if (res && res.status === 'success') {
-          lastSyncTimestamp = res.timestamp || new Date().toLocaleString('zh-TW', { hour12: false });
+        const fullJson = buildPayloadString(true);
+        const fullEncoded = encodeURIComponent(fullJson);
+
+        // 若總長度在安全範圍內，直接單次上傳
+        if (fullEncoded.length <= 3600) {
+          const res = await jsonpRequest(`${gasUrl}?action=upload&payload=${fullEncoded}`);
+          if (res && res.status === 'success') {
+            lastSyncTimestamp = res.timestamp || new Date().toLocaleString('zh-TW', { hour12: false });
+            safeStorage.setItem('alphatrack_last_sync_time', lastSyncTimestamp);
+            updateSyncTimeDisplay();
+            showToast('✅ 已成功上傳備份至 Google 試算表！');
+            return;
+          }
+          throw new Error((res && res.message) || '未知錯誤');
+        }
+
+        // 資料較大時，優先嘗試分段上傳（支援無限筆交易明細）
+        const chunkSize = 2400;
+        const chunks = [];
+        for (let i = 0; i < fullEncoded.length; i += chunkSize) {
+          chunks.push(fullEncoded.slice(i, i + chunkSize));
+        }
+
+        const firstRes = await jsonpRequest(`${gasUrl}?action=upload_chunk&index=0&total=${chunks.length}&chunk=${chunks[0]}`);
+        if (firstRes && firstRes.status === 'success') {
+          for (let i = 1; i < chunks.length; i++) {
+            const stepRes = await jsonpRequest(`${gasUrl}?action=upload_chunk&index=${i}&total=${chunks.length}&chunk=${chunks[i]}`);
+            if (!stepRes || stepRes.status !== 'success') {
+              throw new Error((stepRes && stepRes.message) || `第 ${i + 1} 段上傳失敗`);
+            }
+          }
+          const commitRes = await jsonpRequest(`${gasUrl}?action=upload_commit&total=${chunks.length}`);
+          if (commitRes && commitRes.status === 'success') {
+            lastSyncTimestamp = commitRes.timestamp || new Date().toLocaleString('zh-TW', { hour12: false });
+            safeStorage.setItem('alphatrack_last_sync_time', lastSyncTimestamp);
+            updateSyncTimeDisplay();
+            showToast('✅ 已分段上傳完整備份至 Google 試算表！');
+            return;
+          }
+          throw new Error((commitRes && commitRes.message) || '合併備份失敗');
+        }
+
+        // 若舊版 Apps Script 尚未支援分段指令，自動改用精簡封包相容模式（不重複傳送內建歷史明細）
+        const compactEncoded = encodeURIComponent(buildPayloadString(false));
+        const fallbackRes = await jsonpRequest(`${gasUrl}?action=upload&payload=${compactEncoded}`);
+        if (fallbackRes && fallbackRes.status === 'success') {
+          lastSyncTimestamp = fallbackRes.timestamp || new Date().toLocaleString('zh-TW', { hour12: false });
           safeStorage.setItem('alphatrack_last_sync_time', lastSyncTimestamp);
           updateSyncTimeDisplay();
-          showToast('✅ 已成功上傳備份至 Google 試算表！');
+          showToast('✅ 已成功上傳最新資產與自訂明細至雲端！');
         } else {
-          showToast(`❌ 上傳失敗: ${(res && res.message) || '未知錯誤'}`);
+          throw new Error((fallbackRes && fallbackRes.message) || '請確認 Apps Script 部署權限');
         }
       } catch (err) {
         showToast(`❌ 上傳失敗: ${err.message}`);
@@ -2254,11 +2309,18 @@
         if (res && res.status === 'success' && res.data) {
           const d = res.data;
           if (Array.isArray(d.holdings) && d.holdings.length > 0) {
-            holdings = d.holdings.map(h => ({
-              ...h,
-              link: getGoogleFinanceUrl(h.symbol, h.market),
-              transactions: Array.isArray(h.transactions) ? h.transactions : []
-            }));
+            holdings = d.holdings.map(h => {
+              const sym = String(h.symbol || '').trim().toUpperCase();
+              const cloudTxs = Array.isArray(h.transactions) ? h.transactions : [];
+              const mergedTxs = cloudTxs.length > 0
+                ? cloudTxs
+                : (PRELOADED_BROKER_TRANSACTIONS[sym] ? JSON.parse(JSON.stringify(PRELOADED_BROKER_TRANSACTIONS[sym])) : []);
+              return {
+                ...h,
+                link: getGoogleFinanceUrl(h.symbol, h.market),
+                transactions: mergedTxs
+              };
+            });
             saveHoldingsState();
           }
           if (d.bankDeposits) {
