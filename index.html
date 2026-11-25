@@ -741,6 +741,10 @@
               <span class="text-white block">合庫:</span>
               <input type="number" step="any" inputmode="decimal" id="bankInput-tcb" value="878" oninput="handleBankDepositChange('tcb', this.value)" class="bank-input w-full py-1 px-2 rounded-lg bg-slate-950 border border-slate-700 text-white font-mono font-bold text-sm focus:outline-none focus:border-emerald-500">
             </div>
+            <div class="p-2.5 rounded-xl bg-slate-900 border border-fuchsia-500/30 space-y-1">
+              <span class="text-fuchsia-300 block">IB美金(USD):</span>
+              <input type="number" step="any" inputmode="decimal" id="bankInput-ib_usd" value="1656.61" oninput="handleBankDepositChange('ib_usd', this.value)" class="bank-input w-full py-1 px-2 rounded-lg bg-slate-950 border border-slate-700 text-white font-mono font-bold text-sm focus:outline-none focus:border-fuchsia-400">
+            </div>
           </div>
         </div>
 
@@ -1354,6 +1358,7 @@
         { id: 'tx-00923-01', type: 'BUY', date: '2024-03-26', shares: 150, price: 19.72, note: '券商明細匯入', applied: true }
       ],
       '00631L': [
+        { id: 'tx-00631l-06', type: 'SELL', date: '2026-11-24', shares: 1000, price: 32.37, note: '部分獲利減碼（攤平成本）', applied: true, oldAvg: 28.01, newAvg: 26.26, realizedPnl: 4360.00 },
         { id: 'tx-00631l-05', type: 'BUY', date: '2026-11-20', shares: 1000, price: 22.80, note: '券商明細匯入', applied: true },
         { id: 'tx-00631l-04', type: 'BUY', date: '2026-11-06', shares: 500, price: 27.74, note: '券商明細匯入', applied: true },
         { id: 'tx-00631l-03', type: 'BUY', date: '2026-11-06', shares: 500, price: 26.92, note: '券商明細匯入', applied: true },
@@ -1381,18 +1386,93 @@
       ],
       '3081': [
         { id: 'tx-3081-01', type: 'BUY', date: '2026-08-19', shares: 1, price: 0.00, note: '零成本／配股匯入', applied: true }
+      ],
+      'GOOG': [
+        { id: 'tx-goog-05', type: 'BUY', date: '2026-10-29', shares: 4, price: 284.00, note: '券商複委託明細匯入', applied: true },
+        { id: 'tx-goog-04', type: 'BUY', date: '2026-04-16', shares: 2, price: 333.00, note: '券商複委託明細匯入', applied: true },
+        { id: 'tx-goog-03', type: 'BUY', date: '2025-10-21', shares: 2, price: 246.80, note: '券商複委託明細匯入', applied: true },
+        { id: 'tx-goog-02', type: 'BUY', date: '2025-06-23', shares: 4, price: 167.19, note: '券商複委託明細匯入', applied: true },
+        { id: 'tx-goog-01', type: 'BUY', date: '2025-06-13', shares: 2, price: 176.00, note: '券商複委託明細匯入', applied: true }
+      ],
+      'MSFT': [
+        { id: 'tx-msft-03', type: 'BUY', date: '2026-01-02', shares: 1, price: 475.00, note: '券商複委託明細匯入', applied: true },
+        { id: 'tx-msft-02', type: 'BUY', date: '2025-08-15', shares: 1, price: 522.00, note: '券商複委託明細匯入', applied: true },
+        { id: 'tx-msft-01', type: 'BUY', date: '2025-02-19', shares: 1, price: 408.10, note: '券商複委託明細匯入', applied: true }
+      ],
+      'NVDA': [
+        { id: 'tx-nvda-07', type: 'BUY', date: '2025-11-25', shares: 2, price: 173.00, note: '券商複委託明細匯入', applied: true },
+        { id: 'tx-nvda-06', type: 'BUY', date: '2025-11-13', shares: 2, price: 185.50, note: '券商複委託明細匯入', applied: true },
+        { id: 'tx-nvda-05', type: 'BUY', date: '2025-09-17', shares: 2, price: 168.50, note: '券商複委託明細匯入', applied: true },
+        { id: 'tx-nvda-04', type: 'BUY', date: '2025-03-03', shares: 4, price: 119.50, note: '券商複委託明細匯入', applied: true },
+        { id: 'tx-nvda-03', type: 'BUY', date: '2025-01-27', shares: 4, price: 123.50, note: '券商複委託明細匯入', applied: true },
+        { id: 'tx-nvda-02', type: 'BUY', date: '2024-11-07', shares: 2, price: 147.50, note: '券商複委託明細匯入', applied: true },
+        { id: 'tx-nvda-01', type: 'BUY', date: '2024-09-26', shares: 6, price: 126.84, note: '券商複委託明細匯入', applied: true }
+      ],
+      'QQQ': [
+        { id: 'tx-qqq-09', type: 'BUY', date: '2026-03-25', shares: 1, price: 589.14, note: '券商複委託定股匯入', applied: true },
+        { id: 'tx-qqq-08', type: 'BUY', date: '2025-04-08', shares: 1, price: 433.00, note: '券商複委託整股匯入', applied: true },
+        { id: 'tx-qqq-07', type: 'BUY', date: '2024-11-25', shares: 0.23558, price: 509.389917, note: '券商複委託定額匯入', applied: true },
+        { id: 'tx-qqq-06', type: 'BUY', date: '2024-10-25', shares: 0.20173, price: 495.72, note: '券商複委託定額匯入', applied: true },
+        { id: 'tx-qqq-05', type: 'BUY', date: '2024-09-25', shares: 0.20626, price: 484.8145, note: '券商複委託定額匯入', applied: true },
+        { id: 'tx-qqq-04', type: 'BUY', date: '2024-08-26', shares: 0.20861, price: 479.36, note: '券商複委託定額匯入', applied: true },
+        { id: 'tx-qqq-03', type: 'BUY', date: '2024-07-25', shares: 0.21571, price: 463.59, note: '券商複委託定額匯入', applied: true },
+        { id: 'tx-qqq-02', type: 'BUY', date: '2024-06-25', shares: 0.21022, price: 475.69, note: '券商複委託定額匯入', applied: true },
+        { id: 'tx-qqq-01', type: 'BUY', date: '2024-05-28', shares: 0.21782, price: 459.089602, note: '券商複委託定額匯入', applied: true }
+      ],
+      'QQQM': [
+        { id: 'tx-qqqm-04', type: 'BUY', date: '2026-11-20', shares: 3.49146, price: 263.50, note: '券商複委託碎股匯入', applied: true },
+        { id: 'tx-qqqm-03', type: 'BUY', date: '2026-11-05', shares: 4.1566, price: 281.480039, note: '券商複委託定額匯入', applied: true },
+        { id: 'tx-qqqm-02', type: 'BUY', date: '2026-10-20', shares: 2, price: 293.50, note: '券商複委託整股匯入', applied: true },
+        { id: 'tx-qqqm-01', type: 'BUY', date: '2026-10-15', shares: 1.11494, price: 295.979828, note: '券商複委託定額匯入', applied: true }
+      ],
+      'VOO': [
+        { id: 'tx-voo-29', type: 'BUY', date: '2026-10-26', shares: 0.64218, price: 700.74, note: '券商複委託定額匯入', applied: true },
+        { id: 'tx-voo-28', type: 'BUY', date: '2026-09-25', shares: 0.63515, price: 708.489485, note: '券商複委託定額匯入', applied: true },
+        { id: 'tx-voo-27', type: 'BUY', date: '2026-08-25', shares: 0.63905, price: 704.169992, note: '券商複委託定額匯入', applied: true },
+        { id: 'tx-voo-26', type: 'BUY', date: '2026-07-27', shares: 0.46745, price: 684.560078, note: '券商複委託定額匯入', applied: true },
+        { id: 'tx-voo-25', type: 'BUY', date: '2026-06-25', shares: 0.46977, price: 681.179999, note: '券商複委託定額匯入', applied: true },
+        { id: 'tx-voo-24', type: 'BUY', date: '2026-05-26', shares: 0.46409, price: 689.520249, note: '券商複委託定額匯入', applied: true },
+        { id: 'tx-voo-23', type: 'BUY', date: '2026-04-27', shares: 0.48814, price: 655.550155, note: '券商複委託定額匯入', applied: true },
+        { id: 'tx-voo-22', type: 'BUY', date: '2026-02-25', shares: 0.50405, price: 634.86, note: '券商複委託定額匯入', applied: true },
+        { id: 'tx-voo-21', type: 'BUY', date: '2026-01-26', shares: 0.50387, price: 635.089999, note: '券商複委託定額匯入', applied: true },
+        { id: 'tx-voo-20', type: 'BUY', date: '2025-12-26', shares: 0.50376, price: 635.22, note: '券商複委託定額匯入', applied: true },
+        { id: 'tx-voo-19', type: 'BUY', date: '2025-11-25', shares: 0.52044, price: 614.859989, note: '券商複委託定額匯入', applied: true },
+        { id: 'tx-voo-18', type: 'BUY', date: '2025-10-27', shares: 0.50975, price: 627.760003, note: '券商複委託定額匯入', applied: true },
+        { id: 'tx-voo-17', type: 'BUY', date: '2025-09-25', shares: 0.52743, price: 606.719519, note: '券商複委託定額匯入', applied: true },
+        { id: 'tx-voo-16', type: 'BUY', date: '2025-08-25', shares: 0.54053, price: 592.009999, note: '券商複委託定額匯入', applied: true },
+        { id: 'tx-voo-15', type: 'BUY', date: '2025-07-25', shares: 0.5481, price: 583.830003, note: '券商複委託定額匯入', applied: true },
+        { id: 'tx-voo-14', type: 'BUY', date: '2025-06-25', shares: 0.57085, price: 560.569999, note: '券商複委託定額匯入', applied: true },
+        { id: 'tx-voo-13', type: 'BUY', date: '2025-05-27', shares: 0.55676, price: 538.829784, note: '券商複委託定額匯入', applied: true },
+        { id: 'tx-voo-12', type: 'BUY', date: '2025-04-25', shares: 0.59713, price: 502.40, note: '券商複委託定額匯入', applied: true },
+        { id: 'tx-voo-11', type: 'BUY', date: '2025-04-08', shares: 1, price: 473.00, note: '券商複委託整股匯入', applied: true },
+        { id: 'tx-voo-10', type: 'BUY', date: '2025-03-25', shares: 0.47119, price: 530.57, note: '券商複委託定額匯入', applied: true },
+        { id: 'tx-voo-09', type: 'BUY', date: '2025-02-25', shares: 0.45493, price: 549.530712, note: '券商複委託定額匯入', applied: true },
+        { id: 'tx-voo-08', type: 'BUY', date: '2025-01-27', shares: 0.45637, price: 547.7999, note: '券商複委託定額匯入', applied: true },
+        { id: 'tx-voo-07', type: 'BUY', date: '2024-12-26', shares: 0.45333, price: 551.4694, note: '券商複委託定額匯入', applied: true },
+        { id: 'tx-voo-06', type: 'BUY', date: '2024-11-25', shares: 0.2179, price: 550.7095, note: '券商複委託定額匯入', applied: true },
+        { id: 'tx-voo-05', type: 'BUY', date: '2024-10-25', shares: 0.18693, price: 534.954137, note: '券商複委託定額匯入', applied: true },
+        { id: 'tx-voo-04', type: 'BUY', date: '2024-09-25', shares: 0.18982, price: 526.808278, note: '券商複委託定額匯入', applied: true },
+        { id: 'tx-voo-03', type: 'BUY', date: '2024-08-26', shares: 0.19316, price: 517.6997, note: '券商複委託定額匯入', applied: true },
+        { id: 'tx-voo-02', type: 'BUY', date: '2024-07-25', shares: 0.20096, price: 497.613021, note: '券商複委託定額匯入', applied: true },
+        { id: 'tx-voo-01', type: 'BUY', date: '2024-06-25', shares: 0.19949, price: 501.278408, note: '券商複委託定額匯入', applied: true }
       ]
     };
 
     const PRELOADED_BROKER_SUMMARY = {
-      '0050': { shares: 2916, exactTotalCost: 232507.83, avgPrice: 79.74, currentPrice: 95.70 },
-      '00923': { shares: 3430, exactTotalCost: 71238.70, avgPrice: 20.77, currentPrice: 34.24 },
-      '00631L': { shares: 3500, exactTotalCost: 98020.00, avgPrice: 28.01, currentPrice: 27.00 },
-      '2002': { shares: 3000, exactTotalCost: 65050.00, avgPrice: 21.68, currentPrice: 17.55 },
-      '2330': { shares: 15, exactTotalCost: 34275.00, avgPrice: 2285.00, currentPrice: 2230.00 },
-      '2454': { shares: 49, exactTotalCost: 85970.00, avgPrice: 1754.49, currentPrice: 4050.00 },
-      '2646': { shares: 1137, exactTotalCost: 31850.00, avgPrice: 28.01, currentPrice: 19.40 },
-      '3081': { shares: 1, exactTotalCost: 0.00, avgPrice: 0.00, currentPrice: 1525.00 }
+      '0050': { shares: 2916, exactTotalCost: 232580.16, avgPrice: 79.76, currentPrice: 90.30 },
+      '00923': { shares: 3430, exactTotalCost: 71241.10, avgPrice: 20.77, currentPrice: 32.06 },
+      '00631L': { shares: 2500, exactTotalCost: 65650.00, avgPrice: 26.26, currentPrice: 23.78 },
+      '2002': { shares: 3000, exactTotalCost: 65130.00, avgPrice: 21.71, currentPrice: 17.10 },
+      '2330': { shares: 15, exactTotalCost: 34303.05, avgPrice: 2286.87, currentPrice: 2150.00 },
+      '2454': { shares: 49, exactTotalCost: 86043.02, avgPrice: 1755.98, currentPrice: 3645.00 },
+      '2646': { shares: 1137, exactTotalCost: 31881.48, avgPrice: 28.04, currentPrice: 18.70 },
+      '3081': { shares: 1, exactTotalCost: 0.00, avgPrice: 0.00, currentPrice: 1420.00 },
+      'GOOG': { shares: 14, exactTotalCost: 3316.36, avgPrice: 236.88, currentPrice: 278.22 },
+      'MSFT': { shares: 3, exactTotalCost: 1405.10, avgPrice: 468.37, currentPrice: 521.91 },
+      'NVDA': { shares: 22, exactTotalCost: 3082.04, avgPrice: 140.09, currentPrice: 204.64 },
+      'QQQ': { shares: 3.49593, exactTotalCost: 1742.14, avgPrice: 498.33, currentPrice: 690.49 },
+      'QQQM': { shares: 10.763, exactTotalCost: 3007.00, avgPrice: 279.38, currentPrice: 284.34 },
+      'VOO': { shares: 13.71258, exactTotalCost: 8208.76, avgPrice: 598.63, currentPrice: 694.81 }
     };
 
     function getHoldingNativeCost(h) {
@@ -1402,36 +1482,40 @@
       return (parseFloat(h && h.shares) || 0) * (parseFloat(h && h.avgPrice) || 0);
     }
 
-    /* 17 檔持股清單 (統一連結至 Google 財經) */
+    /* 17 檔持股清單 (統一連結至 Google 財經，依 ETF ➔ 個股 分組排列) */
     const DEFAULT_HOLDINGS = [
-      // 台股部位 (11 檔)
-      { id: 'tw-0050', market: 'TW', symbol: '0050', name: '元大台灣50', category: 'ETF', shares: 2916, exactTotalCost: 232507.83, avgPrice: 79.74, currentPrice: 95.70, link: 'https://www.google.com/finance/quote/0050:TPE', transactions: PRELOADED_BROKER_TRANSACTIONS['0050'] },
-      { id: 'tw-00923', market: 'TW', symbol: '00923', name: '群益台ESG低碳50', category: 'ETF', shares: 3430, exactTotalCost: 71238.70, avgPrice: 20.77, currentPrice: 34.24, link: 'https://www.google.com/finance/quote/00923:TPE', transactions: PRELOADED_BROKER_TRANSACTIONS['00923'] },
-      { id: 'tw-2002', market: 'TW', symbol: '2002', name: '中鋼', category: 'STOCK', shares: 3000, exactTotalCost: 65050.00, avgPrice: 21.68, currentPrice: 17.55, link: 'https://www.google.com/finance/quote/2002:TPE', transactions: PRELOADED_BROKER_TRANSACTIONS['2002'] },
+      // 大盤 / 指數 ETF 部位 (6 檔：台股 ETF ➔ 美股 ETF)
+      { id: 'tw-0050', market: 'TW', symbol: '0050', name: '元大台灣50', category: 'ETF', shares: 2916, exactTotalCost: 232580.16, avgPrice: 79.76, currentPrice: 90.30, link: 'https://www.google.com/finance/quote/0050:TPE', transactions: PRELOADED_BROKER_TRANSACTIONS['0050'] },
+      { id: 'tw-00923', market: 'TW', symbol: '00923', name: '群益台ESG低碳50', category: 'ETF', shares: 3430, exactTotalCost: 71241.10, avgPrice: 20.77, currentPrice: 32.06, link: 'https://www.google.com/finance/quote/00923:TPE', transactions: PRELOADED_BROKER_TRANSACTIONS['00923'] },
+      { id: 'tw-00631l', market: 'TW', symbol: '00631L', name: '元大台灣50正2', category: 'ETF', shares: 2500, exactTotalCost: 65650.00, avgPrice: 26.26, currentPrice: 23.78, link: 'https://www.google.com/finance/quote/00631L:TPE', transactions: PRELOADED_BROKER_TRANSACTIONS['00631L'] },
+      { id: 'us-voo', market: 'US', symbol: 'VOO', name: '先鋒標普500 ETF', category: 'ETF', shares: 13.71258, exactTotalCost: 8208.76, avgPrice: 598.63, currentPrice: 694.81, link: 'https://www.google.com/finance/quote/VOO:NYSEARCA', transactions: PRELOADED_BROKER_TRANSACTIONS['VOO'] },
+      { id: 'us-qqq', market: 'US', symbol: 'QQQ', name: '那斯達克100 ETF', category: 'ETF', shares: 3.49593, exactTotalCost: 1742.14, avgPrice: 498.33, currentPrice: 690.49, link: 'https://www.google.com/finance/quote/QQQ:NASDAQ', transactions: PRELOADED_BROKER_TRANSACTIONS['QQQ'] },
+      { id: 'us-qqqm', market: 'US', symbol: 'QQQM', name: '那斯達克微型 ETF', category: 'ETF', shares: 10.763, exactTotalCost: 3007.00, avgPrice: 279.38, currentPrice: 284.34, link: 'https://www.google.com/finance/quote/QQQM:NASDAQ', transactions: PRELOADED_BROKER_TRANSACTIONS['QQQM'] },
+      { id: 'ib-qld', market: 'IB', symbol: 'QLD', name: 'ProShares 兩倍做多納指100', category: 'ETF', shares: 58, exactTotalCost: 4573.88, avgPrice: 78.86, currentPrice: 64.84, link: 'https://www.google.com/finance/quote/QLD:NYSEARCA' },
+      { id: 'ib-soxl', market: 'IB', symbol: 'SOXL', name: 'Direxion 三倍做多半導體', category: 'ETF', shares: 9, exactTotalCost: 127.71, avgPrice: 14.19, currentPrice: 27.64, link: 'https://www.google.com/finance/quote/SOXL:NYSEARCA' },
+
+      // 個股部位 (13 檔：台股個股 ➔ 美股個股 ➔ IB個股)
+      { id: 'tw-2002', market: 'TW', symbol: '2002', name: '中鋼', category: 'STOCK', shares: 3000, exactTotalCost: 65130.00, avgPrice: 21.71, currentPrice: 17.10, link: 'https://www.google.com/finance/quote/2002:TPE', transactions: PRELOADED_BROKER_TRANSACTIONS['2002'] },
       { id: 'tw-2383', market: 'TW', symbol: '2383', name: '台光電', category: 'STOCK', shares: 4, avgPrice: 4358.00, currentPrice: 4675.00, link: 'https://www.google.com/finance/quote/2383:TPE' },
       { id: 'tw-2308', market: 'TW', symbol: '2308', name: '台達電', category: 'STOCK', shares: 21, avgPrice: 1989.71, currentPrice: 1335.00, link: 'https://www.google.com/finance/quote/2308:TPE' },
-      { id: 'tw-2330', market: 'TW', symbol: '2330', name: '台積電', category: 'STOCK', shares: 15, exactTotalCost: 34275.00, avgPrice: 2285.00, currentPrice: 2230.00, link: 'https://www.google.com/finance/quote/2330:TPE', transactions: PRELOADED_BROKER_TRANSACTIONS['2330'] },
-      { id: 'tw-2454', market: 'TW', symbol: '2454', name: '聯發科', category: 'STOCK', shares: 49, exactTotalCost: 85970.00, avgPrice: 1754.49, currentPrice: 4050.00, link: 'https://www.google.com/finance/quote/2454:TPE', transactions: PRELOADED_BROKER_TRANSACTIONS['2454'] },
-      { id: 'tw-2646', market: 'TW', symbol: '2646', name: '星宇航空', category: 'STOCK', shares: 1137, exactTotalCost: 31850.00, avgPrice: 28.01, currentPrice: 19.40, link: 'https://www.google.com/finance/quote/2646:TPE', transactions: PRELOADED_BROKER_TRANSACTIONS['2646'] },
+      { id: 'tw-2330', market: 'TW', symbol: '2330', name: '台積電', category: 'STOCK', shares: 15, exactTotalCost: 34303.05, avgPrice: 2286.87, currentPrice: 2150.00, link: 'https://www.google.com/finance/quote/2330:TPE', transactions: PRELOADED_BROKER_TRANSACTIONS['2330'] },
+      { id: 'tw-2454', market: 'TW', symbol: '2454', name: '聯發科', category: 'STOCK', shares: 49, exactTotalCost: 86043.02, avgPrice: 1755.98, currentPrice: 3645.00, link: 'https://www.google.com/finance/quote/2454:TPE', transactions: PRELOADED_BROKER_TRANSACTIONS['2454'] },
+      { id: 'tw-2646', market: 'TW', symbol: '2646', name: '星宇航空', category: 'STOCK', shares: 1137, exactTotalCost: 31881.48, avgPrice: 28.04, currentPrice: 18.70, link: 'https://www.google.com/finance/quote/2646:TPE', transactions: PRELOADED_BROKER_TRANSACTIONS['2646'] },
       { id: 'tw-3017', market: 'TW', symbol: '3017', name: '奇鋐', category: 'STOCK', shares: 8, avgPrice: 2126.75, currentPrice: 3095.00, link: 'https://www.google.com/finance/quote/3017:TPE' },
-      { id: 'tw-3081', market: 'TW', symbol: '3081', name: '聯亞', category: 'STOCK', shares: 1, exactTotalCost: 0.00, avgPrice: 0.00, currentPrice: 1525.00, link: 'https://www.google.com/finance?q=3081', transactions: PRELOADED_BROKER_TRANSACTIONS['3081'] },
-      { id: 'tw-00631l', market: 'TW', symbol: '00631L', name: '元大台灣50正2', category: 'ETF', shares: 3500, exactTotalCost: 98020.00, avgPrice: 28.01, currentPrice: 27.00, link: 'https://www.google.com/finance/quote/00631L:TPE', transactions: PRELOADED_BROKER_TRANSACTIONS['00631L'] },
-
-      // 美股部位 (6 檔)
-      { id: 'us-voo', market: 'US', symbol: 'VOO', name: '先鋒標普500 ETF', category: 'ETF', shares: 13.71258, avgPrice: 598.63, currentPrice: 694.81, link: 'https://www.google.com/finance/quote/VOO:NYSEARCA' },
-      { id: 'us-qqq', market: 'US', symbol: 'QQQ', name: '那斯達克100 ETF', category: 'ETF', shares: 3.49593, avgPrice: 499.53, currentPrice: 690.49, link: 'https://www.google.com/finance/quote/QQQ:NASDAQ' },
-      { id: 'us-nvda', market: 'US', symbol: 'NVDA', name: '輝達', category: 'STOCK', shares: 22, avgPrice: 140.23, currentPrice: 204.64, link: 'https://www.google.com/finance/quote/NVDA:NASDAQ' },
-      { id: 'us-msft', market: 'US', symbol: 'MSFT', name: '微軟', category: 'STOCK', shares: 3, avgPrice: 468.84, currentPrice: 521.91, link: 'https://www.google.com/finance/quote/MSFT:NASDAQ' },
-      { id: 'us-goog', market: 'US', symbol: 'GOOG', name: 'Alphabet (谷歌)', category: 'STOCK', shares: 14, avgPrice: 237.09, currentPrice: 278.22, link: 'https://www.google.com/finance/quote/GOOG:NASDAQ' },
-      { id: 'us-qqqm', market: 'US', symbol: 'QQQM', name: '那斯達克微型 ETF', category: 'ETF', shares: 3.11494, avgPrice: 295.38, currentPrice: 284.34, link: 'https://www.google.com/finance/quote/QQQM:NASDAQ' }
+      { id: 'tw-3081', market: 'TW', symbol: '3081', name: '聯亞', category: 'STOCK', shares: 1, exactTotalCost: 0.00, avgPrice: 0.00, currentPrice: 1420.00, link: 'https://www.google.com/finance?q=3081', transactions: PRELOADED_BROKER_TRANSACTIONS['3081'] },
+      { id: 'us-nvda', market: 'US', symbol: 'NVDA', name: '輝達', category: 'STOCK', shares: 22, exactTotalCost: 3082.04, avgPrice: 140.09, currentPrice: 204.64, link: 'https://www.google.com/finance/quote/NVDA:NASDAQ', transactions: PRELOADED_BROKER_TRANSACTIONS['NVDA'] },
+      { id: 'us-msft', market: 'US', symbol: 'MSFT', name: '微軟', category: 'STOCK', shares: 3, exactTotalCost: 1405.10, avgPrice: 468.37, currentPrice: 521.91, link: 'https://www.google.com/finance/quote/MSFT:NASDAQ', transactions: PRELOADED_BROKER_TRANSACTIONS['MSFT'] },
+      { id: 'us-goog', market: 'US', symbol: 'GOOG', name: 'Alphabet (谷歌)', category: 'STOCK', shares: 14, exactTotalCost: 3316.36, avgPrice: 236.88, currentPrice: 278.22, link: 'https://www.google.com/finance/quote/GOOG:NASDAQ', transactions: PRELOADED_BROKER_TRANSACTIONS['GOOG'] },
+      { id: 'ib-aapl', market: 'IB', symbol: 'AAPL', name: '蘋果公司', category: 'STOCK', shares: 2.3, exactTotalCost: 475.32, avgPrice: 206.66, currentPrice: 350.59, link: 'https://www.google.com/finance/quote/AAPL:NASDAQ' },
+      { id: 'ib-ibkr', market: 'IB', symbol: 'IBKR', name: '盈透證券集團', category: 'STOCK', shares: 0.6453, exactTotalCost: 43.33, avgPrice: 67.14, currentPrice: 72.85, link: 'https://www.google.com/finance/quote/IBKR:NASDAQ' }
     ];
 
     const STOCK_DATABASE = {
       // 台股 ETF
-      '0050': { name: '元大台灣50', market: 'TW', category: 'ETF', price: 95.70, link: 'https://www.google.com/finance/quote/0050:TPE' },
+      '0050': { name: '元大台灣50', market: 'TW', category: 'ETF', price: 90.30, link: 'https://www.google.com/finance/quote/0050:TPE' },
       '006208': { name: '富邦台50', market: 'TW', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/006208:TPE' },
-      '00923': { name: '群益台ESG低碳50', market: 'TW', category: 'ETF', price: 34.24, link: 'https://www.google.com/finance/quote/00923:TPE' },
-      '00631L': { name: '元大台灣50正2', market: 'TW', category: 'ETF', price: 27.00, link: 'https://www.google.com/finance/quote/00631L:TPE' },
+      '00923': { name: '群益台ESG低碳50', market: 'TW', category: 'ETF', price: 32.06, link: 'https://www.google.com/finance/quote/00923:TPE' },
+      '00631L': { name: '元大台灣50正2', market: 'TW', category: 'ETF', price: 23.78, link: 'https://www.google.com/finance/quote/00631L:TPE' },
       '00675L': { name: '富邦臺灣加權正2', market: 'TW', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/00675L:TPE' },
       '00685L': { name: '群益臺灣加權正2', market: 'TW', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/00685L:TPE' },
       '00670L': { name: '富邦NASDAQ正2', market: 'TW', category: 'ETF', price: 0, link: 'https://www.google.com/finance/quote/00670L:TPE' },
@@ -1446,14 +1530,14 @@
       '00687B': { name: '國泰20年美債', market: 'TW', category: 'ETF', price: 0, link: 'https://www.google.com/finance?q=00687B' },
 
       // 台股個股
-      '2330': { name: '台積電', market: 'TW', category: 'STOCK', price: 2230.00, link: 'https://www.google.com/finance/quote/2330:TPE' },
-      '2454': { name: '聯發科', market: 'TW', category: 'STOCK', price: 4050.00, link: 'https://www.google.com/finance/quote/2454:TPE' },
+      '2330': { name: '台積電', market: 'TW', category: 'STOCK', price: 2150.00, link: 'https://www.google.com/finance/quote/2330:TPE' },
+      '2454': { name: '聯發科', market: 'TW', category: 'STOCK', price: 3645.00, link: 'https://www.google.com/finance/quote/2454:TPE' },
       '2308': { name: '台達電', market: 'TW', category: 'STOCK', price: 1335.00, link: 'https://www.google.com/finance/quote/2308:TPE' },
       '2383': { name: '台光電', market: 'TW', category: 'STOCK', price: 4675.00, link: 'https://www.google.com/finance/quote/2383:TPE' },
       '3017': { name: '奇鋐', market: 'TW', category: 'STOCK', price: 3095.00, link: 'https://www.google.com/finance/quote/3017:TPE' },
-      '2002': { name: '中鋼', market: 'TW', category: 'STOCK', price: 17.55, link: 'https://www.google.com/finance/quote/2002:TPE' },
-      '2646': { name: '星宇航空', market: 'TW', category: 'STOCK', price: 19.40, link: 'https://www.google.com/finance/quote/2646:TPE' },
-      '3081': { name: '聯亞', market: 'TW', category: 'STOCK', price: 1525.00, link: 'https://www.google.com/finance?q=3081' },
+      '2002': { name: '中鋼', market: 'TW', category: 'STOCK', price: 17.10, link: 'https://www.google.com/finance/quote/2002:TPE' },
+      '2646': { name: '星宇航空', market: 'TW', category: 'STOCK', price: 18.70, link: 'https://www.google.com/finance/quote/2646:TPE' },
+      '3081': { name: '聯亞', market: 'TW', category: 'STOCK', price: 1420.00, link: 'https://www.google.com/finance?q=3081' },
       '2317': { name: '鴻海', market: 'TW', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/2317:TPE' },
       '2382': { name: '廣達', market: 'TW', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/2382:TPE' },
       '3231': { name: '緯創', market: 'TW', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/3231:TPE' },
@@ -1518,7 +1602,8 @@
       'BRK.B': { name: '波克夏海瑟威 B', market: 'US', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/BRK.B:NYSE' },
       'MU': { name: '美光科技', market: 'US', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/MU:NASDAQ' },
       'QCOM': { name: '高通', market: 'US', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/QCOM:NASDAQ' },
-      'LLY': { name: '禮來製藥', market: 'US', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/LLY:NYSE' }
+      'LLY': { name: '禮來製藥', market: 'US', category: 'STOCK', price: 0, link: 'https://www.google.com/finance/quote/LLY:NYSE' },
+      'IBKR': { name: '盈透證券集團', market: 'IB', category: 'STOCK', price: 72.85, link: 'https://www.google.com/finance/quote/IBKR:NASDAQ' }
     };
 
     function getGoogleFinanceUrl(symbol, market) {
@@ -1577,7 +1662,8 @@
       yuanta: 93673,
       cathay: 44259,
       linebank: 33798,
-      tcb: 878
+      tcb: 878,
+      ib_usd: 1656.61
     };
 
     let monthlyDeposit = 45000;
@@ -1598,7 +1684,10 @@
 
     /* 2. 本機狀態讀寫與核心工具函式 */
     function getCashTotal() {
-      return Object.values(bankDeposits).reduce((sum, val) => sum + (parseFloat(val) || 0), 0);
+      return Object.entries(bankDeposits).reduce((sum, [key, val]) => {
+        const num = parseFloat(val) || 0;
+        return sum + (key === 'ib_usd' ? num * usTwdRate : num);
+      }, 0);
     }
 
     function formatMasked(str) {
@@ -1679,8 +1768,8 @@
         holdings = JSON.parse(JSON.stringify(DEFAULT_HOLDINGS));
       }
 
-      /* 一次性自動匯入並校準券商截圖明細（0050、00923、00631L、2002、2330、2454、2646、3081） */
-      if (safeStorage.getItem('eddie_broker_seed_20261125_v4') !== '1') {
+      /* 一次性自動匯入並校準券商截圖明細（含台股 8 檔與美股 GOOG、MSFT、NVDA、QQQ、QQQM、VOO） */
+      if (safeStorage.getItem('eddie_broker_seed_20261125_v8') !== '1') {
         let seededAny = false;
         holdings.forEach(h => {
           const sym = String(h.symbol || '').trim().toUpperCase();
@@ -1690,13 +1779,25 @@
               h.shares = PRELOADED_BROKER_SUMMARY[sym].shares;
               h.exactTotalCost = PRELOADED_BROKER_SUMMARY[sym].exactTotalCost;
               h.avgPrice = PRELOADED_BROKER_SUMMARY[sym].avgPrice;
-              h.currentPrice = PRELOADED_BROKER_SUMMARY[sym].currentPrice;
+              if (PRELOADED_BROKER_SUMMARY[sym].currentPrice) {
+                h.currentPrice = PRELOADED_BROKER_SUMMARY[sym].currentPrice;
+              }
             }
             seededAny = true;
           }
         });
-        safeStorage.setItem('eddie_broker_seed_20261125_v4', '1');
+        safeStorage.setItem('eddie_broker_seed_20261125_v8', '1');
         if (seededAny) saveHoldingsState();
+      }
+
+      /* 一次性自動匯入 IBKR 持倉（QLD、SOXL、AAPL、IBKR）與 IB 美金現金 */
+      if (safeStorage.getItem('eddie_ibkr_seed_20261125_v1') !== '1') {
+        const ibDefaults = DEFAULT_HOLDINGS.filter(item => item.market === 'IB');
+        holdings = holdings.filter(item => item.market !== 'IB').concat(JSON.parse(JSON.stringify(ibDefaults)));
+        bankDeposits.ib_usd = 1656.61;
+        safeStorage.setItem('eddie_ibkr_seed_20261125_v1', '1');
+        saveHoldingsState();
+        saveBankDepositsState();
       }
 
       try {
@@ -2828,17 +2929,70 @@
         return sum + (h.market === 'TW' ? sh * cur : sh * cur * usTwdRate);
       }, 0) + getCashTotal();
 
-      const filtered = holdings.filter(h => {
-        if (activeFilter === 'ALL') return true;
-        if (activeFilter === 'TW') return h.market === 'TW';
-        if (activeFilter === 'US') return h.market === 'US';
-        if (activeFilter === 'IB') return h.market === 'IB';
-        if (activeFilter === 'ETF') return h.category === 'ETF';
-        if (activeFilter === 'STOCK') return h.category === 'STOCK';
-        return true;
-      });
+      const catRank = (cat) => (cat === 'ETF' ? 0 : 1);
+      const mktRank = (mkt) => (mkt === 'TW' ? 0 : (mkt === 'US' ? 1 : 2));
+
+      const filtered = holdings
+        .map((h, origIdx) => ({ h, origIdx }))
+        .filter(({ h }) => {
+          if (activeFilter === 'ALL') return true;
+          if (activeFilter === 'TW') return h.market === 'TW';
+          if (activeFilter === 'US') return h.market === 'US';
+          if (activeFilter === 'IB') return h.market === 'IB';
+          if (activeFilter === 'ETF') return h.category === 'ETF';
+          if (activeFilter === 'STOCK') return h.category === 'STOCK';
+          return true;
+        })
+        .sort((a, b) => {
+          const catDiff = catRank(a.h.category) - catRank(b.h.category);
+          if (catDiff !== 0) return catDiff;
+          const mktDiff = mktRank(a.h.market) - mktRank(b.h.market);
+          if (mktDiff !== 0) return mktDiff;
+          return a.origIdx - b.origIdx;
+        })
+        .map(({ h }) => h);
+
+      const etfCountInView = filtered.filter(item => item.category === 'ETF').length;
+      const stockCountInView = filtered.filter(item => item.category !== 'ETF').length;
+      const showGroupHeaders = etfCountInView > 0 && stockCountInView > 0;
+      let lastRenderedCat = null;
 
       tbody.innerHTML = filtered.map(h => {
+        const curCat = h.category === 'ETF' ? 'ETF' : 'STOCK';
+        let groupHeaderHtml = '';
+        if (showGroupHeaders && curCat !== lastRenderedCat) {
+          lastRenderedCat = curCat;
+          if (curCat === 'ETF') {
+            groupHeaderHtml = `
+              <tr class="bg-slate-950/95 border-y border-slate-800/90">
+                <td colspan="7" class="py-1.5 pl-2.5 pr-2 sm:px-3.5">
+                  <div class="flex items-center justify-between text-[10px] sm:text-xs font-black tracking-wider">
+                    <span class="text-cyan-300 flex items-center gap-1.5">
+                      <i class="fa-solid fa-layer-group text-[10px]"></i>
+                      大盤 / 指數 ETF（${etfCountInView} 檔）
+                    </span>
+                    <span class="text-slate-400 font-mono text-[9px] sm:text-[10px] font-bold">台股 ➔ 美股</span>
+                  </div>
+                </td>
+              </tr>
+            `;
+          } else {
+            groupHeaderHtml = `
+              <tr class="bg-slate-950/95 border-y border-slate-800/90">
+                <td colspan="7" class="py-1.5 pl-2.5 pr-2 sm:px-3.5">
+                  <div class="flex items-center justify-between text-[10px] sm:text-xs font-black tracking-wider">
+                    <span class="text-amber-300 flex items-center gap-1.5">
+                      <i class="fa-solid fa-crosshairs text-[10px]"></i>
+                      個股部位（${stockCountInView} 檔）
+                    </span>
+                    <span class="text-slate-400 font-mono text-[9px] sm:text-[10px] font-bold">台股 ➔ 美股</span>
+                  </div>
+                </td>
+              </tr>
+            `;
+          }
+        }
+
         const sh = parseFloat(h.shares) || 0;
         const avg = parseFloat(h.avgPrice) || 0;
         const cur = parseFloat(h.currentPrice) || 0;
@@ -2869,7 +3023,7 @@
         const pnlClass = pnlUp ? 'text-rose-400' : 'text-emerald-400';
         const gfUrl = getGoogleFinanceUrl(h.symbol, h.market);
 
-        return `
+        return groupHeaderHtml + `
           <tr class="hover:bg-slate-800/40 transition group">
             <!-- 標的與名稱（點擊開啟交易明細與買賣加減碼紀錄） -->
             <td class="py-2 pl-2 pr-1 sm:px-3.5 align-middle">
